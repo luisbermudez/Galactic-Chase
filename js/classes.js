@@ -2,7 +2,8 @@ class Sprite {
     constructor(x, y) {
         this.x = x;
         this.y = y;
-        this.diameter = 15;
+        this.diameter = 10;
+        this.color = 'rgb(37, 136, 228)';
         this.speedX = 0;
         this.speedY = 0;
     }
@@ -13,7 +14,7 @@ class Sprite {
         ctx.lineWidth = 7;
         ctx.strokeStyle = 'black'
         ctx.stroke();
-        ctx.fillStyle = 'rgb(37, 136, 228)';
+        ctx.fillStyle = this.color;
         ctx.fill();
         ctx.closePath();
     }
@@ -21,24 +22,31 @@ class Sprite {
     position() {
         this.y += this.speedY;
         this.x += this.speedX;
-        if(this.y < 23) this.y = 23;
-        if(this.y > 677) this.y = 677;
-        if(this.x < 23) this.x = 23;
-        if(this.x > 1327)this.x = 1327;
+        if(this.y < this.diameter) this.y = this.diameter;
+        if(this.y > canvas.height - this.diameter) this.y = canvas.height - this.diameter;
+        if(this.x < this.diameter) this.x = this.diameter;
+        if(this.x > canvas.width - this.diameter)this.x = canvas.width - this.diameter;
     }
 
-    attack() {
-        ctx.fillStyle = 'tomato';
-        console.log('something');
+    attack(enemy) {
+        if(overAndReady) {
+            enemy.diameter -= 25;
+        }
     }
 
     overEnemy(enemy) {
-        return (
+        if((
             this.x - this.diameter < enemy.x + enemy.diameter && 
             this.x + this.diameter > enemy.x - enemy.diameter &&
             this.y - this.diameter < enemy.y + enemy.diameter &&
             this.y + this.diameter > enemy.y - enemy.diameter
-        )
+        )) {
+            overAndReady = true;
+            this.color = 'rgb(184, 81, 166)'
+        } else {
+            overAndReady = false;
+            this.color = 'rgb(37, 136, 228)';
+        }
     }
 }
 
@@ -72,11 +80,11 @@ class Enemy {
         }
 
         let randomPos = () => {
-            this.randomX = Number(dirX + Math.random() * 4);
-            this.randomY = Number(dirY + Math.random() * 4);
+            this.randomX = Number(dirX + Math.floor(Math.random() * 6));
+            this.randomY = Number(dirY + Math.floor(Math.random() * 6));
         }
 
-        if(frames % 250 === 0) {
+        if(frames % 100 === 0) {
             direction();
             randomPos();
         }
