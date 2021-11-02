@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&display=swap');
+
 html, body {
     margin: 10px;
     padding: 0;
@@ -8,6 +10,11 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+h1 {
+    font-family: Amatic SC;
+    font-size: 250px;
 }
 
 button {
