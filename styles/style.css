@@ -1,38 +1,124 @@
 @import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&display=swap');
 
 html, body {
-    margin: 10px;
+    margin: 0;
     padding: 0;
 }
 
-body {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+
+#gameArea, #info, #level {
+    display: none;
 }
 
-h1 {
+h3 {
     font-family: Amatic SC;
-    font-size: 250px;
+    font-size: 65px;
+    text-align: center;
+    margin: 150px 30px 0;
+}
+
+#gotit {
+    margin: 80px auto;
 }
 
 button {
-    margin: 10px;
-    background-color: rgb(184, 81, 166);
+    margin: 20px 0;
     background-color: rgb(184, 184, 184);
-    /* background-color: rgb(69, 156, 113); */
-    font-size: 16px;
+    font-family: Amatic SC;
+    font-size: 56px;
+    font-weight: bolder;
     color: black;
-    border: 2px solid black;
+    border: 4px solid black;
     border-radius: 15px;
     outline: none;
 }
 button:hover {
-    font-size: 20px;
+    font-size: 70px;
     border-radius: 20px;
+}
+
+ul button {
+    margin: 20px 20px 20px 38.5vw;
+}
+ul {
+    list-style: none;
+    padding: 0;
 }
 
 #canvas {
     border: 5px solid black;
+    margin-top: 20px;
 }
+
+@media (min-width: 320px) {
+    h1 {
+        font-family: Amatic SC;
+        font-size: 65px;
+        margin: 190px 0 0;
+        padding: 0;
+    }
+
+    button {
+        font-size: 40px;
+        border: 3px solid black;
+        margin: 60px 0;
+    }
+    button:hover {
+        font-size: 50px;
+        border-radius: 20px;
+    }
+}
+
+@media (min-width: 760px) {
+    h1 {
+        font-family: Amatic SC;
+        font-size: 140px;
+        margin: 220px 0 0;
+        padding: 0;
+    }
+
+    h3 {
+        font-size: 85px;
+    }
+
+    button {
+        font-size: 46px;
+        border: 3px solid black;
+        margin: 80px 0;
+    }
+    button:hover {
+        font-size: 70px;
+        border-radius: 20px;
+    }
+
+    ul button {
+        margin: 20px 20px 20px 42vw;
+    }
+}
+
+
+@media (min-width: 1000px) {
+    h1 {
+        font-family: Amatic SC;
+        font-size: 190px;
+        margin: 140px 0 0;
+        padding: 0;
+    }
+    button {
+        font-size: 56px;
+        border: 3px solid black;
+        margin: 60px 0 0;
+    }
+    button:hover {
+        font-size: 70px;
+        border-radius: 20px;
+    }
+    ul button {
+        margin: 20px 20px 20px 44vw;
+    }
+}
+
+
+
+
+

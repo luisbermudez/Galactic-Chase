@@ -8,11 +8,25 @@
     <link rel="stylesheet" href="./styles/style.css">
 </head>
 <body>
-    <div>
-        <h1>galactic - saurus</h1>
+    <div id="introArea">
+        <h1>galactic - something</h1>
+        <button id="start">Start</button>
     </div>
-    <button id="start">Start</button>
-    <canvas id="canvas" width="1350" height="700"></canvas>
+    <section id="info">
+        <h3>For a better experience enter full screen :)</h3>
+        <button id="gotit">got it</button>
+    </section>
+    <div id="level">
+        <h3>Select a level</h3>
+        <ul id="levels">
+            <li><button id="mild">Mild</button></li>
+            <li><button id="medium">Medium</button></li>
+            <li><button id="spicy">Spicy</button></li>
+        </ul>
+    </div>
+    <div id="gameArea">
+        <canvas id="canvas" width="1000" height="720"></canvas>
+    </div>
 
     
     <script src="./js/variables.js"></script>

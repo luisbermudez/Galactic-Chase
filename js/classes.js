@@ -11,7 +11,7 @@ class Sprite {
     draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.diameter, 0, Math.PI*2);
-        ctx.lineWidth = 7;
+        ctx.lineWidth = 5;
         ctx.strokeStyle = 'black'
         ctx.stroke();
         ctx.fillStyle = this.color;
@@ -51,12 +51,14 @@ class Sprite {
 }
 
 class Enemy {
-    constructor(x, y, d) {
+    constructor(x, y, d, speed, directionChangeSpeed) {
         this.x = x;
         this.y = y;
         this.diameter = d;
         this.randomX = -2;
         this.randomY = 0;
+        this.speed = speed;
+        this.directionChangeSpeed = directionChangeSpeed;
     }
 
     draw() {
@@ -80,11 +82,11 @@ class Enemy {
         }
 
         let randomPos = () => {
-            this.randomX = Number(dirX + Math.floor(Math.random() * 8));
-            this.randomY = Number(dirY + Math.floor(Math.random() * 8));
+            this.randomX = Number(dirX + Math.floor(Math.random() * this.speed));
+            this.randomY = Number(dirY + Math.floor(Math.random() * this.speed));
         }
 
-        if(frames % 50 === 0) {
+        if(frames % this.directionChangeSpeed === 0) {
             direction();
             randomPos();
         }

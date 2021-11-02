@@ -1,20 +1,73 @@
-
-
 window.onload = () => {
     let firstSprite;
     let firstEnemy;
 
+    let enemySpeed;
+    let directionChangeSpeed;
+
+    const gameArea = document.getElementById('gameArea');
+    const introArea = document.getElementById('introArea');
+    const userInfo = document.getElementById('info');
+    const level = document.getElementById('level');
+    const levels = document.getElementById('levels')
+
+    introArea.style.display = 'flex';
+    introArea.style.flexDirection = 'column';
+    introArea.style.alignItems = 'center';
+
     document.getElementById('start').onclick = () => {
+        introArea.style.display = 'none';
+        
+        if(document.documentElement.clientWidth > 1100 &&
+            document.documentElement.clientHeight > 730) {
+                level.style.display = 'inline';
+            } else {
+                userInfo.style.display = 'flex';
+                userInfo.style.flexDirection = 'column';
+                userInfo.style.alignItems = 'center';
+                document.getElementById('gotit').onclick = () => {
+                    userInfo.style.display = 'none';
+                    level.style.display = 'inline';
+                }
+            }
+    }
+
+    levels.addEventListener('click', (e) => {
         if(requestID) {
             return;
         }
 
+        switch(e.target.innerHTML) {
+            case 'Mild':
+                enemySpeed = 4;
+                directionChangeSpeed = 150;
+                break;
+            case 'Medium':
+                enemySpeed = 8;
+                directionChangeSpeed = 50;
+                break;
+            case 'Spicy':
+                enemySpeed = 18;
+                directionChangeSpeed = 40;
+                break;
+        }
+
+
+        level.style.display = 'none';
+        
+        gameArea.style.display = 'inline';
+        gameArea.style.background = 'white';
+        gameArea.style.display = 'flex';
+        gameArea.style.justifyContent = 'center';
+
         startGame();
-    }
+    });
 
     function startGame () {
+        
+        introArea.style.display = 'none';
         firstSprite = new Sprite(50, 600);
-        firstEnemy = new Enemy(700, 100, 100);
+        firstEnemy = new Enemy(700, 100, 100, enemySpeed, directionChangeSpeed);
         firstSprite.draw();
         firstEnemy.draw();
         requestID = requestAnimationFrame(update);
