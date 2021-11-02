@@ -21,7 +21,7 @@ window.onload = () => {
     }
 
     function status() {
-        if(firstEnemy.diameter < 20) {
+        if(firstEnemy.diameter < 8) {
             aWin();
         }
         if(firstEnemy.diameter > 300) {
@@ -62,19 +62,19 @@ window.onload = () => {
         switch(e.keyCode) {
             case 83:
                 firstSprite.speedY += 5;
-                firstEnemy.diameter += 8;
+                firstEnemy.diameter += 10;
                 break;
             case 87:
                 firstSprite.speedY -= 5;
-                firstEnemy.diameter += 8;
+                firstEnemy.diameter += 10;
                 break;
             case 68:
                 firstSprite.speedX += 5;
-                firstEnemy.diameter += 8;
+                firstEnemy.diameter += 10;
                 break;
             case 65:
                 firstSprite.speedX -= 5;
-                firstEnemy.diameter += 8;
+                firstEnemy.diameter += 10;
                 break;
             case 76:
                 firstSprite.attack(firstEnemy);
