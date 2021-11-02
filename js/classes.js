@@ -80,8 +80,8 @@ class Enemy {
         }
 
         let randomPos = () => {
-            this.randomX = Number(dirX + Math.floor(Math.random() * 18));
-            this.randomY = Number(dirY + Math.floor(Math.random() * 18));
+            this.randomX = Number(dirX + Math.floor(Math.random() * 8));
+            this.randomY = Number(dirY + Math.floor(Math.random() * 8));
         }
 
         if(frames % 50 === 0) {
