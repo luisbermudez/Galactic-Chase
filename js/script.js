@@ -2,24 +2,28 @@ window.onload = () => {
     let firstSprite;
     let firstEnemy;
 
-    
-
     const gameArea = document.getElementById('gameArea');
     const introArea = document.getElementById('introArea');
     const userInfo = document.getElementById('info');
     const level = document.getElementById('level');
-    const levels = document.getElementById('levels')
 
     introArea.style.display = 'flex';
     introArea.style.flexDirection = 'column';
     introArea.style.alignItems = 'center';
 
+    function rightClientWindowSize() {
+        if(windowWidth > 1100 && windowHeight > 730) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     document.getElementById('start').onclick = () => {
         introArea.style.display = 'none';
-        
-        if(document.documentElement.clientWidth > 1100 &&
-            document.documentElement.clientHeight > 730) {
-                level.style.display = 'inline';
+
+        if(rightClientWindowSize()) {
+                level.style.display = 'block';
             } else {
                 userInfo.style.display = 'flex';
                 userInfo.style.flexDirection = 'column';
@@ -31,54 +35,71 @@ window.onload = () => {
             }
     }
 
-    levels.addEventListener('click', (e) => {
+    document.getElementById('mild').onclick = () => {
         if(requestID) {
             return;
         }
 
-        switch(e.target.innerHTML) {
-            case 'Mild':
-                enemySpeedMax = 1;
-                enemySpeedMin = 0;
-                enemyDirectionChangeSpeed = 200;
-                enemyDiameterGrowth = 4;
-                spriteSpeed = 2;
-                spritePower = 10;
-                winDiameterParameter = 30;
-                lostDiameterParameter = 150;
-                break;
-            case 'Medium':
-                enemySpeedMax = 4;
-                enemySpeedMin = 1;
-                enemyDirectionChangeSpeed = 80;
-                enemyDiameterGrowth = 5;
-                spriteSpeed = 4;
-                spritePower = 15;
-                winDiameterParameter = 15;
-                lostDiameterParameter = 150;
-                break;
-            case 'Spicy':
-                enemySpeedMax = 6;
-                enemySpeedMin = 3;
-                enemyDirectionChangeSpeed = 65;
-                enemyDiameterGrowth = 4;
-                spriteSpeed = 8;
-                spritePower = 15;
-                winDiameterParameter = 10;
-                lostDiameterParameter = 160;
-                break;
-        }
-
+        enemySpeedMax = 2;
+        enemySpeedMin = 1;
+        enemyDirectionChangeSpeed = 200;
+        enemyDiameterGrowth = 4;
+        spriteSpeed = 2;
+        spritePower = 10;
+        winDiameterParameter = 30;
+        lostDiameterParameter = 150;
 
         level.style.display = 'none';
-        
         gameArea.style.display = 'inline';
-        gameArea.style.background = 'white';
         gameArea.style.display = 'flex';
         gameArea.style.justifyContent = 'center';
 
         startGame();
-    });
+    }
+
+    document.getElementById('medium').onclick = () => {
+        if(requestID) {
+            return;
+        }
+
+        enemySpeedMax = 4;
+        enemySpeedMin = 1;
+        enemyDirectionChangeSpeed = 80;
+        enemyDiameterGrowth = 5;
+        spriteSpeed = 4;
+        spritePower = 15;
+        winDiameterParameter = 15;
+        lostDiameterParameter = 150;
+
+        level.style.display = 'none';
+        gameArea.style.display = 'inline';
+        gameArea.style.display = 'flex';
+        gameArea.style.justifyContent = 'center';
+
+        startGame();
+    }
+    
+    document.getElementById('spicy').onclick = () => {
+        if(requestID) {
+            return;
+        }
+
+        enemySpeedMax = 6;
+        enemySpeedMin = 3;
+        enemyDirectionChangeSpeed = 65;
+        enemyDiameterGrowth = 4;
+        spriteSpeed = 5;
+        spritePower = 15;
+        winDiameterParameter = 10;
+        lostDiameterParameter = 160;
+
+        level.style.display = 'none';
+        gameArea.style.display = 'inline';
+        gameArea.style.display = 'flex';
+        gameArea.style.justifyContent = 'center';
+
+        startGame();
+    }
 
     function startGame () {
         
@@ -115,7 +136,7 @@ window.onload = () => {
     }
 
     function update() {
-        frames++
+        frames++;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         firstEnemy.draw();
         firstEnemy.randomPosition()

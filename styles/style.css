@@ -6,7 +6,7 @@ html, body {
 }
 
 
-#gameArea, #info, #level {
+#gameArea, #info, #level, #instructions {
     display: none;
 }
 
@@ -15,6 +15,21 @@ h3 {
     font-size: 65px;
     text-align: center;
     margin: 150px 30px 0;
+}
+
+span {
+    font-family: Amatic SC;
+    font-size: 50px;
+    font-weight: bolder;
+}
+
+h4 {
+    font-family: Amatic SC;
+    font-size: 45px;
+    text-align: center;
+    margin: 0 auto;
+    padding: 0;
+    width: 400px;
 }
 
 #gotit {
@@ -32,22 +47,33 @@ button {
     border-radius: 15px;
     outline: none;
 }
-button:hover, button:active {
+button:hover {
     font-size: 70px;
     border-radius: 20px;
 }
 
-ul button {
+#levels button {
     margin: 20px;
+    display: block;
+    margin: 20px auto;
 }
-ul {
+#levels {
     text-align: center;
-    list-style: none;
-    padding: 0;
+}
+
+#buttonInstructions {
+    position: absolute;
+    top: 50px;
+    right: 50px;
+    margin: 0;
+    padding: 0 18px;
+    font-size: 40px;
+    font-weight: bolder;
+    border-radius: 15px;
 }
 
 #canvas {
-    border: 5px solid black;
+    border: 1px solid black;
     margin-top: 20px;
 }
 
@@ -92,9 +118,9 @@ ul {
         border-radius: 20px;
     }
 
-    ul button {
+    /* #levels button {
         margin: 20px;
-    }
+    } */
 }
 
 
@@ -114,9 +140,9 @@ ul {
         font-size: 70px;
         border-radius: 20px;
     }
-    ul button {
+    /* #levels button {
         margin: 20px;
-    }
+    } */
 }
 
 

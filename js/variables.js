@@ -6,6 +6,10 @@ let requestID;
 
 let overAndReady = false;
 
+// Client window size
+let windowWidth = document.documentElement.clientWidth;
+let windowHeight = document.documentElement.clientHeight;
+
 // Enemy different level values
 let enemySpeedMax;
 let enemySpeedMin;
