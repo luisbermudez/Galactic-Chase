@@ -6,33 +6,30 @@ window.onload = () => {
     const introArea = document.getElementById('introArea');
     const userInfo = document.getElementById('info');
     const level = document.getElementById('level');
-
-    introArea.style.display = 'flex';
-    introArea.style.flexDirection = 'column';
-    introArea.style.alignItems = 'center';
-
-    function rightClientWindowSize() {
-        if(windowWidth > 1100 && windowHeight > 730) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    const instructs = document.getElementById('instructions');
 
     document.getElementById('start').onclick = () => {
         introArea.style.display = 'none';
-
+        
         if(rightClientWindowSize()) {
                 level.style.display = 'block';
             } else {
                 userInfo.style.display = 'flex';
-                userInfo.style.flexDirection = 'column';
-                userInfo.style.alignItems = 'center';
                 document.getElementById('gotit').onclick = () => {
                     userInfo.style.display = 'none';
-                    level.style.display = 'inline';
+                    level.style.display = 'block';
                 }
             }
+    }
+
+    document.getElementById('buttonInstructions').onclick  = () => {
+        instructs.style.display = 'block';
+        level.style.display = 'none';
+    }
+
+    document.getElementById('toLevels').onclick = () => {
+        instructs.style.display = 'none';
+        level.style.display = 'block';
     }
 
     document.getElementById('mild').onclick = () => {
@@ -102,10 +99,8 @@ window.onload = () => {
     }
 
     function startGame () {
-        
         introArea.style.display = 'none';
-        firstSprite = new Sprite(50, 600, spritePower);
-                enemySpeedMax = 7;
+        firstSprite = new Sprite(50, 670, spritePower);
         firstEnemy = new Enemy(700, 100, 50, enemySpeedMin, enemySpeedMax, enemyDirectionChangeSpeed);
         firstSprite.draw();
         firstEnemy.draw();
@@ -118,6 +113,14 @@ window.onload = () => {
         }
         if(firstEnemy.diameter > lostDiameterParameter) {
             gameOver();
+        }
+    }
+
+    function rightClientWindowSize() {
+        if(document.documentElement.clientWidth > 1100 && document.documentElement.clientHeight > 730) {
+            return true;
+        } else {
+            return false;
         }
     }
 

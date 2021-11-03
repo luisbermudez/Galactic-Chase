@@ -57,7 +57,7 @@ class Enemy {
         this.y = y;
         this.diameter = d;
         this.randomX = -2;
-        this.randomY = 0;
+        this.randomY = 2;
         this.speedMin = speedMin;
         this.speedMax = speedMax;
         this.directionChangeSpeed = directionChangeSpeed;
