@@ -1,11 +1,12 @@
 class Sprite {
-    constructor(x, y) {
+    constructor(x, y, powerOfAttack) {
         this.x = x;
         this.y = y;
         this.diameter = 10;
         this.color = 'rgb(37, 136, 228)';
         this.speedX = 0;
         this.speedY = 0;
+        this.powerOfAttack = powerOfAttack;
     }
 
     draw() {
@@ -30,7 +31,7 @@ class Sprite {
 
     attack(enemy) {
         if(overAndReady) {
-            enemy.diameter -= 25;
+            enemy.diameter -= this.powerOfAttack;
         }
     }
 
@@ -51,13 +52,14 @@ class Sprite {
 }
 
 class Enemy {
-    constructor(x, y, d, speed, directionChangeSpeed) {
+    constructor(x, y, d, speedMin, speedMax, directionChangeSpeed) {
         this.x = x;
         this.y = y;
         this.diameter = d;
         this.randomX = -2;
         this.randomY = 0;
-        this.speed = speed;
+        this.speedMin = speedMin;
+        this.speedMax = speedMax;
         this.directionChangeSpeed = directionChangeSpeed;
     }
 
@@ -73,45 +75,55 @@ class Enemy {
     }
 
     randomPosition() {
+        // variable that will contain the sign to indicate the direction
         let dirX;
         let dirY;
 
-        let direction = () => {
+        // to randomly get a sign for direction
+        let directionX = () => {
             dirX = Math.floor(Math.random() * 2) ? '-' : '+';
+        }
+
+        let directionY = () => {
             dirY = Math.floor(Math.random() * 2) ? '-' : '+';
         }
 
+        // randomly gets a value to be added to x and y 
+        // the values determine the speed of the enemy
+        // the difference of the values to be added to x & y respectively, determine the trayectory
         let randomPos = () => {
-            this.randomX = Number(dirX + Math.floor(Math.random() * this.speed));
-            this.randomY = Number(dirY + Math.floor(Math.random() * this.speed));
+            this.randomX = Number(dirX + Math.floor(Math.random() * (this.speedMax) + this.speedMin));
+            this.randomY = Number(dirY + Math.floor(Math.random() * (this.speedMax) + this.speedMin));
         }
 
+        // changes the trayectory every directionChangeSpeed value
         if(frames % this.directionChangeSpeed === 0) {
-            direction();
+            directionX();
+            directionY();
             randomPos();
         }
         
         this.x += this.randomX;
         this.y += this.randomY;
 
-        if(this.y < this.diameter) {
+        if(this.y < this.diameter + 1) {
             dirY = '+';
-            dirX = '+';
+            this.x < this.diameter * 3 ? dirX = '+' : directionX();
             randomPos();
         }
-        if(this.y > canvas.height - this.diameter) {
+        if(this.y > canvas.height - this.diameter - 1) {
             dirY = '-';
-            dirX = '-';
+            this.x > canvas.width - (this.diameter * 3) ? dirX = '-' : directionX();
             randomPos()
         }
-        if(this.x < this.diameter) {
+        if(this.x < this.diameter + 1) {
             dirX = '+';
-            dirY = '+';
+            this.y < this.diameter * 3 ? dirY = '+' : directionY();
             randomPos()
         }
-        if(this.x > canvas.width - this.diameter) {
+        if(this.x > canvas.width - this.diameter - 1) {
             dirX = '-';
-            dirY = '-';
+            this.y > canvas.height - (this.diameter * 3) ? dirY = '-' : directionY();
             randomPos();
         }
     }

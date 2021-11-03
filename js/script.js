@@ -2,8 +2,7 @@ window.onload = () => {
     let firstSprite;
     let firstEnemy;
 
-    let enemySpeed;
-    let directionChangeSpeed;
+    
 
     const gameArea = document.getElementById('gameArea');
     const introArea = document.getElementById('introArea');
@@ -39,16 +38,34 @@ window.onload = () => {
 
         switch(e.target.innerHTML) {
             case 'Mild':
-                enemySpeed = 4;
-                directionChangeSpeed = 150;
+                enemySpeedMax = 1;
+                enemySpeedMin = 0;
+                enemyDirectionChangeSpeed = 200;
+                enemyDiameterGrowth = 4;
+                spriteSpeed = 2;
+                spritePower = 10;
+                winDiameterParameter = 30;
+                lostDiameterParameter = 150;
                 break;
             case 'Medium':
-                enemySpeed = 8;
-                directionChangeSpeed = 50;
+                enemySpeedMax = 4;
+                enemySpeedMin = 1;
+                enemyDirectionChangeSpeed = 80;
+                enemyDiameterGrowth = 5;
+                spriteSpeed = 4;
+                spritePower = 15;
+                winDiameterParameter = 15;
+                lostDiameterParameter = 150;
                 break;
             case 'Spicy':
-                enemySpeed = 18;
-                directionChangeSpeed = 40;
+                enemySpeedMax = 6;
+                enemySpeedMin = 3;
+                enemyDirectionChangeSpeed = 65;
+                enemyDiameterGrowth = 4;
+                spriteSpeed = 8;
+                spritePower = 15;
+                winDiameterParameter = 10;
+                lostDiameterParameter = 160;
                 break;
         }
 
@@ -66,18 +83,19 @@ window.onload = () => {
     function startGame () {
         
         introArea.style.display = 'none';
-        firstSprite = new Sprite(50, 600);
-        firstEnemy = new Enemy(700, 100, 100, enemySpeed, directionChangeSpeed);
+        firstSprite = new Sprite(50, 600, spritePower);
+                enemySpeedMax = 7;
+        firstEnemy = new Enemy(700, 100, 50, enemySpeedMin, enemySpeedMax, enemyDirectionChangeSpeed);
         firstSprite.draw();
         firstEnemy.draw();
         requestID = requestAnimationFrame(update);
     }
 
     function status() {
-        if(firstEnemy.diameter < 8) {
+        if(firstEnemy.diameter < winDiameterParameter) {
             aWin();
         }
-        if(firstEnemy.diameter > 300) {
+        if(firstEnemy.diameter > lostDiameterParameter) {
             gameOver();
         }
     }
@@ -115,19 +133,19 @@ window.onload = () => {
         switch(e.keyCode) {
             case 83:
                 firstSprite.speedY += 5;
-                firstEnemy.diameter += 10;
+                firstEnemy.diameter += enemyDiameterGrowth;
                 break;
             case 87:
                 firstSprite.speedY -= 5;
-                firstEnemy.diameter += 10;
+                firstEnemy.diameter += enemyDiameterGrowth;
                 break;
             case 68:
                 firstSprite.speedX += 5;
-                firstEnemy.diameter += 10;
+                firstEnemy.diameter += enemyDiameterGrowth;
                 break;
             case 65:
                 firstSprite.speedX -= 5;
-                firstEnemy.diameter += 10;
+                firstEnemy.diameter += enemyDiameterGrowth;
                 break;
             case 76:
                 firstSprite.attack(firstEnemy);
@@ -137,16 +155,16 @@ window.onload = () => {
     addEventListener('keyup', (e) => {
         switch(e.keyCode) {
             case 83:
-                firstSprite.speedY = 5;
+                firstSprite.speedY = spriteSpeed;
                 break;
             case 87:
-                firstSprite.speedY = -5;
+                firstSprite.speedY = - spriteSpeed;
                 break;
             case 68:
-                firstSprite.speedX = 5;
+                firstSprite.speedX = spriteSpeed;
                 break;
             case 65:
-                firstSprite.speedX = -5;
+                firstSprite.speedX = - spriteSpeed;
                 break;
         }
     });
