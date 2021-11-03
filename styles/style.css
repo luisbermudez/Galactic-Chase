@@ -32,15 +32,16 @@ button {
     border-radius: 15px;
     outline: none;
 }
-button:hover {
+button:hover, button:active {
     font-size: 70px;
     border-radius: 20px;
 }
 
 ul button {
-    margin: 20px 20px 20px 38.5vw;
+    margin: 20px;
 }
 ul {
+    text-align: center;
     list-style: none;
     padding: 0;
 }
@@ -92,7 +93,7 @@ ul {
     }
 
     ul button {
-        margin: 20px 20px 20px 42vw;
+        margin: 20px;
     }
 }
 
@@ -114,7 +115,7 @@ ul {
         border-radius: 20px;
     }
     ul button {
-        margin: 20px 20px 20px 44vw;
+        margin: 20px;
     }
 }
 
