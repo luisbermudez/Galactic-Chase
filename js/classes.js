@@ -128,3 +128,45 @@ class Enemy {
         }
     }
 }
+
+// class Stars {
+//     constructor(x, y) {
+//         this.x = x;
+//         this.y = y;
+//     }
+
+//     draw() {
+//         let positionX = this.x;
+//         let positionY = this.y;
+//         ctx.lineWidth = 3;
+//         ctx.fillStyle = 'yellow';
+//         ctx.beginPath();
+//         ctx.moveTo(positionX, positionY);
+//         ctx.lineTo(positionX + 5, positionY + 14);
+//         ctx.stroke();
+//         ctx.lineTo(positionX + 22, positionY + 16);
+//         ctx.stroke();
+//         ctx.lineTo(positionX + 5, positionY + 28);
+//         ctx.stroke();
+//         ctx.lineTo(positionX + 5, positionY + 40);
+//         ctx.stroke();
+//         ctx.lineTo(positionX - 7, positionY + 30);
+//         ctx.stroke();
+//         ctx.lineTo(positionX - 23, positionY + 39);
+//         ctx.stroke();
+//         ctx.lineTo(positionX - 16, positionY + 25);
+//         ctx.stroke();
+//         ctx.lineTo(positionX - 30, positionY + 16);
+//         ctx.stroke();
+//         ctx.lineTo(positionX - 14, positionY + 15);
+//         ctx.stroke();
+//         ctx.lineTo(positionX, positionY);
+//         ctx.stroke();
+//         ctx.fill();
+//     }
+
+//     position() {
+//         this.x += this.x;
+//         this.y += this.y;
+//     }
+// }

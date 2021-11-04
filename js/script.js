@@ -1,7 +1,13 @@
 window.onload = () => {
     let firstSprite;
     let firstEnemy;
-
+    let star1;
+    let star2;
+    let star3;
+    let star4;
+    let star5;
+    let star6;
+    
     const gameArea = document.getElementById('gameArea');
     const introArea = document.getElementById('introArea');
     const userInfo = document.getElementById('info');
@@ -100,6 +106,11 @@ window.onload = () => {
 
     function startGame () {
         introArea.style.display = 'none';
+        // star1 = new Stars(Math.floor(Math.random() * canvas.width), Math.floor(Math.random() * canvas.height));
+        // star2 = new Stars(Math.floor(Math.random() * canvas.width), Math.floor(Math.random() * canvas.height));
+        // star3 = new Stars(Math.floor(Math.random() * canvas.width), Math.floor(Math.random() * canvas.height));
+        // star4 = new Stars(Math.floor(Math.random() * canvas.width), Math.floor(Math.random() * canvas.height));
+        // star5 = new Stars(Math.floor(Math.random() * canvas.width), Math.floor(Math.random() * canvas.height));
         firstSprite = new Sprite(50, 670, spritePower);
         firstEnemy = new Enemy(700, 100, 50, enemySpeedMin, enemySpeedMax, enemyDirectionChangeSpeed);
         firstSprite.draw();
@@ -141,6 +152,11 @@ window.onload = () => {
     function update() {
         frames++;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        // star1.draw();
+        // star2.draw();
+        // star3.draw();
+        // star4.draw();
+        // star5.draw();
         firstEnemy.draw();
         firstEnemy.randomPosition()
         firstSprite.draw();
