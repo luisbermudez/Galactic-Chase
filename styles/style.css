@@ -5,13 +5,13 @@ html, body {
     padding: 0;
 }
 
-#introArea, #info {
+#introArea, #info, #gameArea, #aWin, #gameOver {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-#gameArea, #info, #level, #instructions {
+#gameArea, #info, #level, #instructions, #aWin, #gameOver {
     display: none;
 }
 
@@ -27,7 +27,7 @@ h4 {
     text-align: center;
     margin: 0 auto;
     padding: 0;
-    width: 400px;
+    width: 260px;
 }
 
 h3 {
@@ -43,7 +43,7 @@ h3 {
 
 button {
     margin: 20px 0;
-    background-color: rgb(184, 184, 184);
+    background-color: rgb(159, 224, 179);
     font-family: Amatic SC;
     font-size: 56px;
     font-weight: bolder;
@@ -71,7 +71,7 @@ button:hover {
     font-size: 38px;
 }
 
-#buttonInstructions, #toLevels {
+#buttonInstructions, #toLevels, #toLevelsGA {
     position: fixed;
     top: 35px;
     right: 16px;
@@ -82,9 +82,29 @@ button:hover {
     border-radius: 50px;
     background-color: white;
 }
-#buttonInstructions:hover, #toLevels:hover {
+#buttonInstructions:hover, #toLevels:hover, #toLevelsGA:hover {
     font-size: 30px;
     padding: 0 14px;
+}
+
+#toLevelsGA {
+    position: fixed;
+    top: 46.5%;
+    left: 64px;
+    margin: 0;
+    padding: 0 12px;
+    font-size: 25px;
+    font-weight: bolder;
+    border-radius: 50px;
+    background-color: rgb(214, 153, 216);
+}
+#toLevelsGA:hover {
+    font-size: 30px;
+    padding: 0 14px;
+}
+
+#start {
+    background-color: rgb(159, 224, 179);
 }
 
 #instructions div {
@@ -123,6 +143,11 @@ button:hover {
         padding: 0;
     }
 
+    h4 {
+        font-size: 55px;
+        width: 500px;
+    }
+
     h3 {
         font-size: 85px;
     }
@@ -146,6 +171,15 @@ button:hover {
     #buttonInstructions:hover, #toLevels:hover {
         font-size: 40px;
         padding: 0 20px;
+    }
+
+    #toLevelsGA {
+        font-size: 35px;
+        padding: 0 18px;
+    }
+    #toLevelsGA:hover {
+        font-size: 45px;
+        padding: 0 23px;
     }
 }
 

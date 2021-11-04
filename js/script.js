@@ -1,12 +1,12 @@
 window.onload = () => {
     let firstSprite;
     let firstEnemy;
-    let star1;
-    let star2;
-    let star3;
-    let star4;
-    let star5;
-    let star6;
+    // let star1;
+    // let star2;
+    // let star3;
+    // let star4;
+    // let star5;
+    // let star6;
     
     const gameArea = document.getElementById('gameArea');
     const introArea = document.getElementById('introArea');
@@ -48,14 +48,16 @@ window.onload = () => {
         enemyDirectionChangeSpeed = 200;
         enemyDiameterGrowth = 4;
         spriteSpeed = 2;
-        spritePower = 10;
+        spritePower = 5;
         winDiameterParameter = 30;
         lostDiameterParameter = 150;
+        powerItemSpeedMax = 4;
+        powerItemSpeedMin = 1;
+        powerOnTimer = 3500;
+
 
         level.style.display = 'none';
-        gameArea.style.display = 'inline';
         gameArea.style.display = 'flex';
-        gameArea.style.justifyContent = 'center';
 
         startGame();
     }
@@ -70,14 +72,15 @@ window.onload = () => {
         enemyDirectionChangeSpeed = 80;
         enemyDiameterGrowth = 5;
         spriteSpeed = 4;
-        spritePower = 15;
+        spritePower = 9;
         winDiameterParameter = 15;
         lostDiameterParameter = 150;
+        powerItemSpeedMax = 4;
+        powerItemSpeedMin = 2;
+        powerOnTimer = 3000;
 
         level.style.display = 'none';
-        gameArea.style.display = 'inline';
         gameArea.style.display = 'flex';
-        gameArea.style.justifyContent = 'center';
 
         startGame();
     }
@@ -92,14 +95,15 @@ window.onload = () => {
         enemyDirectionChangeSpeed = 65;
         enemyDiameterGrowth = 4;
         spriteSpeed = 5;
-        spritePower = 15;
+        spritePower = 8;
         winDiameterParameter = 10;
         lostDiameterParameter = 160;
+        powerItemSpeedMax = 8;
+        powerItemSpeedMin = 6;
+        powerOnTimer = 2000;
 
         level.style.display = 'none';
-        gameArea.style.display = 'inline';
         gameArea.style.display = 'flex';
-        gameArea.style.justifyContent = 'center';
 
         startGame();
     }
@@ -111,8 +115,9 @@ window.onload = () => {
         // star3 = new Stars(Math.floor(Math.random() * canvas.width), Math.floor(Math.random() * canvas.height));
         // star4 = new Stars(Math.floor(Math.random() * canvas.width), Math.floor(Math.random() * canvas.height));
         // star5 = new Stars(Math.floor(Math.random() * canvas.width), Math.floor(Math.random() * canvas.height));
-        firstSprite = new Sprite(50, 670, spritePower);
+        firstSprite = new Sprite(50, 670, spritePower, powerOnTimer);
         firstEnemy = new Enemy(700, 100, 50, enemySpeedMin, enemySpeedMax, enemyDirectionChangeSpeed);
+        poweritem1 = new PowerItem(700, 650, 8, powerItemSpeedMax, powerItemSpeedMin, 200);
         firstSprite.draw();
         firstEnemy.draw();
         requestID = requestAnimationFrame(update);
@@ -124,6 +129,12 @@ window.onload = () => {
         }
         if(firstEnemy.diameter > lostDiameterParameter) {
             gameOver();
+        }
+        document.getElementById('toLevelsGA').onclick = () => {
+            level.style.display = 'block';
+            requestID = undefined;
+            gameArea.style.display = 'none';
+
         }
     }
 
@@ -137,16 +148,22 @@ window.onload = () => {
 
     function gameOver() {
         requestID = undefined;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.font = '250 Calibri';
-        ctx.fillText('Try again!', 100, 100);
+        gameArea.style.display = 'none';
+        document.getElementById('gameOver').style.display = 'flex';
+        document.getElementById('playAgainGO').onclick = () => {
+            document.getElementById('gameOver').style.display = 'none';
+            level.style.display = 'block';
+        }
     }
 
     function aWin() {
         requestID = undefined;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.font = '250 Calibri';
-        ctx.fillText('You won!', 100, 100);
+        gameArea.style.display = 'none';
+        document.getElementById('aWin').style.display = 'flex';
+        document.getElementById('playAgain').onclick = () => {
+            document.getElementById('aWin').style.display = 'none';
+            level.style.display = 'block';
+        }
     }
 
     function update() {
@@ -158,10 +175,13 @@ window.onload = () => {
         // star4.draw();
         // star5.draw();
         firstEnemy.draw();
-        firstEnemy.randomPosition()
+        firstEnemy.randomPosition();
+        poweritem1.draw();
+        poweritem1.randomPosition();
         firstSprite.draw();
         firstSprite.position();
         firstSprite.overEnemy(firstEnemy);
+        firstSprite.power(poweritem1);
         status();
 
         if(requestID) {

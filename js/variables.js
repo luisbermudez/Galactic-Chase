@@ -15,6 +15,11 @@ let enemyDiameterGrowth;
 // Sprite different level values
 let spriteSpeed;
 let spritePower;
+let powerOnTimer;
+
+// Power item level values 
+let powerItemSpeedMax;
+let powerItemSpeedMin;
 
 // win or lose
 let winDiameterParameter;
