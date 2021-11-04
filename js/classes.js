@@ -2,8 +2,8 @@ class Sprite {
     constructor(x, y, powerOfAttack, powerOnTimer) {
         this.x = x;
         this.y = y;
-        this.diameter = 17;
-        this.color = 'rgb(37, 136, 228)';
+        this.diameter = 20;
+        this.color = 'rgb(80, 152, 173)';
         this.speedX = 0;
         this.speedY = 0;
         this.powerOfAttack = powerOfAttack;
@@ -32,20 +32,23 @@ class Sprite {
     }
 
     attack(enemy) {
-        if(this.color === 'red') {
+        if(this.color === 'tomato') {
             if(enemy.diameter > 3) {
                 enemy.diameter -= 3;
+                bulletReady = true;
             }
         }
+
         if(overAndReady) {
             if(enemy.diameter > this.powerOfAttack) {
                 enemy.diameter -= this.powerOfAttack;
+                bulletReady = true;
             }
         }
     }
 
     deactivatePower() {
-        if(this.color === 'red') {
+        if(this.color === 'tomato') {
             setTimeout(() => {
                 this.color = 'rgb(184, 81, 166)';
             }, powerOnTimer);
@@ -59,7 +62,7 @@ class Sprite {
             this.y - this.diameter < powerItem.y + powerItem.diameter &&
             this.y + this.diameter > powerItem.y - powerItem.diameter
         )) {
-            this.color = 'red';
+            this.color = 'tomato';
             this.deactivatePower();
         }
     }
@@ -71,18 +74,19 @@ class Sprite {
             this.y - this.diameter < enemy.y + enemy.diameter &&
             this.y + this.diameter > enemy.y - enemy.diameter
         )) {
-            if(this.color === 'red') {
-                this.color = 'red';
+            if(this.color === 'tomato') {
+                this.color = 'tomato';
             } else {
                 overAndReady = true;
                 this.color = 'rgb(184, 81, 166)';
             }
         } else {
-            if(this.color === 'red') {
-                this.color = 'red';
+            if(this.color === 'tomato') {
+                this.color = 'tomato';
             } else {
                 overAndReady = false;
-                this.color = 'rgb(37, 136, 228)';
+                bulletReady = false;
+                this.color = 'rgb(80, 152, 173)';
             }
         }
     }
@@ -98,6 +102,7 @@ class Enemy {
         this.speedMin = speedMin;
         this.speedMax = speedMax;
         this.directionChangeSpeed = directionChangeSpeed;
+        this.color = 'rgb(147, 206, 188)';
     }
 
     draw() {
@@ -106,7 +111,7 @@ class Enemy {
         ctx.lineWidth = 5;
         ctx.strokeStyle = 'black'
         ctx.stroke();
-        ctx.fillStyle = 'rgb(147, 206, 188)';
+        ctx.fillStyle = this.color;
         ctx.fill();
         ctx.closePath();
     }
@@ -211,16 +216,46 @@ class Enemy {
 class PowerItem extends Enemy {
     constructor(x, y, d, speedMin, speedMax, directionChangeSpeed) {
         super(x, y, d, speedMin, speedMax, directionChangeSpeed)
+        this.color = 'tomato';
+    }
+}
+
+class AttackItems {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.color = 'rgb(118, 86, 160)';
     }
 
     draw() {
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.diameter, 0, Math.PI*2);
-            ctx.lineWidth = 7;
-            ctx.strokeStyle = 'black'
-            ctx.stroke();
-            ctx.fillStyle = 'yellow';
-            ctx.fill();
-            ctx.closePath();
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, 5, 0, Math.PI*2);
+        ctx.lineWidth = 5;
+        ctx.strokeStyle = 'black'
+        ctx.stroke();
+        ctx.fillStyle = this.color;
+        ctx.fill();
+        ctx.closePath();
+    }
+
+    trayectory(sprite) {
+        this.x = sprite.x;
+        this.y = sprite.y;
+    }
+}
+
+class AttackBullet extends AttackItems {
+    constructor(x, y) {
+        super(x, y);
+        this.color = 'yellow'
+    }
+
+    trayectory(firstEnemy) {
+        this.x += 12;
+        this.y -= 13;
+        // if(frames % 5 === 0) {
+        //     this.x =firstEnemy.x;
+        //     this.y = firstEnemy.y;
+        // }
     }
 }

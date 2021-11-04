@@ -4,7 +4,9 @@ const ctx = canvas.getContext('2d');
 let frames = 0;
 let requestID;
 
+// Variables for attack
 let overAndReady = false;
+let bulletReady = false;
 
 // Enemy different level values
 let enemySpeedMax;
@@ -13,7 +15,7 @@ let enemyDirectionChangeSpeed;
 let enemyDiameterGrowth;
 
 // Sprite different level values
-let spriteSpeed;
+let spriteZeroGravity;
 let spritePower;
 let powerOnTimer;
 
@@ -24,3 +26,7 @@ let powerItemSpeedMin;
 // win or lose
 let winDiameterParameter;
 let lostDiameterParameter;
+
+// Attack items 
+let attackItems = [];
+let shootABullet = false;

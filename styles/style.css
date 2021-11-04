@@ -44,6 +44,7 @@ h3 {
 button {
     margin: 20px 0;
     background-color: rgb(159, 224, 179);
+    /* background-color: rgb(238, 223, 12); */
     font-family: Amatic SC;
     font-size: 56px;
     font-weight: bolder;
@@ -71,7 +72,7 @@ button:hover {
     font-size: 38px;
 }
 
-#buttonInstructions, #toLevels, #toLevelsGA {
+#buttonInstructions, #toLevels {
     position: fixed;
     top: 35px;
     right: 16px;
@@ -82,15 +83,15 @@ button:hover {
     border-radius: 50px;
     background-color: white;
 }
-#buttonInstructions:hover, #toLevels:hover, #toLevelsGA:hover {
+#buttonInstructions:hover, #toLevels:hover {
     font-size: 30px;
     padding: 0 14px;
 }
 
 #toLevelsGA {
     position: fixed;
-    top: 46.5%;
-    left: 64px;
+    top: 738px;
+    left: 48%;
     margin: 0;
     padding: 0 12px;
     font-size: 25px;
@@ -113,7 +114,7 @@ button:hover {
 
 #canvas {
     border: 1px solid black;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 @media (min-width: 320px) {
@@ -173,14 +174,14 @@ button:hover {
         padding: 0 20px;
     }
 
-    #toLevelsGA {
+    /* #toLevelsGA {
         font-size: 35px;
         padding: 0 18px;
     }
     #toLevelsGA:hover {
         font-size: 45px;
         padding: 0 23px;
-    }
+    } */
 }
 
 

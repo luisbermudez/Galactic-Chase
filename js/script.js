@@ -47,13 +47,13 @@ window.onload = () => {
         enemySpeedMin = 1;
         enemyDirectionChangeSpeed = 200;
         enemyDiameterGrowth = 4;
-        spriteSpeed = 2;
+        spriteZeroGravity = 2;
         spritePower = 5;
         winDiameterParameter = 30;
-        lostDiameterParameter = 150;
+        lostDiameterParameter = 200;
         powerItemSpeedMax = 4;
         powerItemSpeedMin = 1;
-        powerOnTimer = 3500;
+        powerOnTimer = 3000;
 
 
         level.style.display = 'none';
@@ -71,13 +71,13 @@ window.onload = () => {
         enemySpeedMin = 1;
         enemyDirectionChangeSpeed = 80;
         enemyDiameterGrowth = 5;
-        spriteSpeed = 4;
-        spritePower = 9;
-        winDiameterParameter = 15;
-        lostDiameterParameter = 150;
+        spriteZeroGravity = 4;
+        spritePower = 5;
+        winDiameterParameter = 10;
+        lostDiameterParameter = 200;
         powerItemSpeedMax = 4;
         powerItemSpeedMin = 2;
-        powerOnTimer = 3000;
+        powerOnTimer = 2500;
 
         level.style.display = 'none';
         gameArea.style.display = 'flex';
@@ -93,14 +93,14 @@ window.onload = () => {
         enemySpeedMax = 6;
         enemySpeedMin = 3;
         enemyDirectionChangeSpeed = 65;
-        enemyDiameterGrowth = 4;
-        spriteSpeed = 5;
+        enemyDiameterGrowth = 6;
+        spriteZeroGravity = 5;
         spritePower = 8;
         winDiameterParameter = 10;
-        lostDiameterParameter = 160;
+        lostDiameterParameter = 200;
         powerItemSpeedMax = 8;
         powerItemSpeedMin = 6;
-        powerOnTimer = 2000;
+        powerOnTimer = 1500;
 
         level.style.display = 'none';
         gameArea.style.display = 'flex';
@@ -118,10 +118,16 @@ window.onload = () => {
         firstSprite = new Sprite(50, 670, spritePower, powerOnTimer);
         firstEnemy = new Enemy(700, 100, 50, enemySpeedMin, enemySpeedMax, enemyDirectionChangeSpeed);
         poweritem1 = new PowerItem(700, 650, 8, powerItemSpeedMax, powerItemSpeedMin, 200);
+        attackItem1 = new AttackItems(firstSprite.x, firstSprite.y);
         firstSprite.draw();
         firstEnemy.draw();
         requestID = requestAnimationFrame(update);
     }
+
+    // function canvasAnimation() {
+    //     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    //     ctx.scale(0.5, 0.5);
+    // }
 
     function status() {
         if(firstEnemy.diameter < winDiameterParameter) {
@@ -166,6 +172,28 @@ window.onload = () => {
         }
     }
 
+    function createBullets() {
+        if(bulletReady) {
+            if(shootABullet) {
+                firstBullet = new AttackBullet(firstSprite.x, firstSprite.y); // Trayectory test
+                attackItems.push(firstBullet);
+            }
+        }
+    }
+
+    function clearBullets() {
+        if(frames % 50 === 0) {
+            attackItems = [];
+        }
+    }
+
+    function drawBullets() {
+        attackItems.forEach((bullet) => {
+            bullet.draw();
+            bullet.trayectory(firstEnemy);
+        });
+    }
+
     function update() {
         frames++;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -174,11 +202,16 @@ window.onload = () => {
         // star3.draw();
         // star4.draw();
         // star5.draw();
+        clearBullets()
+        createBullets();
         firstEnemy.draw();
+        drawBullets();
         firstEnemy.randomPosition();
         poweritem1.draw();
         poweritem1.randomPosition();
         firstSprite.draw();
+        attackItem1.draw();
+        attackItem1.trayectory(firstSprite);
         firstSprite.position();
         firstSprite.overEnemy(firstEnemy);
         firstSprite.power(poweritem1);
@@ -209,23 +242,26 @@ window.onload = () => {
                 break;
             case 76:
                 firstSprite.attack(firstEnemy);
+                shootABullet = true;
         }
     });
 
     addEventListener('keyup', (e) => {
         switch(e.keyCode) {
             case 83:
-                firstSprite.speedY = spriteSpeed;
+                firstSprite.speedY = spriteZeroGravity;
                 break;
             case 87:
-                firstSprite.speedY = - spriteSpeed;
+                firstSprite.speedY = - spriteZeroGravity;
                 break;
             case 68:
-                firstSprite.speedX = spriteSpeed;
+                firstSprite.speedX = spriteZeroGravity;
                 break;
             case 65:
-                firstSprite.speedX = - spriteSpeed;
+                firstSprite.speedX = - spriteZeroGravity;
                 break;
+            case 76:
+                shootABullet = false;
         }
     });
 }
