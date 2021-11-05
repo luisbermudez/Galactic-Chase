@@ -250,12 +250,51 @@ class AttackBullet extends AttackItems {
         this.color = 'yellow'
     }
 
-    trayectory(firstEnemy) {
-        this.x += 12;
-        this.y -= 13;
-        // if(frames % 5 === 0) {
-        //     this.x =firstEnemy.x;
-        //     this.y = firstEnemy.y;
-        // }
+    trayectory(firstEnemy, firstSprite) {
+
+        let dirX;
+        let dirY;
+
+        let direction = () => {
+            dirX = Math.floor(Math.random() * 2) ? '-' : '+';
+            dirY = Math.floor(Math.random() * 2) ? '-' : '+';
+        }
+
+        direction();
+
+        this.x += Number(dirX + '12');
+        this.y += Number(dirY + '12');
+
+        if(this.x > firstSprite.x) {
+            if(this.x - firstSprite.x > 10) {
+                if(this.x > firstEnemy.x) {
+                    dirX = '-';
+                } else {
+                    dirX = '+';
+                }
+                if(this.y > firstEnemy.y) {
+                    dirY = '-';
+                } else {
+                    dirY = '+';
+                }
+                this.x += Number(dirX + '12');
+                this.y += Number(dirY + '12');
+            }
+        } else {
+            if(this.x + firstSprite.x > 10) {
+                if(this.x > firstEnemy.x) {
+                    dirX = '-';
+                } else {
+                    dirX = '+';
+                }
+                if(this.y > firstEnemy.y) {
+                    dirY = '-';
+                } else {
+                    dirY = '+';
+                }
+                this.x += Number(dirX + '12');
+                this.y += Number(dirY + '12');
+            }
+        }
     }
 }

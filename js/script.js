@@ -115,6 +115,7 @@ window.onload = () => {
         // star3 = new Stars(Math.floor(Math.random() * canvas.width), Math.floor(Math.random() * canvas.height));
         // star4 = new Stars(Math.floor(Math.random() * canvas.width), Math.floor(Math.random() * canvas.height));
         // star5 = new Stars(Math.floor(Math.random() * canvas.width), Math.floor(Math.random() * canvas.height));
+        attackItems = [];
         firstSprite = new Sprite(50, 670, spritePower, powerOnTimer);
         firstEnemy = new Enemy(700, 100, 50, enemySpeedMin, enemySpeedMax, enemyDirectionChangeSpeed);
         poweritem1 = new PowerItem(700, 650, 8, powerItemSpeedMax, powerItemSpeedMin, 200);
@@ -175,22 +176,21 @@ window.onload = () => {
     function createBullets() {
         if(bulletReady) {
             if(shootABullet) {
-                firstBullet = new AttackBullet(firstSprite.x, firstSprite.y); // Trayectory test
-                attackItems.push(firstBullet);
+                if(frames % 2 === 0) {
+                    firstBullet = new AttackBullet(firstSprite.x, firstSprite.y); // Trayectory test
+                    attackItems.push(firstBullet);
+                }
             }
-        }
-    }
-
-    function clearBullets() {
-        if(frames % 50 === 0) {
+        } else {
             attackItems = [];
         }
     }
 
+
     function drawBullets() {
         attackItems.forEach((bullet) => {
             bullet.draw();
-            bullet.trayectory(firstEnemy);
+            bullet.trayectory(firstEnemy, firstSprite);
         });
     }
 
@@ -202,14 +202,13 @@ window.onload = () => {
         // star3.draw();
         // star4.draw();
         // star5.draw();
-        clearBullets()
         createBullets();
         firstEnemy.draw();
-        drawBullets();
         firstEnemy.randomPosition();
         poweritem1.draw();
         poweritem1.randomPosition();
         firstSprite.draw();
+        drawBullets();
         attackItem1.draw();
         attackItem1.trayectory(firstSprite);
         firstSprite.position();
