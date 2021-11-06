@@ -84,8 +84,8 @@ window.onload = () => {
             return;
         }
 
-        enemySpeedMax = 4;
-        enemySpeedMin = 3;
+        enemySpeedMax = 5;
+        enemySpeedMin = 4;
         enemyDirectionChangeSpeed = 100;
         enemyDiameterGrowth = 4;
         spriteZeroGravity = 4;
@@ -94,7 +94,7 @@ window.onload = () => {
         lostDiameterParameter = 220;
         powerItemSpeedMax = 4;
         powerItemSpeedMin = 3;
-        powerOnTimer = 2000;
+        powerOnTimer = 6000;
 
         level.style.display = 'none';
         gameArea.style.display = 'flex';
@@ -190,7 +190,7 @@ window.onload = () => {
         spriteShadowArr.forEach((bullet, index) => {
             bullet.draw();
             bullet.trayectory();
-            if(bullet.diameter > firstSprite.diameter * 2) {
+            if(bullet.diameter > firstSprite.diameter * 3) {
                 spriteShadowArr.splice(index, 1);
             }
         });
