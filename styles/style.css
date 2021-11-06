@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&display=swap');
 
 html, body {
+    font-family: Amatic SC;
     margin: 0;
     padding: 0;
 }
@@ -16,13 +17,11 @@ html, body {
 }
 
 span {
-    font-family: Amatic SC;
     font-size: 50px;
     font-weight: bolder;
 }
 
 h4 {
-    font-family: Amatic SC;
     font-size: 45px;
     text-align: center;
     margin: 0 auto;
@@ -31,7 +30,6 @@ h4 {
 }
 
 h3 {
-    font-family: Amatic SC;
     font-size: 65px;
     text-align: center;
     margin: 150px 30px 0;
@@ -43,8 +41,8 @@ h3 {
 
 button {
     margin: 20px 0;
+    background-color: rgb(110, 221, 20);
     background-color: rgb(159, 224, 179);
-    /* background-color: rgb(238, 223, 12); */
     font-family: Amatic SC;
     font-size: 56px;
     font-weight: bolder;

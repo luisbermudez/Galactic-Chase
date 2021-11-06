@@ -18,6 +18,7 @@ let enemyDiameterGrowth;
 let spriteZeroGravity;
 let spritePower;
 let powerOnTimer;
+let powerOn = false;
 
 // Power item level values 
 let powerItemSpeedMax;
@@ -29,4 +30,7 @@ let lostDiameterParameter;
 
 // Attack items 
 let attackItems = [];
-let shootABullet = false;
+let spriteShadowArr = [];
+let shootABullet = true;
+let shadowOn = false;
+// let trayectorySpeed;

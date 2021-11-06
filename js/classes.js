@@ -2,24 +2,29 @@ class Sprite {
     constructor(x, y, powerOfAttack, powerOnTimer) {
         this.x = x;
         this.y = y;
-        this.diameter = 20;
-        this.color = 'rgb(80, 152, 173)';
+        this.diameter = 35;
+        this.color = 'rgba(80, 152, 173, 0.95)';
         this.speedX = 0;
         this.speedY = 0;
         this.powerOfAttack = powerOfAttack;
         this.powerActive = false;
         this.powerOnTimer = powerOnTimer;
+
+        this.image = new Image();
+        this.image.src = './../images/astron.png';
     }
 
     draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.diameter, 0, Math.PI*2);
-        ctx.lineWidth = 5;
-        ctx.strokeStyle = 'black'
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = 'rgba(80, 152, 173, 0.75)';
         ctx.stroke();
         ctx.fillStyle = this.color;
         ctx.fill();
         ctx.closePath();
+
+        ctx.drawImage(this.image, this.x - this.diameter, this.y - this.diameter, this.diameter*2, this.diameter*2);
     }
 
     position() {
@@ -32,61 +37,63 @@ class Sprite {
     }
 
     attack(enemy) {
-        if(this.color === 'tomato') {
-            if(enemy.diameter > 3) {
-                enemy.diameter -= 3;
-                bulletReady = true;
-            }
+        // Ready to attack when special power on
+        if(powerOn && enemy.diameter > this.powerOfAttack) {
+            bulletReady = true;
+            shadowOn = true;
         }
 
-        if(overAndReady) {
-            if(enemy.diameter > this.powerOfAttack) {
-                enemy.diameter -= this.powerOfAttack;
-                bulletReady = true;
-            }
+        // Ready to attack when over the enemy
+        if(overAndReady && enemy.diameter > this.powerOfAttack) {
+            bulletReady = true;
         }
     }
 
+    // Timer to deactivate the special power after a period of time
     deactivatePower() {
-        if(this.color === 'tomato') {
+        if(powerOn) {
             setTimeout(() => {
-                this.color = 'rgb(184, 81, 166)';
+                powerOn = false;
+                shadowOn = true;
             }, powerOnTimer);
         }
     }
 
     power(powerItem) {
-        if((
+        if(
             this.x - this.diameter < powerItem.x + powerItem.diameter && 
             this.x + this.diameter > powerItem.x - powerItem.diameter &&
             this.y - this.diameter < powerItem.y + powerItem.diameter &&
             this.y + this.diameter > powerItem.y - powerItem.diameter
-        )) {
-            this.color = 'tomato';
+        ) {
+            this.color = 'rgb(184, 81, 166)';
+            powerOn = true;
             this.deactivatePower();
         }
     }
 
     overEnemy(enemy) {
-        if((
+        if(
             this.x - this.diameter < enemy.x + enemy.diameter && 
             this.x + this.diameter > enemy.x - enemy.diameter &&
             this.y - this.diameter < enemy.y + enemy.diameter &&
             this.y + this.diameter > enemy.y - enemy.diameter
-        )) {
-            if(this.color === 'tomato') {
-                this.color = 'tomato';
+        ) {
+            if(powerOn) {
+                powerOn = true;
             } else {
                 overAndReady = true;
                 this.color = 'rgb(184, 81, 166)';
+                shadowOn = true;
             }
         } else {
-            if(this.color === 'tomato') {
-                this.color = 'tomato';
+            if(powerOn) {
+                powerOn = true;
             } else {
                 overAndReady = false;
                 bulletReady = false;
-                this.color = 'rgb(80, 152, 173)';
+                this.color = 'rgba(80, 152, 173, 0.95)';
+                shadowOn = false;
             }
         }
     }
@@ -102,18 +109,23 @@ class Enemy {
         this.speedMin = speedMin;
         this.speedMax = speedMax;
         this.directionChangeSpeed = directionChangeSpeed;
-        this.color = 'rgb(147, 206, 188)';
+        this.color = 'rgba(147, 206, 188, 0.95)';
+
+        this.image = new Image();
+        this.image.src = './../images/ufo1.png';
     }
 
     draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.diameter, 0, Math.PI*2);
-        ctx.lineWidth = 5;
-        ctx.strokeStyle = 'black'
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = 'rgba(147, 206, 188, 0.565)';
         ctx.stroke();
         ctx.fillStyle = this.color;
         ctx.fill();
         ctx.closePath();
+
+        ctx.drawImage(this.image, this.x - this.diameter, this.y - this.diameter, this.diameter*2, this.diameter*2);
     }
 
     randomPosition() {
@@ -148,22 +160,22 @@ class Enemy {
         this.x += this.randomX;
         this.y += this.randomY;
 
-        if(this.y < this.diameter + 1) {
+        if(this.y < this.diameter) {
             dirY = '+';
             this.x < this.diameter * 3 ? dirX = '+' : directionX();
             randomPos();
         }
-        if(this.y > canvas.height - this.diameter - 1) {
+        if(this.y > canvas.height - this.diameter) {
             dirY = '-';
             this.x > canvas.width - (this.diameter * 3) ? dirX = '-' : directionX();
             randomPos()
         }
-        if(this.x < this.diameter + 1) {
+        if(this.x < this.diameter) {
             dirX = '+';
             this.y < this.diameter * 3 ? dirY = '+' : directionY();
             randomPos()
         }
-        if(this.x > canvas.width - this.diameter - 1) {
+        if(this.x > canvas.width - this.diameter) {
             dirX = '-';
             this.y > canvas.height - (this.diameter * 3) ? dirY = '-' : directionY();
             randomPos();
@@ -171,52 +183,21 @@ class Enemy {
     }
 }
 
-// class Stars {
-//     constructor(x, y) {
-//         this.x = x;
-//         this.y = y;
-//     }
-
-//     draw() {
-//         let positionX = this.x;
-//         let positionY = this.y;
-//         ctx.lineWidth = 3;
-//         ctx.fillStyle = 'yellow';
-//         ctx.beginPath();
-//         ctx.moveTo(positionX, positionY);
-//         ctx.lineTo(positionX + 5, positionY + 14);
-//         ctx.stroke();
-//         ctx.lineTo(positionX + 22, positionY + 16);
-//         ctx.stroke();
-//         ctx.lineTo(positionX + 5, positionY + 28);
-//         ctx.stroke();
-//         ctx.lineTo(positionX + 5, positionY + 40);
-//         ctx.stroke();
-//         ctx.lineTo(positionX - 7, positionY + 30);
-//         ctx.stroke();
-//         ctx.lineTo(positionX - 23, positionY + 39);
-//         ctx.stroke();
-//         ctx.lineTo(positionX - 16, positionY + 25);
-//         ctx.stroke();
-//         ctx.lineTo(positionX - 30, positionY + 16);
-//         ctx.stroke();
-//         ctx.lineTo(positionX - 14, positionY + 15);
-//         ctx.stroke();
-//         ctx.lineTo(positionX, positionY);
-//         ctx.stroke();
-//         ctx.fill();
-//     }
-
-//     position() {
-//         this.x += this.x;
-//         this.y += this.y;
-//     }
-// }
-
 class PowerItem extends Enemy {
     constructor(x, y, d, speedMin, speedMax, directionChangeSpeed) {
         super(x, y, d, speedMin, speedMax, directionChangeSpeed)
-        this.color = 'tomato';
+        this.color = 'rgb(110, 221, 20)';
+    }
+
+    draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.diameter, 0, Math.PI*2);
+        ctx.lineWidth = 5;
+        ctx.strokeStyle = 'black'
+        ctx.stroke();
+        ctx.fillStyle = this.color;
+        ctx.fill();
+        ctx.closePath();
     }
 }
 
@@ -225,13 +206,15 @@ class AttackItems {
         this.x = x;
         this.y = y;
         this.color = 'rgb(118, 86, 160)';
+        this.diameter = 5;
+        this.strokeS = 'black';
     }
 
     draw() {
         ctx.beginPath();
-        ctx.arc(this.x, this.y, 5, 0, Math.PI*2);
-        ctx.lineWidth = 5;
-        ctx.strokeStyle = 'black'
+        ctx.arc(this.x, this.y, this.diameter, 0, Math.PI*2);
+        ctx.lineWidth = 5
+        ctx.strokeStyle = this.strokeS
         ctx.stroke();
         ctx.fillStyle = this.color;
         ctx.fill();
@@ -248,53 +231,34 @@ class AttackBullet extends AttackItems {
     constructor(x, y) {
         super(x, y);
         this.color = 'yellow'
+        this.diameter = 7;
     }
 
     trayectory(firstEnemy, firstSprite) {
+        let xSlope;
+        let ySlope;
 
-        let dirX;
-        let dirY;
-
-        let direction = () => {
-            dirX = Math.floor(Math.random() * 2) ? '-' : '+';
-            dirY = Math.floor(Math.random() * 2) ? '-' : '+';
+        let trayectorySlope = () => {
+            xSlope = firstEnemy.x - this.x;
+            ySlope = firstEnemy.y - this.y;
         }
 
-        direction();
+        trayectorySlope();
 
-        this.x += Number(dirX + '12');
-        this.y += Number(dirY + '12');
+        this.x += xSlope/6
+        this.y += ySlope/6
+    }
+}
 
-        if(this.x > firstSprite.x) {
-            if(this.x - firstSprite.x > 10) {
-                if(this.x > firstEnemy.x) {
-                    dirX = '-';
-                } else {
-                    dirX = '+';
-                }
-                if(this.y > firstEnemy.y) {
-                    dirY = '-';
-                } else {
-                    dirY = '+';
-                }
-                this.x += Number(dirX + '12');
-                this.y += Number(dirY + '12');
-            }
-        } else {
-            if(this.x + firstSprite.x > 10) {
-                if(this.x > firstEnemy.x) {
-                    dirX = '-';
-                } else {
-                    dirX = '+';
-                }
-                if(this.y > firstEnemy.y) {
-                    dirY = '-';
-                } else {
-                    dirY = '+';
-                }
-                this.x += Number(dirX + '12');
-                this.y += Number(dirY + '12');
-            }
-        }
+class spriteShadow extends AttackItems {
+    constructor(x, y) {
+        super(x, y);
+        this.color = 'rgba(154, 35, 209, 0.164)'
+        this.diameter = 5;
+        this.strokeS = 'rgba(154, 35, 209, 0.164)';
+    }
+
+    trayectory() {
+        this.diameter += 15;
     }
 }

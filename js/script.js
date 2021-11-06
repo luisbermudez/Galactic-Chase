@@ -1,12 +1,6 @@
 window.onload = () => {
     let firstSprite;
     let firstEnemy;
-    // let star1;
-    // let star2;
-    // let star3;
-    // let star4;
-    // let star5;
-    // let star6;
     
     const gameArea = document.getElementById('gameArea');
     const introArea = document.getElementById('introArea');
@@ -45,14 +39,14 @@ window.onload = () => {
 
         enemySpeedMax = 2;
         enemySpeedMin = 1;
-        enemyDirectionChangeSpeed = 200;
-        enemyDiameterGrowth = 4;
-        spriteZeroGravity = 2;
+        enemyDirectionChangeSpeed = 150;
+        enemyDiameterGrowth = 3;
+        spriteZeroGravity = 3.5;
         spritePower = 5;
         winDiameterParameter = 30;
-        lostDiameterParameter = 200;
+        lostDiameterParameter = 220;
         powerItemSpeedMax = 4;
-        powerItemSpeedMin = 1;
+        powerItemSpeedMin = 3;
         powerOnTimer = 3000;
 
 
@@ -68,16 +62,16 @@ window.onload = () => {
         }
 
         enemySpeedMax = 4;
-        enemySpeedMin = 1;
-        enemyDirectionChangeSpeed = 80;
-        enemyDiameterGrowth = 5;
+        enemySpeedMin = 2;
+        enemyDirectionChangeSpeed = 150;
+        enemyDiameterGrowth = 4;
         spriteZeroGravity = 4;
         spritePower = 5;
-        winDiameterParameter = 10;
-        lostDiameterParameter = 200;
+        winDiameterParameter = 30;
+        lostDiameterParameter = 220;
         powerItemSpeedMax = 4;
-        powerItemSpeedMin = 2;
-        powerOnTimer = 2500;
+        powerItemSpeedMin = 3;
+        powerOnTimer = 2000;
 
         level.style.display = 'none';
         gameArea.style.display = 'flex';
@@ -90,17 +84,17 @@ window.onload = () => {
             return;
         }
 
-        enemySpeedMax = 6;
+        enemySpeedMax = 4;
         enemySpeedMin = 3;
-        enemyDirectionChangeSpeed = 65;
-        enemyDiameterGrowth = 6;
-        spriteZeroGravity = 5;
-        spritePower = 8;
-        winDiameterParameter = 10;
-        lostDiameterParameter = 200;
-        powerItemSpeedMax = 8;
-        powerItemSpeedMin = 6;
-        powerOnTimer = 1500;
+        enemyDirectionChangeSpeed = 100;
+        enemyDiameterGrowth = 4;
+        spriteZeroGravity = 4;
+        spritePower = 5;
+        winDiameterParameter = 30;
+        lostDiameterParameter = 220;
+        powerItemSpeedMax = 4;
+        powerItemSpeedMin = 3;
+        powerOnTimer = 2000;
 
         level.style.display = 'none';
         gameArea.style.display = 'flex';
@@ -110,25 +104,18 @@ window.onload = () => {
 
     function startGame () {
         introArea.style.display = 'none';
-        // star1 = new Stars(Math.floor(Math.random() * canvas.width), Math.floor(Math.random() * canvas.height));
-        // star2 = new Stars(Math.floor(Math.random() * canvas.width), Math.floor(Math.random() * canvas.height));
-        // star3 = new Stars(Math.floor(Math.random() * canvas.width), Math.floor(Math.random() * canvas.height));
-        // star4 = new Stars(Math.floor(Math.random() * canvas.width), Math.floor(Math.random() * canvas.height));
-        // star5 = new Stars(Math.floor(Math.random() * canvas.width), Math.floor(Math.random() * canvas.height));
         attackItems = [];
+        spriteShadowArr = [];
+        powerOn = false;
         firstSprite = new Sprite(50, 670, spritePower, powerOnTimer);
-        firstEnemy = new Enemy(700, 100, 50, enemySpeedMin, enemySpeedMax, enemyDirectionChangeSpeed);
-        poweritem1 = new PowerItem(700, 650, 8, powerItemSpeedMax, powerItemSpeedMin, 200);
+        firstEnemy = new Enemy(700, 100, 70, enemySpeedMin, enemySpeedMax, enemyDirectionChangeSpeed);
+        poweritem1 = new PowerItem(700, 650, 6, powerItemSpeedMax, powerItemSpeedMin, 150);
         attackItem1 = new AttackItems(firstSprite.x, firstSprite.y);
         firstSprite.draw();
         firstEnemy.draw();
         requestID = requestAnimationFrame(update);
     }
 
-    // function canvasAnimation() {
-    //     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    //     ctx.scale(0.5, 0.5);
-    // }
 
     function status() {
         if(firstEnemy.diameter < winDiameterParameter) {
@@ -141,7 +128,6 @@ window.onload = () => {
             level.style.display = 'block';
             requestID = undefined;
             gameArea.style.display = 'none';
-
         }
     }
 
@@ -174,36 +160,49 @@ window.onload = () => {
     }
 
     function createBullets() {
-        if(bulletReady) {
-            if(shootABullet) {
-                if(frames % 2 === 0) {
-                    firstBullet = new AttackBullet(firstSprite.x, firstSprite.y); // Trayectory test
-                    attackItems.push(firstBullet);
-                }
-            }
-        } else {
-            attackItems = [];
+        if(bulletReady && shootABullet) {
+            const firstBullet = new AttackBullet(firstSprite.x, firstSprite.y); // Trayectory test
+            attackItems.push(firstBullet);
+            shootABullet = false;
         }
     }
 
-
     function drawBullets() {
-        attackItems.forEach((bullet) => {
+        attackItems.forEach((bullet, index) => {
             bullet.draw();
             bullet.trayectory(firstEnemy, firstSprite);
+            if(bullet.x < firstEnemy.x + firstEnemy.diameter/3 && bullet.x > firstEnemy.x - firstEnemy.diameter/3 &&
+                bullet.y < firstEnemy.y + firstEnemy.diameter/3 && bullet.y > firstEnemy.y - firstEnemy.diameter/3) {
+                    attackItems.splice(index, 1);
+                    firstEnemy.diameter -= spritePower;
+                }
+        });
+    }
+
+    function createspriteShadow() {
+        if((!shootABullet) && shadowOn) {
+            const aExpansiveBullet = new spriteShadow(firstSprite.x, firstSprite.y)
+            spriteShadowArr.push(aExpansiveBullet);
+        }
+    }
+
+    function drawspriteShadow() {
+        spriteShadowArr.forEach((bullet, index) => {
+            bullet.draw();
+            bullet.trayectory();
+            if(bullet.diameter > firstSprite.diameter * 2) {
+                spriteShadowArr.splice(index, 1);
+            }
         });
     }
 
     function update() {
         frames++;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        // star1.draw();
-        // star2.draw();
-        // star3.draw();
-        // star4.draw();
-        // star5.draw();
+        createspriteShadow()
         createBullets();
         firstEnemy.draw();
+        drawspriteShadow()
         firstEnemy.randomPosition();
         poweritem1.draw();
         poweritem1.randomPosition();
@@ -241,7 +240,9 @@ window.onload = () => {
                 break;
             case 76:
                 firstSprite.attack(firstEnemy);
-                shootABullet = true;
+                if (!shootABullet) return;
+                shootABullet = false;
+                break;
         }
     });
 
@@ -260,7 +261,8 @@ window.onload = () => {
                 firstSprite.speedX = - spriteZeroGravity;
                 break;
             case 76:
-                shootABullet = false;
+                shootABullet = true;
+                break;
         }
     });
 }
