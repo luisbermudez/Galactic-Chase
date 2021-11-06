@@ -11,7 +11,7 @@ class Sprite {
         this.powerOnTimer = powerOnTimer;
 
         this.image = new Image();
-        this.image.src = './../images/astron.png';
+        this.image.src = './images/astron.png';
     }
 
     draw() {
@@ -112,7 +112,7 @@ class Enemy {
         this.color = 'rgba(147, 206, 188, 0.95)';
 
         this.image = new Image();
-        this.image.src = './../images/ufo1.png';
+        this.image.src = './images/ufo1.png';
     }
 
     draw() {
