@@ -2,8 +2,8 @@ class Sprite {
     constructor(x, y, powerOfAttack, powerOnTimer) {
         this.x = x;
         this.y = y;
-        this.diameter = 35;
-        this.color = 'rgba(80, 152, 173, 0.95)';
+        this.diameter = 40;
+        this.color = 'transparent';
         this.speedX = 0;
         this.speedY = 0;
         this.powerOfAttack = powerOfAttack;
@@ -11,20 +11,20 @@ class Sprite {
         this.powerOnTimer = powerOnTimer;
 
         this.image = new Image();
-        this.image.src = './images/astron.png';
+        this.image.src = './images/13.png';
     }
 
     draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.diameter, 0, Math.PI*2);
         ctx.lineWidth = 2;
-        ctx.strokeStyle = 'rgba(80, 152, 173, 0.75)';
+        ctx.strokeStyle = 'transparent';
         ctx.stroke();
         ctx.fillStyle = this.color;
         ctx.fill();
         ctx.closePath();
 
-        ctx.drawImage(this.image, this.x - this.diameter, this.y - this.diameter, this.diameter*2, this.diameter*2);
+        ctx.drawImage(this.image, this.x - this.diameter, this.y - this.diameter, this.diameter*2, this.diameter*1.7);
     }
 
     position() {
@@ -40,7 +40,6 @@ class Sprite {
         // Ready to attack when special power on
         if(powerOn && enemy.diameter > this.powerOfAttack) {
             bulletReady = true;
-            shadowOn = true;
         }
 
         // Ready to attack when over the enemy
@@ -66,8 +65,10 @@ class Sprite {
             this.y - this.diameter < powerItem.y + powerItem.diameter &&
             this.y + this.diameter > powerItem.y - powerItem.diameter
         ) {
-            this.color = 'rgb(184, 81, 166)';
+            // this.color = 'rgb(184, 81, 166)';
+            // this.image.src = './images/134.png';
             powerOn = true;
+            shadowOn = true;
             this.deactivatePower();
         }
     }
@@ -81,18 +82,22 @@ class Sprite {
         ) {
             if(powerOn) {
                 powerOn = true;
+                shadowOn = true;
             } else {
                 overAndReady = true;
-                this.color = 'rgb(184, 81, 166)';
+                // this.color = 'rgb(184, 81, 166)';
+                // this.image.src = './images/134.png';
                 shadowOn = true;
             }
         } else {
             if(powerOn) {
                 powerOn = true;
+                shadowOn = true;
             } else {
                 overAndReady = false;
                 bulletReady = false;
-                this.color = 'rgba(80, 152, 173, 0.95)';
+                this.color = 'transparent';
+                this.image.src = './images/13.png';
                 shadowOn = false;
             }
         }
@@ -109,7 +114,7 @@ class Enemy {
         this.speedMin = speedMin;
         this.speedMax = speedMax;
         this.directionChangeSpeed = directionChangeSpeed;
-        this.color = 'rgba(147, 206, 188, 0.95)';
+        this.color = 'transparent';
 
         this.image = new Image();
         this.image.src = './images/ufo1.png';
@@ -119,13 +124,14 @@ class Enemy {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.diameter, 0, Math.PI*2);
         ctx.lineWidth = 2;
-        ctx.strokeStyle = 'rgba(147, 206, 188, 0.565)';
+        ctx.strokeStyle = this.color;
         ctx.stroke();
         ctx.fillStyle = this.color;
         ctx.fill();
         ctx.closePath();
 
-        ctx.drawImage(this.image, this.x - this.diameter, this.y - this.diameter, this.diameter*2, this.diameter*2);
+        ctx.drawImage(this.image, this.x - this.diameter, this.y - this.diameter/1.5, this.diameter*2, this.diameter*1.5);
+        // ctx.translate(200, 80);
     }
 
     randomPosition() {
@@ -212,7 +218,7 @@ class AttackItems {
 
     draw() {
         ctx.beginPath();
-        ctx.arc(this.x, this.y, this.diameter, 0, Math.PI*2);
+        ctx.arc(this.x, this.y + 20, this.diameter, 0, Math.PI*2);
         ctx.lineWidth = 5
         ctx.strokeStyle = this.strokeS
         ctx.stroke();
@@ -245,20 +251,21 @@ class AttackBullet extends AttackItems {
 
         trayectorySlope();
 
-        this.x += xSlope/6
-        this.y += ySlope/6
+        this.x += xSlope/4
+        this.y += ySlope/4
     }
 }
 
-class spriteShadow extends AttackItems {
-    constructor(x, y) {
+class Shadow extends AttackItems {
+    constructor(x, y, color) {
         super(x, y);
-        this.color = 'rgba(154, 35, 209, 0.164)'
+        this.color = color;
         this.diameter = 5;
-        this.strokeS = 'rgba(154, 35, 209, 0.164)';
+        this.strokeS = color;
+        this.diameterGrowth = 15;
     }
 
     trayectory() {
-        this.diameter += 15;
+        this.diameter += this.diameterGrowth;
     }
 }

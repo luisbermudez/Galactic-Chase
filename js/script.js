@@ -8,6 +8,7 @@ window.onload = () => {
     const level = document.getElementById('level');
     const instructs = document.getElementById('instructions');
 
+
     document.getElementById('start').onclick = () => {
         introArea.style.display = 'none';
         
@@ -36,70 +37,21 @@ window.onload = () => {
         if(requestID) {
             return;
         }
-
-        enemySpeedMax = 2;
-        enemySpeedMin = 1;
-        enemyDirectionChangeSpeed = 150;
-        enemyDiameterGrowth = 3;
-        spriteZeroGravity = 3.5;
-        spritePower = 5;
-        winDiameterParameter = 30;
-        lostDiameterParameter = 220;
-        powerItemSpeedMax = 4;
-        powerItemSpeedMin = 3;
-        powerOnTimer = 3000;
-
-
-        level.style.display = 'none';
-        gameArea.style.display = 'flex';
-
-        startGame();
+        arenaSetup(2, 1, 150, 3, 3.5, 5, 50, 320, 4, 3, 3000);
     }
 
     document.getElementById('medium').onclick = () => {
         if(requestID) {
             return;
         }
-
-        enemySpeedMax = 4;
-        enemySpeedMin = 2;
-        enemyDirectionChangeSpeed = 150;
-        enemyDiameterGrowth = 4;
-        spriteZeroGravity = 4;
-        spritePower = 5;
-        winDiameterParameter = 30;
-        lostDiameterParameter = 220;
-        powerItemSpeedMax = 4;
-        powerItemSpeedMin = 3;
-        powerOnTimer = 2000;
-
-        level.style.display = 'none';
-        gameArea.style.display = 'flex';
-
-        startGame();
+        arenaSetup(4, 2, 150, 4, 4, 5, 40, 320, 4, 3, 2000);
     }
     
     document.getElementById('spicy').onclick = () => {
         if(requestID) {
             return;
         }
-
-        enemySpeedMax = 5;
-        enemySpeedMin = 4;
-        enemyDirectionChangeSpeed = 100;
-        enemyDiameterGrowth = 4;
-        spriteZeroGravity = 4;
-        spritePower = 5;
-        winDiameterParameter = 30;
-        lostDiameterParameter = 220;
-        powerItemSpeedMax = 4;
-        powerItemSpeedMin = 3;
-        powerOnTimer = 6000;
-
-        level.style.display = 'none';
-        gameArea.style.display = 'flex';
-
-        startGame();
+        arenaSetup(5, 4, 100, 6, 4, 4, 30, 320, 4, 3, 3000)
     }
 
     function startGame () {
@@ -108,8 +60,8 @@ window.onload = () => {
         spriteShadowArr = [];
         powerOn = false;
         firstSprite = new Sprite(50, 670, spritePower, powerOnTimer);
-        firstEnemy = new Enemy(700, 100, 70, enemySpeedMin, enemySpeedMax, enemyDirectionChangeSpeed);
-        poweritem1 = new PowerItem(700, 650, 6, powerItemSpeedMax, powerItemSpeedMin, 150);
+        firstEnemy = new Enemy(700, 100, 120, enemySpeedMin, enemySpeedMax, enemyDirectionChangeSpeed);
+        poweritem1 = new PowerItem(700, 650, 6, powerItemSpeedMax*1.5, powerItemSpeedMin*1.5, 150);
         attackItem1 = new AttackItems(firstSprite.x, firstSprite.y);
         firstSprite.draw();
         firstEnemy.draw();
@@ -137,6 +89,25 @@ window.onload = () => {
         } else {
             return false;
         }
+    }
+
+    let arenaSetup = (a, b, c, d, e, f, g, h, i, j, k) => {
+        enemySpeedMax = a;
+        enemySpeedMin = b;
+        enemyDirectionChangeSpeed = c;
+        enemyDiameterGrowth = d;
+        spriteZeroGravity = e;
+        spritePower = f;
+        winDiameterParameter = g;
+        lostDiameterParameter = h;
+        powerItemSpeedMax = i;
+        powerItemSpeedMin = j;
+        powerOnTimer = k;
+
+        level.style.display = 'none';
+        gameArea.style.display = 'flex';
+
+        startGame();
     }
 
     function gameOver() {
@@ -175,38 +146,48 @@ window.onload = () => {
                 bullet.y < firstEnemy.y + firstEnemy.diameter/3 && bullet.y > firstEnemy.y - firstEnemy.diameter/3) {
                     attackItems.splice(index, 1);
                     firstEnemy.diameter -= spritePower;
+                    createImpact();
                 }
         });
     }
 
-    function createspriteShadow() {
-        if((!shootABullet) && shadowOn) {
-            const aExpansiveBullet = new spriteShadow(firstSprite.x, firstSprite.y)
+    function createShadow() {
+        if(shadowOn) {
+            const aExpansiveBullet = new Shadow(firstSprite.x, firstSprite.y, 'rgba(154, 35, 209, 0.14)')
             spriteShadowArr.push(aExpansiveBullet);
         }
     }
 
-    function drawspriteShadow() {
-        spriteShadowArr.forEach((bullet, index) => {
+    function drawShadow(arr, object, multip) {
+        arr.forEach((bullet, index) => {
             bullet.draw();
             bullet.trayectory();
-            if(bullet.diameter > firstSprite.diameter * 3) {
-                spriteShadowArr.splice(index, 1);
+            if(bullet.diameter > object.diameter * multip) {
+                arr.splice(index, 1);
             }
         });
     }
 
+    function createImpact() {
+        const anImpact = new Shadow(firstEnemy.x, firstEnemy.y, 'rgba(218, 90, 40, 0.15)');
+        enemyImpactShadow.push(anImpact);
+    }
+
+
     function update() {
         frames++;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        createspriteShadow()
+        // ctx.fillStyle = "rgb(18, 24, 34)";
+        // ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.clearRect(0, 0, canvas.clientWidth, canvas.height);
+        createShadow()
         createBullets();
         firstEnemy.draw();
-        drawspriteShadow()
+        drawShadow(enemyImpactShadow, firstEnemy, 1.2);
+        drawShadow(spriteShadowArr, firstSprite, 3);
         firstEnemy.randomPosition();
-        poweritem1.draw();
         poweritem1.randomPosition();
         firstSprite.draw();
+        poweritem1.draw();
         drawBullets();
         attackItem1.draw();
         attackItem1.trayectory(firstSprite);

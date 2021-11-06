@@ -41,7 +41,7 @@ h3 {
 
 button {
     margin: 20px 0;
-    background-color: rgb(110, 221, 20);
+    background-color: rgb(218, 90, 40);
     background-color: rgb(159, 224, 179);
     font-family: Amatic SC;
     font-size: 56px;
@@ -113,6 +113,10 @@ button:hover {
 #canvas {
     border: 1px solid black;
     margin-top: 10px;
+}
+
+#introCanvas{
+    position: absolute;
 }
 
 @media (min-width: 320px) {
