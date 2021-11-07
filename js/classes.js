@@ -121,6 +121,8 @@ class Enemy {
 
         this.dirX;
         this.dirY;
+
+        this.boundary = 0;
     }
 
     draw() {
@@ -165,22 +167,22 @@ class Enemy {
         this.x += this.randomX;
         this.y += this.randomY;
 
-        if(this.y < this.diameter) {
+        if(this.y + this.boundary < this.diameter) {
             this.dirY = '+';
             this.x < this.diameter * 3 ? this.dirX = '+' : directionX();
             randomPos();
         }
-        if(this.y > canvas.height - this.diameter) {
+        if(this.y > canvas.height + this.boundary - this.diameter) {
             this.dirY = '-';
             this.x > canvas.width - (this.diameter * 3) ? this.dirX = '-' : directionX();
             randomPos()
         }
-        if(this.x < this.diameter) {
+        if(this.x + this.boundary < this.diameter) {
             this.dirX = '+';
             this.y < this.diameter * 3 ? this.dirY = '+' : directionY();
             randomPos()
         }
-        if(this.x > canvas.width - this.diameter) {
+        if(this.x > canvas.width + this.boundary - this.diameter) {
             this.dirX = '-';
             this.y > canvas.height - (this.diameter * 3) ? this.dirY = '-' : directionY();
             randomPos();
@@ -200,6 +202,7 @@ class PowerItem extends Enemy {
     constructor(x, y, d, speedMin, speedMax, directionChangeSpeed) {
         super(x, y, d, speedMin, speedMax, directionChangeSpeed)
         this.color = 'rgb(110, 221, 20)';
+        this.boundary = 150;
     }
 
     draw() {
@@ -269,7 +272,7 @@ class Shadow extends AttackItems {
         this.color = color;
         this.diameter = 5;
         this.strokeS = color;
-        this.diameterGrowth = 15;
+        this.diameterGrowth = 17;
     }
 
     trayectory() {

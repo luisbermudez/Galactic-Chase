@@ -37,14 +37,14 @@ window.onload = () => {
         if(requestID) {
             return;
         }
-        arenaSetup(2, 1, 150, 3, 3.5, 5, 50, 320, 4, 3, 3000);
+        arenaSetup(3, 2, 150, 3, 3.5, 4, 70, 320, 4, 3, 3000);
     }
 
     document.getElementById('medium').onclick = () => {
         if(requestID) {
             return;
         }
-        arenaSetup(4, 2, 150, 4, 4, 5, 40, 320, 4, 3, 2000);
+        arenaSetup(4, 2, 150, 4, 4, 4, 50, 320, 4, 3, 3000);
     }
     
     document.getElementById('spicy').onclick = () => {
@@ -61,7 +61,7 @@ window.onload = () => {
         powerOn = false;
         firstSprite = new Sprite(50, 670, spritePower, powerOnTimer);
         firstEnemy = new Enemy(700, 100, 120, enemySpeedMin, enemySpeedMax, enemyDirectionChangeSpeed);
-        poweritem1 = new PowerItem(700, 650, 6, powerItemSpeedMax*1.5, powerItemSpeedMin*1.5, 150);
+        poweritem1 = new PowerItem(700, 650, 6, powerItemSpeedMax*2, powerItemSpeedMin*2, 150);
         attackItem1 = new AttackItems(firstSprite.x, firstSprite.y);
         firstSprite.draw();
         firstEnemy.draw();
@@ -147,13 +147,15 @@ window.onload = () => {
                     attackItems.splice(index, 1);
                     firstEnemy.diameter -= spritePower;
                     createImpact();
+                    firstSprite.x < firstEnemy.x ? firstEnemy.x += 10 : firstEnemy.x -= 10;
+                    firstSprite.y < firstEnemy.y ? firstEnemy.y += 10 : firstEnemy.y -= 10;
                 }
         });
     }
 
     function createShadow() {
         if(shadowOn) {
-            const aExpansiveBullet = new Shadow(firstSprite.x, firstSprite.y, 'rgba(154, 35, 209, 0.14)')
+            const aExpansiveBullet = new Shadow(firstSprite.x, firstSprite.y, 'rgba(142, 43, 199, 0.15)')
             spriteShadowArr.push(aExpansiveBullet);
         }
     }
@@ -169,7 +171,7 @@ window.onload = () => {
     }
 
     function createImpact() {
-        const anImpact = new Shadow(firstEnemy.x, firstEnemy.y, 'rgba(218, 90, 40, 0.15)');
+        const anImpact = new Shadow(firstEnemy.x, firstEnemy.y, 'rgba(110, 110, 110, 0.15)');
         enemyImpactShadow.push(anImpact);
     }
 
@@ -182,8 +184,8 @@ window.onload = () => {
         createShadow()
         createBullets();
         firstEnemy.draw();
-        drawShadow(enemyImpactShadow, firstEnemy, 1.2);
-        drawShadow(spriteShadowArr, firstSprite, 3);
+        drawShadow(enemyImpactShadow, firstEnemy, 1);
+        drawShadow(spriteShadowArr, firstSprite, 3.2);
         firstEnemy.randomPosition();
         firstEnemy.imageSwitch();
         poweritem1.randomPosition();
