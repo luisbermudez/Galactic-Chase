@@ -185,6 +185,7 @@ window.onload = () => {
         drawShadow(enemyImpactShadow, firstEnemy, 1.2);
         drawShadow(spriteShadowArr, firstSprite, 3);
         firstEnemy.randomPosition();
+        firstEnemy.imageSwitch();
         poweritem1.randomPosition();
         firstSprite.draw();
         poweritem1.draw();

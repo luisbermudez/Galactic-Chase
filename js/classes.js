@@ -118,6 +118,9 @@ class Enemy {
 
         this.image = new Image();
         this.image.src = './images/ufo1.png';
+
+        this.dirX;
+        this.dirY;
     }
 
     draw() {
@@ -135,25 +138,21 @@ class Enemy {
     }
 
     randomPosition() {
-        // variable that will contain the sign to indicate the direction
-        let dirX;
-        let dirY;
-
         // to randomly get a sign for direction
         let directionX = () => {
-            dirX = Math.floor(Math.random() * 2) ? '-' : '+';
+            this.dirX = Math.floor(Math.random() * 2) ? '-' : '+';
         }
 
         let directionY = () => {
-            dirY = Math.floor(Math.random() * 2) ? '-' : '+';
+            this.dirY = Math.floor(Math.random() * 2) ? '-' : '+';
         }
 
         // randomly gets a value to be added to x and y 
         // the values determine the speed of the enemy
         // the difference of the values to be added to x & y respectively, determine the trayectory
         let randomPos = () => {
-            this.randomX = Number(dirX + Math.floor(Math.random() * (this.speedMax) + this.speedMin));
-            this.randomY = Number(dirY + Math.floor(Math.random() * (this.speedMax) + this.speedMin));
+            this.randomX = Number(this.dirX + Math.floor(Math.random() * (this.speedMax) + this.speedMin));
+            this.randomY = Number(this.dirY + Math.floor(Math.random() * (this.speedMax) + this.speedMin));
         }
 
         // changes the trayectory every directionChangeSpeed value
@@ -167,24 +166,32 @@ class Enemy {
         this.y += this.randomY;
 
         if(this.y < this.diameter) {
-            dirY = '+';
-            this.x < this.diameter * 3 ? dirX = '+' : directionX();
+            this.dirY = '+';
+            this.x < this.diameter * 3 ? this.dirX = '+' : directionX();
             randomPos();
         }
         if(this.y > canvas.height - this.diameter) {
-            dirY = '-';
-            this.x > canvas.width - (this.diameter * 3) ? dirX = '-' : directionX();
+            this.dirY = '-';
+            this.x > canvas.width - (this.diameter * 3) ? this.dirX = '-' : directionX();
             randomPos()
         }
         if(this.x < this.diameter) {
-            dirX = '+';
-            this.y < this.diameter * 3 ? dirY = '+' : directionY();
+            this.dirX = '+';
+            this.y < this.diameter * 3 ? this.dirY = '+' : directionY();
             randomPos()
         }
         if(this.x > canvas.width - this.diameter) {
-            dirX = '-';
-            this.y > canvas.height - (this.diameter * 3) ? dirY = '-' : directionY();
+            this.dirX = '-';
+            this.y > canvas.height - (this.diameter * 3) ? this.dirY = '-' : directionY();
             randomPos();
+        }
+    }
+
+    imageSwitch() {
+        if(this.dirX === '-') {
+            this.image.src = './images/ufo2.png';
+        } else {
+            this.image.src = './images/ufo1.png';
         }
     }
 }
