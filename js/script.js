@@ -60,7 +60,7 @@ window.onload = () => {
         spriteShadowArr = [];
         powerOn = false;
         firstSprite = new Sprite(50, 670, spritePower, powerOnTimer);
-        firstEnemy = new Enemy(700, 100, 120, enemySpeedMin, enemySpeedMax, enemyDirectionChangeSpeed);
+        firstEnemy = new Enemy(700, 100, 100, enemySpeedMin, enemySpeedMax, enemyDirectionChangeSpeed);
         poweritem1 = new PowerItem(700, 650, 6, powerItemSpeedMax*2, powerItemSpeedMin*2, 150);
         attackItem1 = new AttackItems(firstSprite.x, firstSprite.y);
         firstSprite.draw();
@@ -185,7 +185,7 @@ window.onload = () => {
         createBullets();
         firstEnemy.draw();
         drawShadow(enemyImpactShadow, firstEnemy, 1);
-        drawShadow(spriteShadowArr, firstSprite, 3.2);
+        drawShadow(spriteShadowArr, firstSprite, 3);
         firstEnemy.randomPosition();
         firstEnemy.imageSwitch();
         poweritem1.randomPosition();

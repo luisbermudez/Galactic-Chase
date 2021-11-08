@@ -117,7 +117,7 @@ class Enemy {
         this.color = 'transparent';
 
         this.image = new Image();
-        this.image.src = './images/ufo1.png';
+        this.image.src = './images/ufo2.png';
 
         this.dirX;
         this.dirY;
@@ -135,7 +135,7 @@ class Enemy {
         ctx.fill();
         ctx.closePath();
 
-        ctx.drawImage(this.image, this.x - this.diameter, this.y - this.diameter/1.5, this.diameter*2, this.diameter*1.5);
+        ctx.drawImage(this.image, this.x - this.diameter/0.79, this.y - this.diameter, this.diameter*2.5, this.diameter*2);
         // ctx.translate(200, 80);
     }
 
@@ -192,8 +192,10 @@ class Enemy {
     imageSwitch() {
         if(this.dirX === '-') {
             this.image.src = './images/ufo2.png';
-        } else {
+        } else if(this.dirX === '+'){
             this.image.src = './images/ufo1.png';
+        } else {
+            this.image.src = './images/ufo2.png';
         }
     }
 }
