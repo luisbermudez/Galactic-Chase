@@ -6,7 +6,7 @@ html, body {
     padding: 0;
 }
 
-#introArea, #info, #gameArea, #aWin, #gameOver {
+#introArea, #info, #gameArea, #aWin, #gameOver, #instructions div, #dirTrayect {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -106,8 +106,8 @@ button:hover {
     background-color: rgb(159, 224, 179);
 }
 
-#instructions div {
-    margin: 100px 0;
+#instructions div, #dirTrayect {
+    margin: 20px 0;
 }
 
 #canvas {
@@ -117,6 +117,33 @@ button:hover {
 
 #introCanvas{
     position: absolute;
+}
+
+#astro {
+    width: 140px;
+    margin: 20px 0;
+}
+#ufo {
+    width: 240px;
+    margin: 20px 0;
+}
+
+#dirTrayect img, #powerOn {
+    width: 200px;
+    margin: 10px 0;
+}
+#k {
+    width: 65px;
+}
+
+#note {
+    background-color: rgba(240, 58, 45, 0.966);
+    border: 2px solid black;
+    color: white;
+    padding: 0 20px;
+    margin: 0 10px;
+    border-radius: 10px;
+    font-weight: bolder;
 }
 
 @media (min-width: 320px) {
@@ -175,15 +202,6 @@ button:hover {
         font-size: 40px;
         padding: 0 20px;
     }
-
-    /* #toLevelsGA {
-        font-size: 35px;
-        padding: 0 18px;
-    }
-    #toLevelsGA:hover {
-        font-size: 45px;
-        padding: 0 23px;
-    } */
 }
 
 
@@ -194,21 +212,12 @@ button:hover {
         margin: 140px 0 0;
         padding: 0;
     }
-    #start {
+    /* /* #start {
         margin-top: 70px;
         font-size: 70px;
     }
     #start:hover {
         margin-top: 70px;
         font-size: 80px;
-    }
-    button {
-        font-size: 60px;
-        border: 3px solid black;
-        margin: 60px 0 0;
-    }
-    button:hover {
-        font-size: 70px;
-        border-radius: 20px;
-    }
+    } */
 }

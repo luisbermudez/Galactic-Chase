@@ -175,7 +175,6 @@ window.onload = () => {
         enemyImpactShadow.push(anImpact);
     }
 
-
     function update() {
         frames++;
         // ctx.fillStyle = "rgb(18, 24, 34)";
@@ -222,7 +221,7 @@ window.onload = () => {
                 firstSprite.speedX -= 5;
                 firstEnemy.diameter += enemyDiameterGrowth;
                 break;
-            case 76:
+            case 75:
                 firstSprite.attack(firstEnemy);
                 if (!shootABullet) return;
                 shootABullet = false;
@@ -244,7 +243,7 @@ window.onload = () => {
             case 65:
                 firstSprite.speedX = - spriteZeroGravity;
                 break;
-            case 76:
+            case 75:
                 shootABullet = true;
                 break;
         }

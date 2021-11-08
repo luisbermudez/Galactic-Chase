@@ -34,4 +34,4 @@ let spriteShadowArr = [];
 let enemyImpactShadow = [];
 let shootABullet = true;
 let shadowOn = false;
-// let trayectorySpeed;
+

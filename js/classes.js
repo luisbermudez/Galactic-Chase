@@ -204,7 +204,7 @@ class PowerItem extends Enemy {
     constructor(x, y, d, speedMin, speedMax, directionChangeSpeed) {
         super(x, y, d, speedMin, speedMax, directionChangeSpeed)
         this.color = 'rgb(110, 221, 20)';
-        this.boundary = 150;
+        this.boundary = 0;
     }
 
     draw() {

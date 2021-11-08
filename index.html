@@ -28,27 +28,33 @@
     <section id="instructions">
         <div>
             <h4>This is you!</h4>
-            <h4>You will be chasin the evil galactic UFO</h4>
+            <img id="astro" src="./images/astro3.png" alt="this is an astronaut">
         </div>
         <div>
-            <h4>Use these keys to navigate: </h4>
+            <h4>Use these keys to: </h4>
             <section id="dirTrayect">
-                <h4> - [ W ] to go up</h4>
-                <h4> - [ S ] to go down</h4>
-                <h4> - [ A ] to go left</h4>
-                <h4> - [ D ] to go right</h4>
+                <img src="./images/keys.png" alt="">
+                <h4>[ W ] Go up ↑</h4>
+                <h4>[ S ] Go down ↓</h4>
+                <h4>[ A ] Go left ←</h4>
+                <h4>[ D ] Go right →</h4>
             </section>
-            <h4>Press the navigation keys everytime you want to change direction, in outer space you can easily glide away!</h4>
+            <h4><span id="note">!</span>Press navigation keys everytime you want to change direction, in outer space you can easily glide away!</h4>
         </div>
         <div>
-            <h4>The evil galactic UFO will grow as you move towards it</h4>
-            <h4>As soon as you find yourself over it, you can shoot with letter <span>[ L ]</span> to make it smaller</h4>
+            <h4>This is D-UFO</h4>
+            <img id="ufo" src="./images/ufo1.png" alt="this is an astronaut">
+            <h4>He will grow everytime you move.</h4>
+            <h4>When you are over him, you can shoot with key <img id="k" src="./images/kkey.png"> and he will shrink.</h4>
+            <img id="powerOn" src="./images/powerOn.png" alt="">
+            <h4><span id="note">!</span>The purple waves indicate when you can shoot.</h4>
+            <h4>Get special powers when touching the green ball & shoot even if you are not over D-UFO.</h4>
         </div>
         <button id="toLevels">X</button>
     </section>
     <div id="gameArea">
         <button id="toLevelsGA">Reset</button>
-        <canvas id="canvas" width="1000" height="720"></canvas>
+        <canvas id="canvas" width="1250" height="720"></canvas>
     </div>
     <div id="aWin">
         <h1>You won!</h1>
