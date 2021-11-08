@@ -117,7 +117,7 @@ class Enemy {
         this.color = 'transparent';
 
         this.image = new Image();
-        this.image.src = './images/ufo2.png';
+        this.image.src = './images/ufo3.png';
 
         this.dirX;
         this.dirY;
@@ -191,11 +191,11 @@ class Enemy {
 
     imageSwitch() {
         if(this.dirX === '-') {
-            this.image.src = './images/ufo2.png';
+            this.image.src = './images/ufo3.png';
         } else if(this.dirX === '+'){
             this.image.src = './images/ufo1.png';
         } else {
-            this.image.src = './images/ufo2.png';
+            this.image.src = './images/ufo3.png';
         }
     }
 }

@@ -42,7 +42,7 @@ h3 {
 button {
     margin: 20px 0;
     background-color: rgb(190, 190, 190);
-    background-color: rgb(159, 224, 179);
+    background-color: rgb(226, 98, 151);
     font-family: Amatic SC;
     font-size: 56px;
     font-weight: bolder;
@@ -92,18 +92,14 @@ button:hover {
     left: 48%;
     margin: 0;
     padding: 0 12px;
-    font-size: 25px;
+    font-size: 30px;
     font-weight: bolder;
     border-radius: 50px;
-    background-color: rgb(214, 153, 216);
+    background-color: rgb(226, 98, 151);
 }
 #toLevelsGA:hover {
-    font-size: 30px;
+    font-size: 32px;
     padding: 0 14px;
-}
-
-#start {
-    background-color: rgb(159, 224, 179);
 }
 
 #instructions div, #dirTrayect {
