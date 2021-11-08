@@ -30,10 +30,23 @@ class Sprite {
     position() {
         this.y += this.speedY;
         this.x += this.speedX;
-        if(this.y < this.diameter + 5) this.y = this.diameter + 3;
-        if(this.y > canvas.height - this.diameter - 5) this.y = canvas.height - this.diameter - 3;
-        if(this.x < this.diameter + 5) this.x = this.diameter + 3;
-        if(this.x > canvas.width - this.diameter - 5)this.x = canvas.width - this.diameter - 3;
+        if(this.y < this.diameter + 40) {
+            this.y = this.diameter + 40;
+        }
+        if(this.y > canvas.height - this.diameter - 40) {
+            this.y = canvas.height - this.diameter - 40;
+        }
+        if(this.x < this.diameter + 40) {
+            this.x = this.diameter + 40;
+        }
+        if(this.x > canvas.width - this.diameter - 40) {
+            this.x = canvas.width - this.diameter - 40;
+        }
+        if(this.speedX > 1) {
+            this.image.src = './images/right.png';
+        } else if(this.speedX < -1) {
+            this.image.src = './images/left.png';
+        }
     }
 
     attack(enemy) {
@@ -85,8 +98,6 @@ class Sprite {
                 shadowOn = true;
             } else {
                 overAndReady = true;
-                // this.color = 'rgb(184, 81, 166)';
-                // this.image.src = './images/134.png';
                 shadowOn = true;
             }
         } else {
@@ -96,8 +107,6 @@ class Sprite {
             } else {
                 overAndReady = false;
                 bulletReady = false;
-                this.color = 'transparent';
-                this.image.src = './images/13.png';
                 shadowOn = false;
             }
         }
@@ -135,7 +144,7 @@ class Enemy {
         ctx.fill();
         ctx.closePath();
 
-        ctx.drawImage(this.image, this.x - this.diameter/0.79, this.y - this.diameter, this.diameter*2.5, this.diameter*2);
+        ctx.drawImage(this.image, this.x - this.diameter/0.9, this.y - this.diameter, this.diameter*2.2, this.diameter*2);
         // ctx.translate(200, 80);
     }
 
@@ -203,7 +212,7 @@ class Enemy {
 class PowerItem extends Enemy {
     constructor(x, y, d, speedMin, speedMax, directionChangeSpeed) {
         super(x, y, d, speedMin, speedMax, directionChangeSpeed)
-        this.color = 'rgb(110, 221, 20)';
+        this.color = 'yellow';
         this.boundary = 0;
     }
 
@@ -223,7 +232,7 @@ class AttackItems {
     constructor(x, y) {
         this.x = x;
         this.y = y;
-        this.color = 'rgb(118, 86, 160)';
+        this.color = 'gray';
         this.diameter = 5;
         this.strokeS = 'black';
     }

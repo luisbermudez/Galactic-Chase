@@ -2,6 +2,7 @@ window.onload = () => {
     let firstSprite;
     let firstEnemy;
     
+    const body = document.getElementById('body');
     const gameArea = document.getElementById('gameArea');
     const introArea = document.getElementById('introArea');
     const userInfo = document.getElementById('info');
@@ -37,21 +38,21 @@ window.onload = () => {
         if(requestID) {
             return;
         }
-        arenaSetup(3, 2, 150, 3, 3.5, 4, 70, 320, 4, 3, 3000);
+        arenaSetup(3, 2, 150, 3, 3.5, 4, 70, 270, 4, 3, 3000);
     }
 
     document.getElementById('medium').onclick = () => {
         if(requestID) {
             return;
         }
-        arenaSetup(4, 2, 150, 4, 4, 4, 50, 320, 4, 3, 3000);
+        arenaSetup(4, 2, 150, 4, 4, 4, 50, 270, 4, 3, 3000);
     }
     
     document.getElementById('spicy').onclick = () => {
         if(requestID) {
             return;
         }
-        arenaSetup(5, 4, 100, 6, 4, 4, 30, 320, 4, 3, 3000)
+        arenaSetup(5, 4, 100, 6, 4, 4, 30, 270, 4, 3, 3000)
     }
 
     function startGame () {
@@ -60,7 +61,7 @@ window.onload = () => {
         spriteShadowArr = [];
         powerOn = false;
         firstSprite = new Sprite(50, 670, spritePower, powerOnTimer);
-        firstEnemy = new Enemy(700, 100, 100, enemySpeedMin, enemySpeedMax, enemyDirectionChangeSpeed);
+        firstEnemy = new Enemy(700, 100, 80, enemySpeedMin, enemySpeedMax, enemyDirectionChangeSpeed);
         poweritem1 = new PowerItem(700, 650, 6, powerItemSpeedMax*2, powerItemSpeedMin*2, 150);
         attackItem1 = new AttackItems(firstSprite.x, firstSprite.y);
         firstSprite.draw();
@@ -77,6 +78,7 @@ window.onload = () => {
             gameOver();
         }
         document.getElementById('toLevelsGA').onclick = () => {
+            body.style.backgroundColor = 'transparent';
             level.style.display = 'block';
             requestID = undefined;
             gameArea.style.display = 'none';
@@ -105,12 +107,16 @@ window.onload = () => {
         powerOnTimer = k;
 
         level.style.display = 'none';
+        canvas.width = document.documentElement.clientWidth - 2;
+        canvas.height = document.documentElement.clientHeight - 15;
+        body.style.backgroundColor = 'black';
         gameArea.style.display = 'flex';
 
         startGame();
     }
 
     function gameOver() {
+        body.style.backgroundColor = 'transparent';
         requestID = undefined;
         gameArea.style.display = 'none';
         document.getElementById('gameOver').style.display = 'flex';
@@ -121,6 +127,7 @@ window.onload = () => {
     }
 
     function aWin() {
+        body.style.backgroundColor = 'transparent';
         requestID = undefined;
         gameArea.style.display = 'none';
         document.getElementById('aWin').style.display = 'flex';
@@ -155,7 +162,7 @@ window.onload = () => {
 
     function createShadow() {
         if(shadowOn) {
-            const aExpansiveBullet = new Shadow(firstSprite.x, firstSprite.y, 'rgba(142, 43, 199, 0.15)')
+            const aExpansiveBullet = new Shadow(firstSprite.x, firstSprite.y, 'rgba(45, 201, 240, 0.17)')
             spriteShadowArr.push(aExpansiveBullet);
         }
     }
@@ -171,15 +178,15 @@ window.onload = () => {
     }
 
     function createImpact() {
-        const anImpact = new Shadow(firstEnemy.x, firstEnemy.y, 'rgba(110, 110, 110, 0.15)');
+        const anImpact = new Shadow(firstEnemy.x, firstEnemy.y, 'rgba(200, 200, 200, 0.15)');
         enemyImpactShadow.push(anImpact);
     }
 
     function update() {
         frames++;
-        // ctx.fillStyle = "rgb(18, 24, 34)";
-        // ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.clearRect(0, 0, canvas.clientWidth, canvas.height);
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        // ctx.clearRect(0, 0, canvas.clientWidth, canvas.height);
         createShadow()
         createBullets();
         firstEnemy.draw();
