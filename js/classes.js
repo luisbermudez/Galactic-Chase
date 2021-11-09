@@ -2,7 +2,7 @@ class Sprite {
     constructor(x, y, powerOfAttack, powerOnTimer) {
         this.x = x;
         this.y = y;
-        this.diameter = 45;
+        this.diameter = 110;
         this.color = 'transparent';
         this.speedX = 0;
         this.speedY = 0;
@@ -15,21 +15,14 @@ class Sprite {
     }
 
     draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.diameter, 0, Math.PI*2);
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = 'transparent';
-        ctx.stroke();
-        ctx.fillStyle = this.color;
-        ctx.fill();
-        ctx.closePath();
-
+        drawCircle(this.x, this.y, this.diameter, 2, this.color, this.color);
         ctx.drawImage(this.image, this.x - this.diameter, this.y - this.diameter, this.diameter*2, this.diameter*1.7);
     }
 
     position() {
         this.y += this.speedY;
         this.x += this.speedX;
+
         if(this.y < this.diameter + 40) {
             this.y = this.diameter + 40;
         }
@@ -77,10 +70,10 @@ class Sprite {
 
     power(powerItem) {
         if(
-            this.x - this.diameter < powerItem.x + powerItem.diameter && 
-            this.x + this.diameter > powerItem.x - powerItem.diameter &&
-            this.y - this.diameter < powerItem.y + powerItem.diameter &&
-            this.y + this.diameter > powerItem.y - powerItem.diameter
+            this.x - this.diameter < powerItem.x + powerItem.diameter/3.7 && 
+            this.x + this.diameter > powerItem.x - powerItem.diameter/3.7 &&
+            this.y - this.diameter < powerItem.y + powerItem.diameter/3.7 &&
+            this.y + this.diameter > powerItem.y - powerItem.diameter/3.7
         ) {
             // this.color = 'rgb(184, 81, 166)';
             // this.image.src = './images/134.png';
@@ -139,16 +132,8 @@ class Enemy {
     }
 
     draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.diameter, 0, Math.PI*2);
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = this.color;
-        ctx.stroke();
-        ctx.fillStyle = this.color;
-        ctx.fill();
-        ctx.closePath();
-
-        ctx.drawImage(this.image, this.x - this.diameter/0.9, this.y - this.diameter/1.2, this.diameter*2.2, this.diameter*1.7);
+        drawCircle(this.x, this.y, this.diameter, 2, this.color, this.color);
+        ctx.drawImage(this.image, this.x - this.diameter/0.9, this.y - this.diameter/1.2, this.diameter*2.2, this.diameter*1.8);
     }
 
     randomPosition() {
@@ -216,7 +201,6 @@ class PowerItem extends Enemy {
     constructor(x, y, d, speedMin, speedMax, directionChangeSpeed) {
         super(x, y, d, speedMin, speedMax, directionChangeSpeed)
         this.color = 'rgb(45, 201, 240)';
-        this.boundary = 0;
         this.history = [];
     }
 
@@ -225,50 +209,30 @@ class PowerItem extends Enemy {
 
         for(let i = 0; i < this.history.length; i++) {
             let pos = this.history[i];
-            drawCircle(pos[0], pos[1], (7 + (i*2)), 5, 'rgba(8, 35, 53, 0.51)', 'rgb(8, 35, 53, 0.81)');
+            drawCircle(pos[0], pos[1], (5 + (i*1.5)), 50, 'rgb(8, 35, 53, 0.51)', 'rgb(8, 35, 53, 0.81)');
         }
 
-        if(this.history.length > 20) {
+        if(this.history.length > 30) {
             this.history.splice(0, 1);
         }
     }
 
     draw() {
-        drawCircle(this.x, this.y, 8, 5, 'black', 'rgb(192, 218, 235)');
+        drawCircle(this.x, this.y, 15, 15, 'black', 'rgb(45, 201, 240)');
     }
 }
 
-class AttackItems {
+class AttackBullet {
     constructor(x, y) {
         this.x = x;
         this.y = y;
-        this.color = 'yellow';
-        this.diameter = 5;
-        this.strokeS = 'black';
+        this.color = 'yellow'
+        this.diameter = 10;
+        this.strokeColor = 'black';
     }
 
     draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y + 20, this.diameter, 0, Math.PI*2);
-        ctx.lineWidth = 5
-        ctx.strokeStyle = this.strokeS
-        ctx.stroke();
-        ctx.fillStyle = this.color;
-        ctx.fill();
-        ctx.closePath();
-    }
-
-    trayectory(sprite) {
-        this.x = sprite.x;
-        this.y = sprite.y;
-    }
-}
-
-class AttackBullet extends AttackItems {
-    constructor(x, y) {
-        super(x, y);
-        this.color = 'yellow'
-        this.diameter = 7;
+        drawCircle(this.x, this.y, this.diameter, 10, this.strokeColor, this.color);
     }
 
     trayectory(firstEnemy, firstSprite) {
@@ -282,17 +246,17 @@ class AttackBullet extends AttackItems {
 
         trayectorySlope();
 
-        this.x += xSlope/4
-        this.y += ySlope/4
+        this.x += xSlope/6
+        this.y += ySlope/6
     }
 }
 
-class Shadow extends AttackItems {
+class Shadow extends AttackBullet {
     constructor(x, y, color) {
         super(x, y);
         this.color = color;
         this.diameter = 5;
-        this.strokeS = color;
+        this.strokeColor = color;
         this.diameterGrowth = 17;
     }
 
@@ -302,17 +266,18 @@ class Shadow extends AttackItems {
 }
 
 class Star {
-    constructor(x, y, color, size) {
+    constructor(x, y, color, maxSize, minSize) {
         this.x = x;
         this.y = y;
         this.color = color;
-        this.size = size;
+        this.maxSize = maxSize;
+        this.minSize = minSize;
         this.speedX = 0;
         this.speedY = 0;
     }
 
     draw() {
-        let size = (Math.random() * (this.size + 0.5) + 0.5);
+        let size = (Math.random() * (this.maxSize + this.minSize) + this.minSize);
         drawCircle(this.x, this.y, size, 5, this.color, this.color);
     }
 
@@ -322,6 +287,7 @@ class Star {
     }
 }
 
+// Functions
 function drawCircle(x, y, d, dLineWidth, dLineStroke, color) {
     ctx.beginPath();
     ctx.arc(x, y, d, 0, Math.PI*2);
@@ -331,4 +297,20 @@ function drawCircle(x, y, d, dLineWidth, dLineStroke, color) {
     ctx.fillStyle = color;
     ctx.fill();
     ctx.closePath();
+}
+
+// Intro canvas
+class IntroAstron {
+    constructor(){
+        this.x = 200;
+        this.y = 200;
+        this.speedX = 0;
+        this.speedY = 0;
+        this.image = new Image();
+        this.image.src = './images/astro3.png';
+    }
+
+    draw() {
+        introCTX.drawImage(this.image, this.x, this.y, 500, 440);
+    }
 }

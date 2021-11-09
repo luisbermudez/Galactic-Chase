@@ -1,35 +1,21 @@
 window.onload = () => {
-    let firstSprite;
-    let firstEnemy;
-    
-    const body = document.getElementById('body');
-    const gameArea = document.getElementById('gameArea');
-    const introArea = document.getElementById('introArea');
-    const userInfo = document.getElementById('info');
-    const level = document.getElementById('level');
-    const instructs = document.getElementById('instructions');
-
+    // Event listeners for buttons when clicked
+    window.onresize = setCanvasSize;
+    introCanvasFunction();
 
     document.getElementById('start').onclick = () => {
         introArea.style.display = 'none';
-        
-        if(rightClientWindowSize()) {
-                level.style.display = 'block';
-            } else {
-                userInfo.style.display = 'flex';
-                document.getElementById('gotit').onclick = () => {
-                    userInfo.style.display = 'none';
-                    level.style.display = 'block';
-                }
-            }
+        fullScreenMessageDisplay();
     }
 
     document.getElementById('buttonInstructions').onclick  = () => {
+        introCanvas.style.display = 'none';
         instructs.style.display = 'block';
         level.style.display = 'none';
     }
 
     document.getElementById('toLevels').onclick = () => {
+        introCanvas.style.display = 'block';
         instructs.style.display = 'none';
         level.style.display = 'block';
     }
@@ -38,63 +24,32 @@ window.onload = () => {
         if(requestID) {
             return;
         }
-        arenaSetup(3, 2, 150, 4, 3.5, 5, 60, 220, 4, 3, 3000);
+        arenaSetup(4, 2, 190, 4, 3.5, 5, 60, 370, 4, 3, 3000);
     }
 
     document.getElementById('medium').onclick = () => {
         if(requestID) {
             return;
         }
-        arenaSetup(4, 2, 150, 5, 4, 4, 50, 220, 4, 3, 3000);
+        arenaSetup(5, 2, 150, 5, 4, 4, 50, 370, 4, 3, 3000);
     }
     
     document.getElementById('spicy').onclick = () => {
         if(requestID) {
             return;
         }
-        arenaSetup(5, 4, 100, 4, 4, 4, 30, 220, 4, 3, 3000)
+        arenaSetup(6, 4, 100, 4, 4, 4, 30, 370, 4, 3, 3000)
     }
 
-    function startGame () {
-        introArea.style.display = 'none';
-        attackItems = [];
-        spriteShadowArr = [];
-        startsArr = [];
-        powerOn = false;
-        firstSprite = new Sprite(200, 600, spritePower, powerOnTimer);
-        firstEnemy = new Enemy(700, 100, 100, enemySpeedMin, enemySpeedMax, enemyDirectionChangeSpeed);
-        poweritem1 = new PowerItem(700, 650, 10, powerItemSpeedMax*2, powerItemSpeedMin*2, 150);
-        attackItem1 = new AttackItems(firstSprite.x, firstSprite.y);
-        aStar = new Star(500, 500);
-        firstSprite.draw();
-        firstEnemy.draw();
-        requestID = requestAnimationFrame(update);
+    document.getElementById('toLevelsGA').onclick = () => {
+        introCanvas.style.display = 'block';
+        body.style.backgroundColor = 'transparent';
+        level.style.display = 'block';
+        requestID = undefined;
+        gameArea.style.display = 'none';
     }
 
-
-    function status() {
-        if(firstEnemy.diameter < winDiameterParameter) {
-            aWin();
-        }
-        if(firstEnemy.diameter > lostDiameterParameter) {
-            gameOver();
-        }
-        document.getElementById('toLevelsGA').onclick = () => {
-            body.style.backgroundColor = 'transparent';
-            level.style.display = 'block';
-            requestID = undefined;
-            gameArea.style.display = 'none';
-        }
-    }
-
-    function rightClientWindowSize() {
-        if(document.documentElement.clientWidth > 1100 && document.documentElement.clientHeight > 730) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
+    // This modulates the game level of difficulty
     let arenaSetup = (a, b, c, d, e, f, g, h, i, j, k) => {
         enemySpeedMax = a;
         enemySpeedMin = b;
@@ -108,14 +63,57 @@ window.onload = () => {
         powerItemSpeedMin = j;
         powerOnTimer = k;
 
+        clearInterval(intervalID);
+        introCanvas.style.display = 'none';
         level.style.display = 'none';
-        canvas.width = document.documentElement.clientWidth - 2;
-        canvas.height = document.documentElement.clientHeight - 15;
+        canvas.width = (document.documentElement.clientWidth - 2)*3;
+        canvas.height = (document.documentElement.clientHeight - 5)*3;
+        canvas.style.width = document.documentElement.clientWidth - 2 + 'px';
+        canvas.style.height = document.documentElement.clientHeight - 5 + 'px';
         body.style.backgroundColor = 'black';
         gameArea.style.display = 'flex';
 
         startGame();
         createStars();
+    }
+
+    // Assignes values to variables needed to begin the game
+    function startGame () {
+        frames = 0
+        introArea.style.display = 'none';
+        attackItems = [];
+        spriteShadowArr = [];
+        startsArr = [];
+        powerOn = false;
+
+        firstSprite = new Sprite(300, 600, spritePower, powerOnTimer);
+        firstEnemy = new Enemy(1200, 900, 200, enemySpeedMin, enemySpeedMax, enemyDirectionChangeSpeed);
+        poweritem1 = new PowerItem(700, 650, 300, powerItemSpeedMax*3, powerItemSpeedMin*3, 150);
+        aStar = new Star(500, 500);
+
+        firstSprite.draw();
+        firstEnemy.draw();
+
+        requestID = requestAnimationFrame(update);
+    }
+
+    // Checks user's window's size to display full screen message
+    function rightClientWindowSize() {
+        if(document.documentElement.clientWidth > 1100 && document.documentElement.clientHeight > 730) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // continuously checks the diameter of the enemy to call either aWin or gameOver
+    function status() {
+        if(firstEnemy.diameter < winDiameterParameter) {
+            aWin();
+        }
+        if(firstEnemy.diameter > lostDiameterParameter) {
+            gameOver();
+        }
     }
 
     function gameOver() {
@@ -188,17 +186,17 @@ window.onload = () => {
     }
 
     function createStars() {
-        for(let i = 0; i < 20; i++) {
+        for(let i = 0; i < 30; i++) {
             const x = Math.floor(Math.random() * (canvas.width + 25 - ( - 25)) + ( - 25));
             const y = Math.floor(Math.random() * (canvas.height + 25 - ( - 25)) + ( - 25));
-            const aStar = new Star(x, y, 'rgb(70, 70, 70, 0.42)', 0.6);
+            const aStar = new Star(x, y, 'rgb(70, 70, 70, 0.82)', 2.7, 0.6);
             startsArr.push(aStar);
         }
 
-        for(let i = 0; i < 5; i++) {
+        for(let i = 0; i < 4; i++) {
             const x = Math.floor(Math.random() * (canvas.width + 25 - ( - 25)) + ( - 25));
             const y = Math.floor(Math.random() * (canvas.height + 25 - ( - 25)) + ( - 25));
-            const aStar = new Star(x, y, 'rgba(100, 100, 100, 0.35)', 1.8);
+            const aStar = new Star(x, y, 'rgba(100, 100, 100, 0.75)', 4.5, 1);
             startsArr.push(aStar);
         }
     }
@@ -228,32 +226,61 @@ window.onload = () => {
                 star.y = -30;
                 star.x = Math.floor(Math.random() * (canvas.width + 25 - ( - 25)) + ( - 25));
             }
-        })
+        });
+    }
+
+    function setCanvasSize() {
+        introCanvas.width = document.documentElement.clientWidth - 2;
+        introCanvas.height = document.documentElement.clientHeight - 2;
+
+        canvas.width = document.documentElement.clientWidth - 2;
+        canvas.height = document.documentElement.clientHeight - 5;
+    }
+
+    function fullScreenMessageDisplay() {
+        if(rightClientWindowSize()) {
+            level.style.display = 'block';
+        } else {
+            userInfo.style.display = 'flex';
+            document.getElementById('gotit').onclick = () => {
+                userInfo.style.display = 'none';
+                level.style.display = 'block';
+            }
+        }
+    }
+
+    function introCanvasFunction() {
+
+        let anIntroAstro = new IntroAstron();
+
+        intervalID = setInterval(() => {
+            console.log('test');
+            anIntroAstro.draw();
+        }, 10);
     }
 
     function update() {
         frames++;
         ctx.fillStyle = "black";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
+
         checkStarsPositioin();
-        if(frames % 10 < 8) drawStars();
+        drawStars();
         createShadow()
         createBullets();
-        if(frames % 1000 < 300) {
+        if(frames % 1800 > 1100) {
             poweritem1.trailDrawing();
             poweritem1.draw();
             firstSprite.power(poweritem1);
         }
         firstEnemy.draw();
         drawShadow(enemyImpactShadow, firstEnemy, 1);
-        drawShadow(spriteShadowArr, firstSprite, 3);
+        drawShadow(spriteShadowArr, firstSprite, 2);
         firstEnemy.randomPosition();
         firstEnemy.imageSwitch();
         poweritem1.randomPosition();
         firstSprite.draw();
         drawBullets();
-        attackItem1.draw();
-        attackItem1.trayectory(firstSprite);
         firstSprite.position();
         firstSprite.overEnemy(firstEnemy);
         status();
@@ -263,31 +290,32 @@ window.onload = () => {
         }
     }
 
+    // Event listeners for keyboard when playing
     addEventListener('keydown', (e) => {
         switch(e.keyCode) {
             case 83:
-                firstSprite.speedY += 5;
+                firstSprite.speedY += 6.5;
                 firstEnemy.diameter += enemyDiameterGrowth;
                 startsArr.forEach(star => {
                     star.speedY-= 0.3;
                 })
                 break;
             case 87:
-                firstSprite.speedY -= 5;
+                firstSprite.speedY -= 6.5;
                 firstEnemy.diameter += enemyDiameterGrowth;
                 startsArr.forEach(star => {
                     star.speedY+= 0.3;
                 })
                 break;
             case 68:
-                firstSprite.speedX += 5;
+                firstSprite.speedX += 6.5;
                 firstEnemy.diameter += enemyDiameterGrowth;
                 startsArr.forEach(star => {
                     star.speedX-= 0.3;
                 })
                 break;
             case 65:
-                firstSprite.speedX -= 5;
+                firstSprite.speedX -= 6.5;
                 firstEnemy.diameter += enemyDiameterGrowth;
                 startsArr.forEach(star => {
                     star.speedX+= 0.3;
