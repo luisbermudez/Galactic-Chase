@@ -33,6 +33,7 @@ let lostDiameterParameter;
 let attackItems = [];
 let spriteShadowArr = [];
 let enemyImpactShadow = [];
+let startsArr = [];
 let shootABullet = true;
 let shadowOn = false;
 

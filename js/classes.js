@@ -308,7 +308,7 @@ class Star {
         let positionY = this.y;
 
         ctx.lineWidth = 3;
-        ctx.fillStyle = 'rgb(243, 241, 98)';
+        ctx.fillStyle = 'yellow';
         ctx.beginPath();
         ctx.moveTo(positionX, positionY);
         ctx.lineTo(positionX + 3, positionY + 9);
