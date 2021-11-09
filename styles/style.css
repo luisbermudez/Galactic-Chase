@@ -42,7 +42,7 @@ h3 {
 
 button {
     margin: 20px 0;
-    background-color: rgb(21, 210, 235);
+    background-color: rgb(243, 241, 98);
     background-color: rgb(46, 46, 46);
     font-family: Amatic SC;
     font-size: 56px;
@@ -88,16 +88,35 @@ button:hover {
     padding: 0 14px;
 }
 
-#toLevelsGA {
-    position: absolute;
-    top: 735px;
+/* #buttonInstructions, #toLevels {
+    position: fixed;
+    bottom: 10px;
     right: 10px;
     margin: 0;
     padding: 0 13px;
     font-size: 27px;
     font-weight: bolder;
+    border: 2px solid white;
     border-radius: 50px;
-    background-color: rgba(255, 0, 0, 0.966);
+    color: white;
+    background-color: black;
+}
+#buttonInstructions:hover, #toLevels:hover {
+    font-size: 32px;
+    padding: 0 15px;
+} */
+
+#toLevelsGA {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    margin: 0;
+    padding: 0 13px;
+    border: 2px solid white;
+    font-size: 27px;
+    font-weight: bolder;
+    border-radius: 50px;
+    background-color: black;
 }
 #toLevelsGA:hover {
     font-size: 32px;
@@ -188,17 +207,6 @@ button:hover {
     button:hover {
         font-size: 60px;
         border-radius: 20px;
-    }
-
-    #buttonInstructions, #toLevels {
-        top: 50px;
-        right: 50px;
-        font-size: 35px;
-        padding: 0 18px;
-    }
-    #buttonInstructions:hover, #toLevels:hover {
-        font-size: 40px;
-        padding: 0 20px;
     }
 }
 

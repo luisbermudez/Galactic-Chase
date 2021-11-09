@@ -2,7 +2,7 @@ class Sprite {
     constructor(x, y, powerOfAttack, powerOnTimer) {
         this.x = x;
         this.y = y;
-        this.diameter = 40;
+        this.diameter = 45;
         this.color = 'transparent';
         this.speedX = 0;
         this.speedY = 0;
@@ -42,10 +42,14 @@ class Sprite {
         if(this.x > canvas.width - this.diameter - 40) {
             this.x = canvas.width - this.diameter - 40;
         }
+
+        console.log(this.x);
         if(this.speedX > 1) {
             this.image.src = './images/right.png';
         } else if(this.speedX < -1) {
             this.image.src = './images/left.png';
+        } else if(this.x === 85 || this.x === canvas.width - 85) {
+            this.image.src = './images/13.png';
         }
     }
 
@@ -212,7 +216,7 @@ class Enemy {
 class PowerItem extends Enemy {
     constructor(x, y, d, speedMin, speedMax, directionChangeSpeed) {
         super(x, y, d, speedMin, speedMax, directionChangeSpeed)
-        this.color = 'yellow';
+        this.color = 'rgb(45, 201, 240)';
         this.boundary = 0;
     }
 
@@ -288,5 +292,50 @@ class Shadow extends AttackItems {
 
     trayectory() {
         this.diameter += this.diameterGrowth;
+    }
+}
+
+class Star {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.speedX = 0;
+        this.speedY = 0;
+    }
+
+    draw() {
+        let positionX = this.x;
+        let positionY = this.y;
+
+        ctx.lineWidth = 3;
+        ctx.fillStyle = 'rgb(243, 241, 98)';
+        ctx.beginPath();
+        ctx.moveTo(positionX, positionY);
+        ctx.lineTo(positionX + 3, positionY + 9);
+        ctx.stroke();
+        ctx.lineTo(positionX + 16, positionY + 14);
+        ctx.stroke();
+        ctx.lineTo(positionX + 3, positionY + 20);
+        ctx.stroke();
+        ctx.lineTo(positionX + 4, positionY + 30);
+        ctx.stroke();
+        ctx.lineTo(positionX - 7, positionY + 20);
+        ctx.stroke();
+        ctx.lineTo(positionX - 23, positionY + 30);
+        ctx.stroke();
+        ctx.lineTo(positionX - 16, positionY + 18);
+        ctx.stroke();
+        ctx.lineTo(positionX - 25, positionY + 11);
+        ctx.stroke();
+        ctx.lineTo(positionX - 10, positionY + 10);
+        ctx.stroke();
+        ctx.lineTo(positionX, positionY);
+        ctx.stroke();
+        ctx.fill();
+    }
+
+    position() {
+        this.x += this.speedX;
+        this.y += this.speedY;
     }
 }

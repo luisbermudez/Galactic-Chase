@@ -23,6 +23,7 @@ let powerOn = false;
 // Power item level values 
 let powerItemSpeedMax;
 let powerItemSpeedMin;
+// let powerSpanTime = frames % 1000;
 
 // win or lose
 let winDiameterParameter;

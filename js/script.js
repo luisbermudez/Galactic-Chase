@@ -38,21 +38,21 @@ window.onload = () => {
         if(requestID) {
             return;
         }
-        arenaSetup(3, 2, 150, 3, 3.5, 4, 70, 270, 4, 3, 3000);
+        arenaSetup(3, 2, 150, 4, 3.5, 4, 60, 220, 4, 3, 3000);
     }
 
     document.getElementById('medium').onclick = () => {
         if(requestID) {
             return;
         }
-        arenaSetup(4, 2, 150, 4, 4, 4, 50, 270, 4, 3, 3000);
+        arenaSetup(4, 2, 150, 5, 4, 4, 50, 220, 4, 3, 3000);
     }
     
     document.getElementById('spicy').onclick = () => {
         if(requestID) {
             return;
         }
-        arenaSetup(5, 4, 100, 6, 4, 4, 30, 270, 4, 3, 3000)
+        arenaSetup(5, 4, 100, 5, 4, 4, 30, 220, 4, 3, 3000)
     }
 
     function startGame () {
@@ -60,10 +60,11 @@ window.onload = () => {
         attackItems = [];
         spriteShadowArr = [];
         powerOn = false;
-        firstSprite = new Sprite(50, 670, spritePower, powerOnTimer);
-        firstEnemy = new Enemy(700, 100, 80, enemySpeedMin, enemySpeedMax, enemyDirectionChangeSpeed);
+        firstSprite = new Sprite(200, 600, spritePower, powerOnTimer);
+        firstEnemy = new Enemy(700, 100, 100, enemySpeedMin, enemySpeedMax, enemyDirectionChangeSpeed);
         poweritem1 = new PowerItem(700, 650, 6, powerItemSpeedMax*2, powerItemSpeedMin*2, 150);
         attackItem1 = new AttackItems(firstSprite.x, firstSprite.y);
+        aStar = new Star(500, 500);
         firstSprite.draw();
         firstEnemy.draw();
         requestID = requestAnimationFrame(update);
@@ -186,9 +187,14 @@ window.onload = () => {
         frames++;
         ctx.fillStyle = "black";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-        // ctx.clearRect(0, 0, canvas.clientWidth, canvas.height);
+        // aStar.draw();
+        // aStar.position();
         createShadow()
         createBullets();
+        if(frames % 250 < 120) {
+            poweritem1.draw();
+            firstSprite.power(poweritem1);
+        }
         firstEnemy.draw();
         drawShadow(enemyImpactShadow, firstEnemy, 1);
         drawShadow(spriteShadowArr, firstSprite, 3);
@@ -196,13 +202,11 @@ window.onload = () => {
         firstEnemy.imageSwitch();
         poweritem1.randomPosition();
         firstSprite.draw();
-        poweritem1.draw();
         drawBullets();
         attackItem1.draw();
         attackItem1.trayectory(firstSprite);
         firstSprite.position();
         firstSprite.overEnemy(firstEnemy);
-        firstSprite.power(poweritem1);
         status();
 
         if(requestID) {
@@ -215,18 +219,22 @@ window.onload = () => {
             case 83:
                 firstSprite.speedY += 5;
                 firstEnemy.diameter += enemyDiameterGrowth;
+                aStar.speedY-=0.9;
                 break;
             case 87:
                 firstSprite.speedY -= 5;
                 firstEnemy.diameter += enemyDiameterGrowth;
+                aStar.speedY+=0.9;
                 break;
             case 68:
                 firstSprite.speedX += 5;
                 firstEnemy.diameter += enemyDiameterGrowth;
+                aStar.speedX-=0.9;
                 break;
             case 65:
                 firstSprite.speedX -= 5;
                 firstEnemy.diameter += enemyDiameterGrowth;
+                aStar.speedX+=0.9;
                 break;
             case 75:
                 firstSprite.attack(firstEnemy);
@@ -240,15 +248,19 @@ window.onload = () => {
         switch(e.keyCode) {
             case 83:
                 firstSprite.speedY = spriteZeroGravity;
+                aStar.speedY = -0.9;
                 break;
             case 87:
                 firstSprite.speedY = - spriteZeroGravity;
+                aStar.speedY = 0.9;
                 break;
             case 68:
                 firstSprite.speedX = spriteZeroGravity;
+                aStar.speedX = -0.9;
                 break;
             case 65:
                 firstSprite.speedX = - spriteZeroGravity;
+                aStar.speedX = 0.9;
                 break;
             case 75:
                 shootABullet = true;
