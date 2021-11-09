@@ -148,8 +148,7 @@ class Enemy {
         ctx.fill();
         ctx.closePath();
 
-        ctx.drawImage(this.image, this.x - this.diameter/0.9, this.y - this.diameter, this.diameter*2.2, this.diameter*2);
-        // ctx.translate(200, 80);
+        ctx.drawImage(this.image, this.x - this.diameter/0.9, this.y - this.diameter/1.2, this.diameter*2.2, this.diameter*1.7);
     }
 
     randomPosition() {
@@ -218,17 +217,24 @@ class PowerItem extends Enemy {
         super(x, y, d, speedMin, speedMax, directionChangeSpeed)
         this.color = 'rgb(45, 201, 240)';
         this.boundary = 0;
+        this.history = [];
+    }
+
+    trailDrawing() {
+        this.history.push([this.x, this.y]);
+
+        for(let i = 0; i < this.history.length; i++) {
+            let pos = this.history[i];
+            drawCircle(pos[0], pos[1], (7 + (i*2)), 5, 'rgba(8, 35, 53, 0.51)', 'rgb(8, 35, 53, 0.81)');
+        }
+
+        if(this.history.length > 20) {
+            this.history.splice(0, 1);
+        }
     }
 
     draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.diameter, 0, Math.PI*2);
-        ctx.lineWidth = 5;
-        ctx.strokeStyle = 'black'
-        ctx.stroke();
-        ctx.fillStyle = this.color;
-        ctx.fill();
-        ctx.closePath();
+        drawCircle(this.x, this.y, 8, 5, 'black', 'rgb(192, 218, 235)');
     }
 }
 
@@ -236,7 +242,7 @@ class AttackItems {
     constructor(x, y) {
         this.x = x;
         this.y = y;
-        this.color = 'gray';
+        this.color = 'yellow';
         this.diameter = 5;
         this.strokeS = 'black';
     }
@@ -296,46 +302,33 @@ class Shadow extends AttackItems {
 }
 
 class Star {
-    constructor(x, y) {
+    constructor(x, y, color, size) {
         this.x = x;
         this.y = y;
+        this.color = color;
+        this.size = size;
         this.speedX = 0;
         this.speedY = 0;
     }
 
     draw() {
-        let positionX = this.x;
-        let positionY = this.y;
-
-        ctx.lineWidth = 3;
-        ctx.fillStyle = 'yellow';
-        ctx.beginPath();
-        ctx.moveTo(positionX, positionY);
-        ctx.lineTo(positionX + 3, positionY + 9);
-        ctx.stroke();
-        ctx.lineTo(positionX + 16, positionY + 14);
-        ctx.stroke();
-        ctx.lineTo(positionX + 3, positionY + 20);
-        ctx.stroke();
-        ctx.lineTo(positionX + 4, positionY + 30);
-        ctx.stroke();
-        ctx.lineTo(positionX - 7, positionY + 20);
-        ctx.stroke();
-        ctx.lineTo(positionX - 23, positionY + 30);
-        ctx.stroke();
-        ctx.lineTo(positionX - 16, positionY + 18);
-        ctx.stroke();
-        ctx.lineTo(positionX - 25, positionY + 11);
-        ctx.stroke();
-        ctx.lineTo(positionX - 10, positionY + 10);
-        ctx.stroke();
-        ctx.lineTo(positionX, positionY);
-        ctx.stroke();
-        ctx.fill();
+        let size = (Math.random() * (this.size + 0.5) + 0.5);
+        drawCircle(this.x, this.y, size, 5, this.color, this.color);
     }
 
     position() {
         this.x += this.speedX;
         this.y += this.speedY;
     }
+}
+
+function drawCircle(x, y, d, dLineWidth, dLineStroke, color) {
+    ctx.beginPath();
+    ctx.arc(x, y, d, 0, Math.PI*2);
+    ctx.lineWidth = dLineWidth;
+    ctx.strokeStyle = dLineStroke;
+    ctx.stroke();
+    ctx.fillStyle = color;
+    ctx.fill();
+    ctx.closePath();
 }

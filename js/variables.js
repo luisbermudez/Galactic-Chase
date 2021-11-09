@@ -37,3 +37,5 @@ let startsArr = [];
 let shootABullet = true;
 let shadowOn = false;
 
+// trail
+let history = [];

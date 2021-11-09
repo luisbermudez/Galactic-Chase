@@ -38,7 +38,7 @@ window.onload = () => {
         if(requestID) {
             return;
         }
-        arenaSetup(3, 2, 150, 4, 3.5, 4, 60, 220, 4, 3, 3000);
+        arenaSetup(3, 2, 150, 4, 3.5, 5, 60, 220, 4, 3, 3000);
     }
 
     document.getElementById('medium').onclick = () => {
@@ -52,7 +52,7 @@ window.onload = () => {
         if(requestID) {
             return;
         }
-        arenaSetup(5, 4, 100, 5, 4, 4, 30, 220, 4, 3, 3000)
+        arenaSetup(5, 4, 100, 4, 4, 4, 30, 220, 4, 3, 3000)
     }
 
     function startGame () {
@@ -63,7 +63,7 @@ window.onload = () => {
         powerOn = false;
         firstSprite = new Sprite(200, 600, spritePower, powerOnTimer);
         firstEnemy = new Enemy(700, 100, 100, enemySpeedMin, enemySpeedMax, enemyDirectionChangeSpeed);
-        poweritem1 = new PowerItem(700, 650, 6, powerItemSpeedMax*2, powerItemSpeedMin*2, 150);
+        poweritem1 = new PowerItem(700, 650, 10, powerItemSpeedMax*2, powerItemSpeedMin*2, 150);
         attackItem1 = new AttackItems(firstSprite.x, firstSprite.y);
         aStar = new Star(500, 500);
         firstSprite.draw();
@@ -183,15 +183,22 @@ window.onload = () => {
     }
 
     function createImpact() {
-        const anImpact = new Shadow(firstEnemy.x, firstEnemy.y, 'rgba(200, 200, 200, 0.15)');
+        const anImpact = new Shadow(firstEnemy.x, firstEnemy.y, 'rgba(230, 230, 230, 0.15)');
         enemyImpactShadow.push(anImpact);
     }
 
     function createStars() {
-        for(let i = 0; i < 600; i++) {
-            const x = Math.floor(Math.random() * (canvas.width*5 - ( - 5000)) + ( - 5000));
-            const y = Math.floor(Math.random() * (canvas.height*5 - ( - 5000)) + ( - 5000));
-            const aStar = new Star(x, y);
+        for(let i = 0; i < 20; i++) {
+            const x = Math.floor(Math.random() * (canvas.width + 25 - ( - 25)) + ( - 25));
+            const y = Math.floor(Math.random() * (canvas.height + 25 - ( - 25)) + ( - 25));
+            const aStar = new Star(x, y, 'rgb(70, 70, 70, 0.42)', 0.6);
+            startsArr.push(aStar);
+        }
+
+        for(let i = 0; i < 5; i++) {
+            const x = Math.floor(Math.random() * (canvas.width + 25 - ( - 25)) + ( - 25));
+            const y = Math.floor(Math.random() * (canvas.height + 25 - ( - 25)) + ( - 25));
+            const aStar = new Star(x, y, 'rgba(100, 100, 100, 0.35)', 1.8);
             startsArr.push(aStar);
         }
     }
@@ -203,16 +210,37 @@ window.onload = () => {
         });
     }
 
+    function checkStarsPositioin() {
+        startsArr.forEach(star => {
+            if(star.x < -30) {
+                star.x = canvas.width + 30;
+                star.y = Math.floor(Math.random() * (canvas.height + 25 - ( - 25)) + ( - 25));
+            }
+            if(star.x > canvas.width + 30) {
+                star.x = -30;
+                star.y = Math.floor(Math.random() * (canvas.height + 25 - ( - 25)) + ( - 25));
+            }
+            if(star.y < -30) {
+                star.y = canvas.height + 30;
+                star.x = Math.floor(Math.random() * (canvas.width + 25 - ( - 25)) + ( - 25));
+            }
+            if(star.y > canvas.height + 30) {
+                star.y = -30;
+                star.x = Math.floor(Math.random() * (canvas.width + 25 - ( - 25)) + ( - 25));
+            }
+        })
+    }
+
     function update() {
         frames++;
         ctx.fillStyle = "black";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-        // aStar.draw();
-        // aStar.position();
-        drawStars();
+        checkStarsPositioin();
+        if(frames % 10 < 8) drawStars();
         createShadow()
         createBullets();
-        if(frames % 250 < 120) {
+        if(frames % 1000 < 300) {
+            poweritem1.trailDrawing();
             poweritem1.draw();
             firstSprite.power(poweritem1);
         }
@@ -241,33 +269,29 @@ window.onload = () => {
                 firstSprite.speedY += 5;
                 firstEnemy.diameter += enemyDiameterGrowth;
                 startsArr.forEach(star => {
-                    star.speedY-= 0.5;
+                    star.speedY-= 0.3;
                 })
-                // aStar.speedY-=0.9;
                 break;
             case 87:
                 firstSprite.speedY -= 5;
                 firstEnemy.diameter += enemyDiameterGrowth;
                 startsArr.forEach(star => {
-                    star.speedY+= 0.5;
+                    star.speedY+= 0.3;
                 })
-                // aStar.speedY+=0.9;
                 break;
             case 68:
                 firstSprite.speedX += 5;
                 firstEnemy.diameter += enemyDiameterGrowth;
                 startsArr.forEach(star => {
-                    star.speedX-= 0.5;
+                    star.speedX-= 0.3;
                 })
-                // aStar.speedX-=0.9;
                 break;
             case 65:
                 firstSprite.speedX -= 5;
                 firstEnemy.diameter += enemyDiameterGrowth;
                 startsArr.forEach(star => {
-                    star.speedX+= 0.5;
+                    star.speedX+= 0.3;
                 })
-                // aStar.speedX+=0.9;
                 break;
             case 75:
                 firstSprite.attack(firstEnemy);
@@ -282,25 +306,25 @@ window.onload = () => {
             case 83:
                 firstSprite.speedY = spriteZeroGravity;
                 startsArr.forEach(star => {
-                    star.speedY-= 0.5;
+                    star.speedY-= 0.3;
                 })
                 break;
             case 87:
                 firstSprite.speedY = - spriteZeroGravity;
                 startsArr.forEach(star => {
-                    star.speedY+= 0.5;
+                    star.speedY+= 0.3;
                 })
                 break;
             case 68:
                 firstSprite.speedX = spriteZeroGravity;
                 startsArr.forEach(star => {
-                    star.speedX-= 0.5;
+                    star.speedX-= 0.3;
                 })
                 break;
             case 65:
                 firstSprite.speedX = - spriteZeroGravity;
                 startsArr.forEach(star => {
-                    star.speedX+= 0.5;
+                    star.speedX+= 0.3;
                 })
                 break;
             case 75:
