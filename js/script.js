@@ -374,9 +374,15 @@ window.onload = () => {
         }
     });
 
-    window.addEventListener('deviceorientation', (e) => {
+    function handleOrientation(e) {
         document.getElementById('Orientation_a').innerHTML = `Alpha: ${e.alpha}`;
         document.getElementById('Orientation_b').innerHTML = `Beta: ${e.beta}`;
         document.getElementById('Orientation_g').innerHTML = `Gamma: ${e.gamma}`;
-    });
+    }
+
+    if (DeviceMotionEvent && typeof DeviceMotionEvent.requestPermission === "function") {
+        DeviceMotionEvent.requestPermission();
+      }
+
+    window.addEventListener('deviceorientation', handleOrientation);
 }
