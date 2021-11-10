@@ -373,4 +373,15 @@ window.onload = () => {
                 break;
         }
     });
+
+    function handleOrientation(event) {
+        let x = event.beta;
+        let y = event.gamma;
+
+        console.log(x, y);
+        document.getElementById('test').innerHTML = `${x}, ${y}`;
+
+    }
+
+    addEventListener('deviceorientation', handleOrientation);
 }

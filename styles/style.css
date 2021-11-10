@@ -152,6 +152,10 @@ button:hover {
     font-weight: bolder;
 }
 
+h5 {
+    color: white;
+}
+
 @media (min-width: 320px) {
     h1 {
         font-family: Amatic SC;
