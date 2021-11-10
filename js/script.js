@@ -1,18 +1,3 @@
-function handleOrientation(event) {
-
-    let output = document.getElementById('Orientation_a');
-    // document.getElementById('Orientation_b').innerHTML = `Beta: ${e.beta}`;
-    // document.getElementById('Orientation_g').innerHTML = `Gamma: ${e.gamma}`;
-
-    let properties = '';
-    for(let prop in event) {
-        properties += prop + ": " + event[prop] + "<br>";
-    }
-    output.innerHTML = properties;
-}
-
-window.addEventListener('deviceorientation', handleOrientation);
-
 window.onload = () => {
     // Event listeners for buttons when clicked
     introCanvasFunction();
@@ -85,7 +70,7 @@ window.onload = () => {
         canvas.height = (document.documentElement.clientHeight - 5)*3;
         canvas.style.width = document.documentElement.clientWidth - 2 + 'px';
         canvas.style.height = document.documentElement.clientHeight - 5 + 'px';
-        body.style.backgroundColor = 'green';
+        body.style.backgroundColor = 'black';
         gameArea.style.display = 'flex';
 
         startGame();
@@ -319,7 +304,6 @@ window.onload = () => {
     }
 
     // Event listeners for keyboard when playing
-
     addEventListener('keydown', (e) => {
         switch(e.keyCode) {
             case 83:
