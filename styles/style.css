@@ -122,7 +122,11 @@ button:hover {
 }
 
 #astro {
-    width: 140px;
+    width: 150px;
+    margin: 20px 0;
+}
+#shootingS {
+    width: 250px;
     margin: 20px 0;
 }
 #ufo {

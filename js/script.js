@@ -8,13 +8,13 @@ window.onload = () => {
     }
 
     document.getElementById('buttonInstructions').onclick  = () => {
-        introCanvas.style.display = 'none';
+        dIntroCanvas.style.display = 'none';
         instructs.style.display = 'block';
         level.style.display = 'none';
     }
 
     document.getElementById('toLevels').onclick = () => {
-        introCanvas.style.display = 'block';
+        dIntroCanvas.style.display = 'block';
         instructs.style.display = 'none';
         level.style.display = 'block';
     }
@@ -41,7 +41,8 @@ window.onload = () => {
     }
 
     document.getElementById('toLevelsGA').onclick = () => {
-        introCanvas.style.display = 'block';
+        introCanvasFunction();
+        dIntroCanvas.style.display = 'block';
         body.style.backgroundColor = 'transparent';
         level.style.display = 'block';
         requestID = undefined;
@@ -63,7 +64,7 @@ window.onload = () => {
         powerOnTimer = k;
 
         clearInterval(intervalID);
-        introCanvas.style.display = 'none';
+        dIntroCanvas.style.display = 'none';
         level.style.display = 'none';
         canvas.width = (document.documentElement.clientWidth - 2)*3;
         canvas.height = (document.documentElement.clientHeight - 5)*3;
@@ -86,8 +87,8 @@ window.onload = () => {
         powerOn = false;
 
         firstSprite = new Sprite(300,900, spritePower, powerOnTimer);
-        firstEnemy = new Enemy(1200, 900, 190, enemySpeedMin, enemySpeedMax, enemyDirectionChangeSpeed);
-        poweritem1 = new PowerItem(700, 650, 300, powerItemSpeedMax*3, powerItemSpeedMin*3, 150);
+        firstEnemy = new Enemy(1200, 900, 190, enemySpeedMin, enemySpeedMax, enemyDirectionChangeSpeed, canvas);
+        poweritem1 = new PowerItem(700, 650, 300, powerItemSpeedMax*3, powerItemSpeedMin*3, 150, canvas, ctx);
         aStar = new Star(500, 500);
 
         firstSprite.draw();
@@ -130,6 +131,8 @@ window.onload = () => {
         gameArea.style.display = 'none';
         document.getElementById('gameOver').style.display = 'flex';
         document.getElementById('playAgainGO').onclick = () => {
+            introCanvasFunction();
+            dIntroCanvas.style.display = 'block';
             document.getElementById('gameOver').style.display = 'none';
             level.style.display = 'block';
         }
@@ -141,6 +144,8 @@ window.onload = () => {
         gameArea.style.display = 'none';
         document.getElementById('aWin').style.display = 'flex';
         document.getElementById('playAgain').onclick = () => {
+            introCanvasFunction();
+            dIntroCanvas.style.display = 'block';
             document.getElementById('aWin').style.display = 'none';
             level.style.display = 'block';
         }
@@ -192,7 +197,7 @@ window.onload = () => {
     }
 
     function createStars() {
-        for(let i = 0; i < 30; i++) {
+        for(let i = 0; i < 40; i++) {
             const x = Math.floor(Math.random() * (canvas.width + 25 - ( - 25)) + ( - 25));
             const y = Math.floor(Math.random() * (canvas.height + 25 - ( - 25)) + ( - 25));
             const aStar = new Star(x, y, 'rgb(70, 70, 70, 0.82)', 2.7, 0.6);
@@ -246,26 +251,25 @@ window.onload = () => {
         if(rightClientWindowSize()) {
             level.style.display = 'block';
         } else {
-            introCanvas.style.display = 'none'
+            dIntroCanvas.style.display = 'none'
             userInfo.style.display = 'flex';
             document.getElementById('gotit').onclick = () => {
                 userInfo.style.display = 'none';
                 level.style.display = 'block';
-                introCanvas.style.display = 'block'
+                dIntroCanvas.style.display = 'block'
             }
         }
     }
 
     function introCanvasFunction() {
-
         let anIntroAstro = new IntroAstron();
 
         intervalID = setInterval(() => {
-            introCTX.clearRect(0, 0, introCanvas.width, introCanvas.height);
+            introCTX.clearRect(0, 0, dIntroCanvas.width, dIntroCanvas.height);
 
             anIntroAstro.draw();
             anIntroAstro.position();
-        }, 10);
+        }, 40);
     }
 
     function update() {

@@ -1,10 +1,10 @@
 // Intro canvas
-const introCanvas = document.getElementById('introCanvas');
-const introCTX = introCanvas.getContext('2d');
-introCanvas.width = (200 - 2)*4;
-introCanvas.height = (130 - 2)*4;
-introCanvas.style.width = (200 - 2) + 'px';
-introCanvas.style.height = (130 - 2) + 'px';
+const dIntroCanvas = document.getElementById('introCanvas');
+const introCTX = dIntroCanvas.getContext('2d');
+dIntroCanvas.width = (document.documentElement.clientWidth - 2)*4;
+dIntroCanvas.height = (document.documentElement.clientHeight - 5)*4;
+dIntroCanvas.style.width = (document.documentElement.clientWidth - 2) + 'px';
+dIntroCanvas.style.height = (document.documentElement.clientHeight - 5) + 'px';
 
 // Main canvas
 const canvas = document.getElementById('canvas');
@@ -63,6 +63,5 @@ const instructs = document.getElementById('instructions');
 
 // introCanvas
 let intervalID;
-let anAstroN;
 let anAstroNX;
 let anAstroNY;

@@ -12,10 +12,12 @@ class Sprite {
 
         this.image = new Image();
         this.image.src = './images/13.png';
+
+        this.history = [];
     }
 
     draw() {
-        drawCircle(this.x, this.y, this.diameter, 2, this.color, this.color);
+        drawCircle(this.x, this.y, this.diameter, 2, this.color, this.color, ctx);
         ctx.drawImage(this.image, this.x - this.diameter, this.y - this.diameter, this.diameter*2, this.diameter*1.7);
     }
 
@@ -111,7 +113,7 @@ class Sprite {
 }
 
 class Enemy {
-    constructor(x, y, d, speedMin, speedMax, directionChangeSpeed) {
+    constructor(x, y, d, speedMin, speedMax, directionChangeSpeed, dCanvas) {
         this.x = x;
         this.y = y;
         this.diameter = d;
@@ -129,10 +131,11 @@ class Enemy {
         this.dirY;
 
         this.boundary = 0;
+        this.dCanvas = dCanvas;
     }
 
     draw() {
-        drawCircle(this.x, this.y, this.diameter, 2, this.color, this.color);
+        drawCircle(this.x, this.y, this.diameter, 2, this.color, this.color, ctx);
         ctx.drawImage(this.image, this.x - this.diameter/0.9, this.y - this.diameter/1.2, this.diameter*2.2, this.diameter*1.8);
     }
 
@@ -198,10 +201,12 @@ class Enemy {
 }
 
 class PowerItem extends Enemy {
-    constructor(x, y, d, speedMin, speedMax, directionChangeSpeed) {
-        super(x, y, d, speedMin, speedMax, directionChangeSpeed)
+    constructor(x, y, d, speedMin, speedMax, directionChangeSpeed, dCanvas, ctx) {
+        super(x, y, d, speedMin, speedMax, directionChangeSpeed, dCanvas)
         this.color = 'rgb(45, 201, 240)';
         this.history = [];
+        this.context = ctx;
+        this.boundary = 100;
     }
 
     trailDrawing() {
@@ -209,7 +214,7 @@ class PowerItem extends Enemy {
 
         for(let i = 0; i < this.history.length; i++) {
             let pos = this.history[i];
-            drawCircle(pos[0], pos[1], (5 + (i*1.5)), 50, 'rgb(8, 35, 53, 0.51)', `rgb(8, 35, 53, 0.81)`);
+            drawCircle(pos[0], pos[1], (5 + (i*1.5)), 50, 'rgb(8, 35, 53, 0.51)', `rgb(8, 35, 53, 0.81)`, this.context);
         }
 
         if(this.history.length > 30) {
@@ -218,7 +223,7 @@ class PowerItem extends Enemy {
     }
 
     draw() {
-        drawCircle(this.x, this.y, 15, 45, 'black', 'rgb(45, 201, 240)');
+        drawCircle(this.x, this.y, 15, 45, 'black', 'rgb(45, 201, 240)', this.context);
     }
 }
 
@@ -232,7 +237,7 @@ class AttackBullet {
     }
 
     draw() {
-        drawCircle(this.x, this.y, this.diameter, 10, this.strokeColor, this.color);
+        drawCircle(this.x, this.y, this.diameter, 10, this.strokeColor, this.color, ctx);
     }
 
     trayectory(firstEnemy, firstSprite) {
@@ -278,7 +283,7 @@ class Star {
 
     draw() {
         let size = (Math.random() * (this.maxSize + this.minSize) + this.minSize);
-        drawCircle(this.x, this.y, size, 5, this.color, this.color);
+        drawCircle(this.x, this.y, size, 5, this.color, this.color, ctx);
     }
 
     position() {
@@ -288,21 +293,21 @@ class Star {
 }
 
 // Functions
-function drawCircle(x, y, d, dLineWidth, dLineStroke, color) {
-    ctx.beginPath();
-    ctx.arc(x, y, d, 0, Math.PI*2);
-    ctx.lineWidth = dLineWidth;
-    ctx.strokeStyle = dLineStroke;
-    ctx.stroke();
-    ctx.fillStyle = color;
-    ctx.fill();
-    ctx.closePath();
+function drawCircle(x, y, d, dLineWidth, dLineStroke, color, context) {
+    context.beginPath();
+    context.arc(x, y, d, 0, Math.PI*2);
+    context.lineWidth = dLineWidth;
+    context.strokeStyle = dLineStroke;
+    context.stroke();
+    context.fillStyle = color;
+    context.fill();
+    context.closePath();
 }
 
 // Intro canvas
 class IntroAstron {
     constructor(){
-        this.x = 200;
+        this.x = document.documentElement.clientWidth*4/2 - 200;
         this.y = 49;
         this.speedY = 0;
         this.image = new Image();
@@ -314,11 +319,11 @@ class IntroAstron {
     }
 
     position() {
-        if(this.y > 150) {
-            this.speedY = -1;
+        if(this.y > 200) {
+            this.speedY = -6;
         }
-        if(this.y < 50) {
-            this.speedY = 1;
+        if(this.y < 70) {
+            this.speedY = 6;
         }
 
         this.y += this.speedY;
