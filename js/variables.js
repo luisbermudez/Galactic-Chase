@@ -1,10 +1,10 @@
 // Intro canvas
 const introCanvas = document.getElementById('introCanvas');
 const introCTX = introCanvas.getContext('2d');
-introCanvas.width = (document.documentElement.clientWidth - 2)*4;
-introCanvas.height = (document.documentElement.clientHeight - 2)*4;
-introCanvas.style.width = (document.documentElement.clientWidth - 2) + 'px';
-introCanvas.style.height = (document.documentElement.clientHeight - 2) + 'px';
+introCanvas.width = (200 - 2)*4;
+introCanvas.height = (130 - 2)*4;
+introCanvas.style.width = (200 - 2) + 'px';
+introCanvas.style.height = (130 - 2) + 'px';
 
 // Main canvas
 const canvas = document.getElementById('canvas');

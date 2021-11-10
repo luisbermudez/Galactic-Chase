@@ -1,6 +1,5 @@
 window.onload = () => {
     // Event listeners for buttons when clicked
-    window.onresize = setCanvasSize;
     introCanvasFunction();
 
     document.getElementById('start').onclick = () => {
@@ -24,21 +23,21 @@ window.onload = () => {
         if(requestID) {
             return;
         }
-        arenaSetup(4, 2, 190, 4, 3.5, 5, 60, 370, 4, 3, 3000);
+        arenaSetup(5, 2, 190, 5, 3.5, 3, 10, 370, 4, 3, 3000);
     }
 
     document.getElementById('medium').onclick = () => {
         if(requestID) {
             return;
         }
-        arenaSetup(5, 2, 150, 5, 4, 4, 50, 370, 4, 3, 3000);
+        arenaSetup(6, 2, 150, 3, 4, 4, 90, 370, 4, 3, 3000);
     }
     
     document.getElementById('spicy').onclick = () => {
         if(requestID) {
             return;
         }
-        arenaSetup(6, 4, 100, 4, 4, 4, 30, 370, 4, 3, 3000)
+        arenaSetup(7, 4, 100, 3, 4, 4, 90, 370, 4, 3, 3000)
     }
 
     document.getElementById('toLevelsGA').onclick = () => {
@@ -79,15 +78,15 @@ window.onload = () => {
 
     // Assignes values to variables needed to begin the game
     function startGame () {
-        frames = 0
+        frames = 0;
         introArea.style.display = 'none';
         attackItems = [];
         spriteShadowArr = [];
         startsArr = [];
         powerOn = false;
 
-        firstSprite = new Sprite(300, 600, spritePower, powerOnTimer);
-        firstEnemy = new Enemy(1200, 900, 200, enemySpeedMin, enemySpeedMax, enemyDirectionChangeSpeed);
+        firstSprite = new Sprite(300,900, spritePower, powerOnTimer);
+        firstEnemy = new Enemy(1200, 900, 190, enemySpeedMin, enemySpeedMax, enemyDirectionChangeSpeed);
         poweritem1 = new PowerItem(700, 650, 300, powerItemSpeedMax*3, powerItemSpeedMin*3, 150);
         aStar = new Star(500, 500);
 
@@ -116,10 +115,18 @@ window.onload = () => {
         }
     }
 
-    function gameOver() {
+    function reset() {
         startsArr = [];
-        body.style.backgroundColor = 'transparent';
+        attackItems = [];
+        spriteShadowArr = [];
+        enemyImpactShadow = [];
+        frames = 0;
         requestID = undefined;
+    }
+
+    function gameOver() {
+        reset();
+        body.style.backgroundColor = 'transparent';
         gameArea.style.display = 'none';
         document.getElementById('gameOver').style.display = 'flex';
         document.getElementById('playAgainGO').onclick = () => {
@@ -129,9 +136,8 @@ window.onload = () => {
     }
 
     function aWin() {
-        startsArr = [];
+        reset()
         body.style.backgroundColor = 'transparent';
-        requestID = undefined;
         gameArea.style.display = 'none';
         document.getElementById('aWin').style.display = 'flex';
         document.getElementById('playAgain').onclick = () => {
@@ -199,6 +205,13 @@ window.onload = () => {
             const aStar = new Star(x, y, 'rgba(100, 100, 100, 0.75)', 4.5, 1);
             startsArr.push(aStar);
         }
+
+        for(let i = 0; i < 3; i++) {
+            const x = Math.floor(Math.random() * (canvas.width + 25 - ( - 25)) + ( - 25));
+            const y = Math.floor(Math.random() * (canvas.height + 25 - ( - 25)) + ( - 25));
+            const aStar = new Star(x, y, 'rgba(100, 100, 100, 0.75)', 5.5, 3);
+            startsArr.push(aStar);
+        }
     }
 
     function drawStars() {
@@ -229,22 +242,16 @@ window.onload = () => {
         });
     }
 
-    function setCanvasSize() {
-        introCanvas.width = document.documentElement.clientWidth - 2;
-        introCanvas.height = document.documentElement.clientHeight - 2;
-
-        canvas.width = document.documentElement.clientWidth - 2;
-        canvas.height = document.documentElement.clientHeight - 5;
-    }
-
     function fullScreenMessageDisplay() {
         if(rightClientWindowSize()) {
             level.style.display = 'block';
         } else {
+            introCanvas.style.display = 'none'
             userInfo.style.display = 'flex';
             document.getElementById('gotit').onclick = () => {
                 userInfo.style.display = 'none';
                 level.style.display = 'block';
+                introCanvas.style.display = 'block'
             }
         }
     }
@@ -254,8 +261,10 @@ window.onload = () => {
         let anIntroAstro = new IntroAstron();
 
         intervalID = setInterval(() => {
-            console.log('test');
+            introCTX.clearRect(0, 0, introCanvas.width, introCanvas.height);
+
             anIntroAstro.draw();
+            anIntroAstro.position();
         }, 10);
     }
 
@@ -297,28 +306,28 @@ window.onload = () => {
                 firstSprite.speedY += 6.5;
                 firstEnemy.diameter += enemyDiameterGrowth;
                 startsArr.forEach(star => {
-                    star.speedY-= 0.3;
+                    star.speedY-= 0.4;
                 })
                 break;
             case 87:
                 firstSprite.speedY -= 6.5;
                 firstEnemy.diameter += enemyDiameterGrowth;
                 startsArr.forEach(star => {
-                    star.speedY+= 0.3;
+                    star.speedY+= 0.4;
                 })
                 break;
             case 68:
                 firstSprite.speedX += 6.5;
                 firstEnemy.diameter += enemyDiameterGrowth;
                 startsArr.forEach(star => {
-                    star.speedX-= 0.3;
+                    star.speedX-= 0.4;
                 })
                 break;
             case 65:
                 firstSprite.speedX -= 6.5;
                 firstEnemy.diameter += enemyDiameterGrowth;
                 startsArr.forEach(star => {
-                    star.speedX+= 0.3;
+                    star.speedX+= 0.4;
                 })
                 break;
             case 75:
@@ -334,25 +343,25 @@ window.onload = () => {
             case 83:
                 firstSprite.speedY = spriteZeroGravity;
                 startsArr.forEach(star => {
-                    star.speedY-= 0.3;
+                    star.speedY-= 0.4;
                 })
                 break;
             case 87:
                 firstSprite.speedY = - spriteZeroGravity;
                 startsArr.forEach(star => {
-                    star.speedY+= 0.3;
+                    star.speedY+= 0.4;
                 })
                 break;
             case 68:
                 firstSprite.speedX = spriteZeroGravity;
                 startsArr.forEach(star => {
-                    star.speedX-= 0.3;
+                    star.speedX-= 0.4;
                 })
                 break;
             case 65:
                 firstSprite.speedX = - spriteZeroGravity;
                 startsArr.forEach(star => {
-                    star.speedX+= 0.3;
+                    star.speedX+= 0.4;
                 })
                 break;
             case 75:

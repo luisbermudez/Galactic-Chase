@@ -209,7 +209,7 @@ class PowerItem extends Enemy {
 
         for(let i = 0; i < this.history.length; i++) {
             let pos = this.history[i];
-            drawCircle(pos[0], pos[1], (5 + (i*1.5)), 50, 'rgb(8, 35, 53, 0.51)', 'rgb(8, 35, 53, 0.81)');
+            drawCircle(pos[0], pos[1], (5 + (i*1.5)), 50, 'rgb(8, 35, 53, 0.51)', `rgb(8, 35, 53, 0.81)`);
         }
 
         if(this.history.length > 30) {
@@ -218,7 +218,7 @@ class PowerItem extends Enemy {
     }
 
     draw() {
-        drawCircle(this.x, this.y, 15, 15, 'black', 'rgb(45, 201, 240)');
+        drawCircle(this.x, this.y, 15, 45, 'black', 'rgb(45, 201, 240)');
     }
 }
 
@@ -246,8 +246,8 @@ class AttackBullet {
 
         trayectorySlope();
 
-        this.x += xSlope/6
-        this.y += ySlope/6
+        this.x += xSlope/4
+        this.y += ySlope/4
     }
 }
 
@@ -303,14 +303,24 @@ function drawCircle(x, y, d, dLineWidth, dLineStroke, color) {
 class IntroAstron {
     constructor(){
         this.x = 200;
-        this.y = 200;
-        this.speedX = 0;
+        this.y = 49;
         this.speedY = 0;
         this.image = new Image();
         this.image.src = './images/astro3.png';
     }
 
     draw() {
-        introCTX.drawImage(this.image, this.x, this.y, 500, 440);
+        introCTX.drawImage(this.image, this.x, this.y, 400, 340);
+    }
+
+    position() {
+        if(this.y > 150) {
+            this.speedY = -1;
+        }
+        if(this.y < 50) {
+            this.speedY = 1;
+        }
+
+        this.y += this.speedY;
     }
 }
