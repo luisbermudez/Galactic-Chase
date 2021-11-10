@@ -1,16 +1,10 @@
-if(window.DeviceOrientationEvent) {
-    document.getElementById('Orientation_a').innerHTML = `Alpha: `;
-    document.getElementById('Orientation_b').innerHTML = `Beta: `;
-    document.getElementById('Orientation_g').innerHTML = `Gamma: `;
-
-    function handleOrientation(e) {
-        document.getElementById('Orientation_a').innerHTML = `Alpha: ${e.alpha}`;
-        document.getElementById('Orientation_b').innerHTML = `Beta: ${e.beta}`;
-        document.getElementById('Orientation_g').innerHTML = `Gamma: ${e.gamma}`;
-    }
-
-    window.addEventListener('deviceorientation', handleOrientation);
+function handleOrientation(e) {
+    document.getElementById('Orientation_a').innerHTML = `Alpha: ${e.alpha}`;
+    document.getElementById('Orientation_b').innerHTML = `Beta: ${e.beta}`;
+    document.getElementById('Orientation_g').innerHTML = `Gamma: ${e.gamma}`;
 }
+
+window.addEventListener('deviceorientation', handleOrientation);
 
 window.onload = () => {
     // Event listeners for buttons when clicked
