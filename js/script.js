@@ -200,7 +200,7 @@ window.onload = () => {
         for(let i = 0; i < 40; i++) {
             const x = Math.floor(Math.random() * (canvas.width + 25 - ( - 25)) + ( - 25));
             const y = Math.floor(Math.random() * (canvas.height + 25 - ( - 25)) + ( - 25));
-            const aStar = new Star(x, y, 'rgb(70, 70, 70, 0.82)', 2.7, 0.6);
+            const aStar = new Star(x, y, 'rgb(70, 70, 70, 0.92)', 2.7, 0.6);
             startsArr.push(aStar);
         }
 
@@ -374,14 +374,9 @@ window.onload = () => {
         }
     });
 
-    function handleOrientation(event) {
-        let x = event.beta;
-        let y = event.gamma;
-
-        console.log(x, y);
-        document.getElementById('test').innerHTML = `${x}, ${y}`;
-
-    }
-
-    window.addEventListener('deviceorientation', handleOrientation);
+    window.addEventListener('deviceorientation', (e) => {
+        document.getElementById('Orientation_a').innerHTML = `Alpha: ${e.alpha}`;
+        document.getElementById('Orientation_b').innerHTML = `Beta: ${e.beta}`;
+        document.getElementById('Orientation_g').innerHTML = `Gamma: ${e.gamma}`;
+    });
 }

@@ -154,6 +154,7 @@ button:hover {
 
 h5 {
     color: white;
+    font-size: 50px;
 }
 
 @media (min-width: 320px) {
