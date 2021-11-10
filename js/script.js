@@ -70,7 +70,7 @@ window.onload = () => {
         canvas.height = (document.documentElement.clientHeight - 5)*3;
         canvas.style.width = document.documentElement.clientWidth - 2 + 'px';
         canvas.style.height = document.documentElement.clientHeight - 5 + 'px';
-        body.style.backgroundColor = 'black';
+        body.style.backgroundColor = 'green';
         gameArea.style.display = 'flex';
 
         startGame();
@@ -383,5 +383,5 @@ window.onload = () => {
 
     }
 
-    addEventListener('deviceorientation', handleOrientation);
+    window.addEventListener('deviceorientation', handleOrientation);
 }
