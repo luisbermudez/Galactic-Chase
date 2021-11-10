@@ -1,7 +1,14 @@
-function handleOrientation(e) {
-    document.getElementById('Orientation_a').innerHTML = `Alpha: ${e.alpha}`;
-    document.getElementById('Orientation_b').innerHTML = `Beta: ${e.beta}`;
-    document.getElementById('Orientation_g').innerHTML = `Gamma: ${e.gamma}`;
+function handleOrientation(event) {
+
+    let output = document.getElementById('Orientation_a');
+    // document.getElementById('Orientation_b').innerHTML = `Beta: ${e.beta}`;
+    // document.getElementById('Orientation_g').innerHTML = `Gamma: ${e.gamma}`;
+
+    let properties = '';
+    for(let prop in event) {
+        properties += prop + ": " + event[prop] + "<br>";
+    }
+    output.innerHTML = properties;
 }
 
 window.addEventListener('deviceorientation', handleOrientation);
