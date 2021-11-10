@@ -1,3 +1,17 @@
+if(window.DeviceOrientationEvent) {
+    document.getElementById('Orientation_a').innerHTML = `Alpha: `;
+    document.getElementById('Orientation_b').innerHTML = `Beta: `;
+    document.getElementById('Orientation_g').innerHTML = `Gamma: `;
+
+    function handleOrientation(e) {
+        document.getElementById('Orientation_a').innerHTML = `Alpha: ${e.alpha}`;
+        document.getElementById('Orientation_b').innerHTML = `Beta: ${e.beta}`;
+        document.getElementById('Orientation_g').innerHTML = `Gamma: ${e.gamma}`;
+    }
+
+    window.addEventListener('deviceorientation', handleOrientation);
+}
+
 window.onload = () => {
     // Event listeners for buttons when clicked
     introCanvasFunction();
@@ -304,6 +318,7 @@ window.onload = () => {
     }
 
     // Event listeners for keyboard when playing
+
     addEventListener('keydown', (e) => {
         switch(e.keyCode) {
             case 83:
@@ -373,16 +388,4 @@ window.onload = () => {
                 break;
         }
     });
-
-    function handleOrientation(e) {
-        document.getElementById('Orientation_a').innerHTML = `Alpha: ${e.alpha}`;
-        document.getElementById('Orientation_b').innerHTML = `Beta: ${e.beta}`;
-        document.getElementById('Orientation_g').innerHTML = `Gamma: ${e.gamma}`;
-    }
-
-    if (DeviceMotionEvent && typeof DeviceMotionEvent.requestPermission === "function") {
-        DeviceMotionEvent.requestPermission();
-      }
-
-    window.addEventListener('deviceorientation', handleOrientation);
 }
