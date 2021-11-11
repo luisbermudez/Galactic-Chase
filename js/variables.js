@@ -51,6 +51,7 @@ let enemyImpactShadow = [];
 let startsArr = [];
 let shootABullet = true;
 let shadowOn = false;
+let powerShadowOn = false;
 
 
 // DOM 
@@ -66,3 +67,14 @@ let intervalID;
 let anAstroNX;
 let anAstroNY;
 let introFrames = 0;
+
+// audio
+const shootSound = new Audio();
+shootSound.src = './audio/shooting.wav';
+
+const backgroundSound = new Audio();
+backgroundSound.src = './audio/backgroundSound.wav'
+backgroundSound.loop = true;
+
+const bonusSound = new Audio();
+bonusSound.src = './audio/bonus.wav';

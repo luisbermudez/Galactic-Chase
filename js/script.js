@@ -3,6 +3,7 @@ window.onload = () => {
     introCanvasFunction();
 
     document.getElementById('start').onclick = () => {
+        backgroundSound.play();
         introArea.style.display = 'none';
         fullScreenMessageDisplay();
     }
@@ -23,7 +24,7 @@ window.onload = () => {
         if(requestID) {
             return;
         }
-        arenaSetup(5, 2, 190, 5, 3.5, 4, 120, 370, 4, 3, 3000);
+        arenaSetup(5, 2, 190, 5, 3.5, 4, 120, 370, 4, 3, 6000);
     }
 
     document.getElementById('medium').onclick = () => {
@@ -41,7 +42,6 @@ window.onload = () => {
     }
 
     document.getElementById('toLevelsGA').onclick = () => {
-        introCanvasFunction();
         dIntroCanvas.style.display = 'block';
         body.style.backgroundColor = 'transparent';
         level.style.display = 'block';
@@ -63,7 +63,7 @@ window.onload = () => {
         powerItemSpeedMin = j;
         powerOnTimer = k;
 
-        clearInterval(intervalID);
+        // clearInterval(intervalID);
         dIntroCanvas.style.display = 'none';
         level.style.display = 'none';
         canvas.width = (document.documentElement.clientWidth - 2)*3;
@@ -108,10 +108,10 @@ window.onload = () => {
 
     // continuously checks the diameter of the enemy to call either aWin or gameOver
     function status() {
-        if(firstEnemy.diameter < winDiameterParameter) {
+        if(firstEnemy.radius < winDiameterParameter) {
             aWin();
         }
-        if(firstEnemy.diameter > lostDiameterParameter) {
+        if(firstEnemy.radius > lostDiameterParameter) {
             gameOver();
         }
     }
@@ -129,9 +129,9 @@ window.onload = () => {
         reset();
         body.style.backgroundColor = 'transparent';
         gameArea.style.display = 'none';
+        introCanvas.style.display = 'block';
         document.getElementById('gameOver').style.display = 'flex';
         document.getElementById('playAgainGO').onclick = () => {
-            introCanvasFunction();
             dIntroCanvas.style.display = 'block';
             document.getElementById('gameOver').style.display = 'none';
             level.style.display = 'block';
@@ -142,9 +142,9 @@ window.onload = () => {
         reset()
         body.style.backgroundColor = 'transparent';
         gameArea.style.display = 'none';
+        introCanvas.style.display = 'block';
         document.getElementById('aWin').style.display = 'flex';
         document.getElementById('playAgain').onclick = () => {
-            introCanvasFunction();
             dIntroCanvas.style.display = 'block';
             document.getElementById('aWin').style.display = 'none';
             level.style.display = 'block';
@@ -163,10 +163,11 @@ window.onload = () => {
         attackItems.forEach((bullet, index) => {
             bullet.draw();
             bullet.trayectory(firstEnemy, firstSprite);
-            if(bullet.x < firstEnemy.x + firstEnemy.diameter/3 && bullet.x > firstEnemy.x - firstEnemy.diameter/3 &&
-                bullet.y < firstEnemy.y + firstEnemy.diameter/3 && bullet.y > firstEnemy.y - firstEnemy.diameter/3) {
+            if(bullet.x < firstEnemy.x + firstEnemy.radius/3 && bullet.x > firstEnemy.x - firstEnemy.radius/3 &&
+                bullet.y < firstEnemy.y + firstEnemy.radius/3 && bullet.y > firstEnemy.y - firstEnemy.radius/3) {
+                    shootSound.cloneNode(true).play();
                     attackItems.splice(index, 1);
-                    firstEnemy.diameter -= spritePower;
+                    firstEnemy.radius -= spritePower;
                     createImpact();
                     firstSprite.x < firstEnemy.x ? firstEnemy.x += 10 : firstEnemy.x -= 10;
                     firstSprite.y < firstEnemy.y ? firstEnemy.y += 10 : firstEnemy.y -= 10;
@@ -176,8 +177,13 @@ window.onload = () => {
 
     function createShadow() {
         if(shadowOn) {
-            const aExpansiveBullet = new Shadow(firstSprite.x, firstSprite.y, 'rgba(45, 201, 240, 0.17)')
+            const aExpansiveBullet = new Shadow(firstSprite.x, firstSprite.y, 'rgba(166, 67, 196, 0.15)')
             spriteShadowArr.push(aExpansiveBullet);
+        }
+        if(powerShadowOn) {
+            bonusSound.play();
+            const powershadownOnActive = new Shadow(firstSprite.x, firstSprite.y, 'rgba(45, 201, 240, 0.16)')
+            spriteShadowArr.push(powershadownOnActive);
         }
     }
 
@@ -185,7 +191,7 @@ window.onload = () => {
         arr.forEach((bullet, index) => {
             bullet.draw();
             bullet.trayectory();
-            if(bullet.diameter > object.diameter * multip) {
+            if(bullet.radius > object.radius * multip) {
                 arr.splice(index, 1);
             }
         });
@@ -296,14 +302,14 @@ window.onload = () => {
         drawStars();
         createShadow()
         createBullets();
-        if(frames % 2000 > 1400) {
+        if(frames % 2000 > 1000) {
             poweritem1.trailDrawing();
             poweritem1.draw();
             firstSprite.power(poweritem1);
         }
         firstEnemy.draw();
         drawShadow(enemyImpactShadow, firstEnemy, 1);
-        drawShadow(spriteShadowArr, firstSprite, 2);
+        drawShadow(spriteShadowArr, firstSprite, 1.5);
         firstEnemy.randomPosition();
         firstEnemy.imageSwitch();
         poweritem1.randomPosition();
@@ -323,28 +329,28 @@ window.onload = () => {
         switch(e.keyCode) {
             case 83:
                 firstSprite.speedY += 6.5;
-                firstEnemy.diameter += enemyDiameterGrowth;
+                firstEnemy.radius += enemyDiameterGrowth;
                 startsArr.forEach(star => {
                     star.speedY-= 0.4;
                 })
                 break;
             case 87:
                 firstSprite.speedY -= 6.5;
-                firstEnemy.diameter += enemyDiameterGrowth;
+                firstEnemy.radius += enemyDiameterGrowth;
                 startsArr.forEach(star => {
                     star.speedY+= 0.4;
                 })
                 break;
             case 68:
                 firstSprite.speedX += 6.5;
-                firstEnemy.diameter += enemyDiameterGrowth;
+                firstEnemy.radius += enemyDiameterGrowth;
                 startsArr.forEach(star => {
                     star.speedX-= 0.4;
                 })
                 break;
             case 65:
                 firstSprite.speedX -= 6.5;
-                firstEnemy.diameter += enemyDiameterGrowth;
+                firstEnemy.radius += enemyDiameterGrowth;
                 startsArr.forEach(star => {
                     star.speedX+= 0.4;
                 })
