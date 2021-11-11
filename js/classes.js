@@ -185,8 +185,6 @@ class Enemy {
             this.image.src = './images/ufo3.png';
         } else if(this.dirX === '+'){
             this.image.src = './images/ufo1.png';
-        } else {
-            this.image.src = './images/ufo1.png';
         }
     }
 }
@@ -196,7 +194,7 @@ class PowerItem extends Enemy {
         super(x, y, d, speedMin, speedMax, directionChangeSpeed)
         this.color = 'rgb(45, 201, 240)';
         this.history = [];
-        this.boundary = 700;
+        this.boundary = -400;
     }
 
     trailDrawing() {
@@ -325,41 +323,30 @@ class ShootingStar {
     constructor() {
         this.x = document.documentElement.clientWidth*4/2;
         this.y = document.documentElement.clientHeight*4 - 400;
-        this.diameter = 40;
-        this.randomX = -20;
+        this.diameter = 250;
+        this.randomX = -15;
         this.randomY = -10;
         this.speedMin = 10;
-        this.speedMax = 20;
+        this.speedMax = 15;
         this.directionChangeSpeed = 100;
-        this.color = 'rgba(221, 116, 55, 0.55)';
+        this.color = 'transparent';
 
         this.dirX;
         this.dirY;
 
         this.boundary = 1000;
         this.history = [];
-    }
 
-    trailDrawing() {
-        this.history.push([this.x, this.y]);
-
-        for(let i = 0; i < this.history.length; i++) {
-            let pos = this.history[i];
-            drawCircle(pos[0], pos[1], ((this.diameter/2) + (i*2.5)), 50, 'rgb(204, 190, 163, 0.11)', `rgb(204, 190, 163, 0.51)`, introCTX);
-        }
-
-        if(this.history.length > 30) {
-            this.history.splice(0, 1);
-        }
+        this.image = new Image();
+        this.image.src = './images/ufo3.png'
     }
 
     draw() {
-        drawCircle(this.x, this.y, this.diameter, 20, 'rgba(60, 60, 60, 0.9)', this.color, introCTX);
+        drawCircle(this.x, this.y, this.diameter, 2, this.color, this.color, introCTX);
+        introCTX.drawImage(this.image, this.x - this.diameter, this.y - this.diameter, this.diameter*2, this.diameter*1.7);
     }
 
     randomPosition() {
-        console.log(this.randomX, this.randomY);
-
         let directionX = () => {
             this.dirX = Math.floor(Math.random() * 2) ? '-' : '+';
         }
@@ -401,6 +388,14 @@ class ShootingStar {
             directionX();
             directionY();
             randomNum();
+        }
+    }
+
+    imageSwitch() {
+        if(this.dirX === '-') {
+            this.image.src = './images/ufo3.png';
+        } else if(this.dirX === '+'){
+            this.image.src = './images/ufo1.png';
         }
     }
 }

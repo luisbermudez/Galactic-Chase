@@ -23,21 +23,21 @@ window.onload = () => {
         if(requestID) {
             return;
         }
-        arenaSetup(5, 2, 190, 5, 3.5, 4, 120, 350, 4, 3, 3000);
+        arenaSetup(5, 2, 190, 5, 3.5, 4, 120, 370, 4, 3, 3000);
     }
 
     document.getElementById('medium').onclick = () => {
         if(requestID) {
             return;
         }
-        arenaSetup(6, 2, 150, 3, 4, 3, 120, 350, 4, 3, 3000);
+        arenaSetup(6, 2, 150, 3, 4, 3, 120, 370, 4, 3, 3000);
     }
     
     document.getElementById('spicy').onclick = () => {
         if(requestID) {
             return;
         }
-        arenaSetup(7, 4, 100, 3, 4, 4, 120, 350, 4, 3, 3000)
+        arenaSetup(7, 4, 100, 3, 4, 4, 120, 370, 4, 3, 3000)
     }
 
     document.getElementById('toLevelsGA').onclick = () => {
@@ -200,14 +200,14 @@ window.onload = () => {
         for(let i = 0; i < 40; i++) {
             const x = Math.floor(Math.random() * (canvas.width + 25 - ( - 25)) + ( - 25));
             const y = Math.floor(Math.random() * (canvas.height + 25 - ( - 25)) + ( - 25));
-            const aStar = new Star(x, y, 'rgb(70, 70, 70, 0.92)', 2.7, 0.6);
+            const aStar = new Star(x, y, 'rgb(80, 80, 80, 0.92)', 2.7, 0.6);
             startsArr.push(aStar);
         }
 
         for(let i = 0; i < 4; i++) {
             const x = Math.floor(Math.random() * (canvas.width + 25 - ( - 25)) + ( - 25));
             const y = Math.floor(Math.random() * (canvas.height + 25 - ( - 25)) + ( - 25));
-            const aStar = new Star(x, y, 'rgba(100, 100, 100, 0.75)', 4.5, 1);
+            const aStar = new Star(x, y, 'rgba(120, 120, 120, 0.75)', 4.5, 1);
             startsArr.push(aStar);
         }
 
@@ -274,12 +274,12 @@ window.onload = () => {
             introFrames++;
             introCTX.clearRect(0, 0, dIntroCanvas.width, dIntroCanvas.height);
 
-            // aShootingStar.trailDrawing();
-            // aShootingStar.draw();
-            // aShootingStar.randomPosition();
+            aShootingStar.imageSwitch();
+            aShootingStar.draw();
+            aShootingStar.randomPosition();
             anIntroAstro.draw();
             anIntroAstro.position();
-        }, 30);
+        }, 50);
     }
 
     function update() {
@@ -296,7 +296,7 @@ window.onload = () => {
         drawStars();
         createShadow()
         createBullets();
-        if(frames % 2000 > 500) {
+        if(frames % 2000 > 1400) {
             poweritem1.trailDrawing();
             poweritem1.draw();
             firstSprite.power(poweritem1);
