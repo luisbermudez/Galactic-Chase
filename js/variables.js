@@ -11,7 +11,7 @@ const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
 // To update
-let frames = 0;
+let frames;
 let requestID;
 
 // Elements 
@@ -65,3 +65,4 @@ const instructs = document.getElementById('instructions');
 let intervalID;
 let anAstroNX;
 let anAstroNY;
+let introFrames = 0;

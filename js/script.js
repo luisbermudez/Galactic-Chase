@@ -23,21 +23,21 @@ window.onload = () => {
         if(requestID) {
             return;
         }
-        arenaSetup(5, 2, 190, 5, 3.5, 3, 10, 370, 4, 3, 3000);
+        arenaSetup(5, 2, 190, 5, 3.5, 4, 120, 350, 4, 3, 3000);
     }
 
     document.getElementById('medium').onclick = () => {
         if(requestID) {
             return;
         }
-        arenaSetup(6, 2, 150, 3, 4, 4, 90, 370, 4, 3, 3000);
+        arenaSetup(6, 2, 150, 3, 4, 3, 120, 350, 4, 3, 3000);
     }
     
     document.getElementById('spicy').onclick = () => {
         if(requestID) {
             return;
         }
-        arenaSetup(7, 4, 100, 3, 4, 4, 90, 370, 4, 3, 3000)
+        arenaSetup(7, 4, 100, 3, 4, 4, 120, 350, 4, 3, 3000)
     }
 
     document.getElementById('toLevelsGA').onclick = () => {
@@ -87,8 +87,8 @@ window.onload = () => {
         powerOn = false;
 
         firstSprite = new Sprite(300,900, spritePower, powerOnTimer);
-        firstEnemy = new Enemy(1200, 900, 190, enemySpeedMin, enemySpeedMax, enemyDirectionChangeSpeed, canvas);
-        poweritem1 = new PowerItem(700, 650, 300, powerItemSpeedMax*3, powerItemSpeedMin*3, 150, canvas, ctx);
+        firstEnemy = new Enemy(500, 300, 200, enemySpeedMin, enemySpeedMax, enemyDirectionChangeSpeed);
+        poweritem1 = new PowerItem(700, 650, 15, powerItemSpeedMax*3, powerItemSpeedMin*3, 150);
         aStar = new Star(500, 500);
 
         firstSprite.draw();
@@ -263,16 +263,31 @@ window.onload = () => {
 
     function introCanvasFunction() {
         let anIntroAstro = new IntroAstron();
+        let aShootingStar = new ShootingStar();
 
         intervalID = setInterval(() => {
+            dIntroCanvas.width = (document.documentElement.clientWidth - 2)*4;
+            dIntroCanvas.height = (document.documentElement.clientHeight - 5)*4;
+            dIntroCanvas.style.width = (document.documentElement.clientWidth - 2) + 'px';
+            dIntroCanvas.style.height = (document.documentElement.clientHeight - 5) + 'px';
+
+            introFrames++;
             introCTX.clearRect(0, 0, dIntroCanvas.width, dIntroCanvas.height);
 
+            // aShootingStar.trailDrawing();
+            // aShootingStar.draw();
+            // aShootingStar.randomPosition();
             anIntroAstro.draw();
             anIntroAstro.position();
-        }, 40);
+        }, 30);
     }
 
     function update() {
+        canvas.width = (document.documentElement.clientWidth - 2)*3;
+        canvas.height = (document.documentElement.clientHeight - 5)*3;
+        canvas.style.width = document.documentElement.clientWidth - 2 + 'px';
+        canvas.style.height = document.documentElement.clientHeight - 5 + 'px';
+
         frames++;
         ctx.fillStyle = "black";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -281,7 +296,7 @@ window.onload = () => {
         drawStars();
         createShadow()
         createBullets();
-        if(frames % 1800 > 1100) {
+        if(frames % 2000 > 500) {
             poweritem1.trailDrawing();
             poweritem1.draw();
             firstSprite.power(poweritem1);

@@ -9,6 +9,7 @@ class Sprite {
         this.powerOfAttack = powerOfAttack;
         this.powerActive = false;
         this.powerOnTimer = powerOnTimer;
+        this.boundary = 50;
 
         this.image = new Image();
         this.image.src = './images/13.png';
@@ -25,26 +26,19 @@ class Sprite {
         this.y += this.speedY;
         this.x += this.speedX;
 
-        if(this.y < this.diameter + 40) {
-            this.y = this.diameter + 40;
-        }
-        if(this.y > canvas.height - this.diameter - 40) {
-            this.y = canvas.height - this.diameter - 40;
-        }
-        if(this.x < this.diameter + 40) {
-            this.x = this.diameter + 40;
-        }
-        if(this.x > canvas.width - this.diameter - 40) {
-            this.x = canvas.width - this.diameter - 40;
-        }
+        if(this.y < this.diameter + this.boundary) {
+            this.y = this.diameter + this.boundary;}
+        if(this.y > canvas.height - this.diameter - this.boundary) {
+            this.y = canvas.height - this.diameter - this.boundary;}
+        if(this.x < this.diameter + this.boundary) {
+            this.x = this.diameter + this.boundary;}
+        if(this.x > canvas.width - this.diameter - this.boundary) {
+            this.x = canvas.width - this.diameter - this.boundary;}
 
-        console.log(this.x);
         if(this.speedX > 1) {
             this.image.src = './images/right.png';
         } else if(this.speedX < -1) {
             this.image.src = './images/left.png';
-        } else if(this.x === 85 || this.x === canvas.width - 85) {
-            this.image.src = './images/13.png';
         }
     }
 
@@ -72,13 +66,11 @@ class Sprite {
 
     power(powerItem) {
         if(
-            this.x - this.diameter < powerItem.x + powerItem.diameter/3.7 && 
-            this.x + this.diameter > powerItem.x - powerItem.diameter/3.7 &&
-            this.y - this.diameter < powerItem.y + powerItem.diameter/3.7 &&
-            this.y + this.diameter > powerItem.y - powerItem.diameter/3.7
+            this.x - this.diameter < powerItem.x + powerItem.diameter && 
+            this.x + this.diameter > powerItem.x - powerItem.diameter &&
+            this.y - this.diameter < powerItem.y + powerItem.diameter &&
+            this.y + this.diameter > powerItem.y - powerItem.diameter
         ) {
-            // this.color = 'rgb(184, 81, 166)';
-            // this.image.src = './images/134.png';
             powerOn = true;
             shadowOn = true;
             this.deactivatePower();
@@ -113,11 +105,11 @@ class Sprite {
 }
 
 class Enemy {
-    constructor(x, y, d, speedMin, speedMax, directionChangeSpeed, dCanvas) {
+    constructor(x, y, d, speedMin, speedMax, directionChangeSpeed) {
         this.x = x;
         this.y = y;
         this.diameter = d;
-        this.randomX = -2;
+        this.randomX = 8;
         this.randomY = 2;
         this.speedMin = speedMin;
         this.speedMax = speedMax;
@@ -125,13 +117,12 @@ class Enemy {
         this.color = 'transparent';
 
         this.image = new Image();
-        this.image.src = './images/ufo3.png';
+        this.image.src = './images/ufo1.png';
 
         this.dirX;
         this.dirY;
 
-        this.boundary = 0;
-        this.dCanvas = dCanvas;
+        this.boundary = -100;
     }
 
     draw() {
@@ -157,7 +148,7 @@ class Enemy {
             this.randomY = Number(this.dirY + Math.floor(Math.random() * (this.speedMax) + this.speedMin));
         }
 
-        // changes the trayectory every directionChangeSpeed value
+        // changes the trayectory every period-of-time (directionChangeSpeed) value
         if(frames % this.directionChangeSpeed === 0) {
             directionX();
             directionY();
@@ -195,18 +186,17 @@ class Enemy {
         } else if(this.dirX === '+'){
             this.image.src = './images/ufo1.png';
         } else {
-            this.image.src = './images/ufo3.png';
+            this.image.src = './images/ufo1.png';
         }
     }
 }
 
 class PowerItem extends Enemy {
-    constructor(x, y, d, speedMin, speedMax, directionChangeSpeed, dCanvas, ctx) {
-        super(x, y, d, speedMin, speedMax, directionChangeSpeed, dCanvas)
+    constructor(x, y, d, speedMin, speedMax, directionChangeSpeed) {
+        super(x, y, d, speedMin, speedMax, directionChangeSpeed)
         this.color = 'rgb(45, 201, 240)';
         this.history = [];
-        this.context = ctx;
-        this.boundary = 100;
+        this.boundary = 700;
     }
 
     trailDrawing() {
@@ -214,7 +204,7 @@ class PowerItem extends Enemy {
 
         for(let i = 0; i < this.history.length; i++) {
             let pos = this.history[i];
-            drawCircle(pos[0], pos[1], (5 + (i*1.5)), 50, 'rgb(8, 35, 53, 0.51)', `rgb(8, 35, 53, 0.81)`, this.context);
+            drawCircle(pos[0], pos[1], ((this.diameter/3) + (i*1.5)), 50, 'rgb(8, 35, 53, 0.51)', `rgb(8, 35, 53, 0.81)`, ctx);
         }
 
         if(this.history.length > 30) {
@@ -223,7 +213,7 @@ class PowerItem extends Enemy {
     }
 
     draw() {
-        drawCircle(this.x, this.y, 15, 45, 'black', 'rgb(45, 201, 240)', this.context);
+        drawCircle(this.x, this.y, this.diameter, 45, 'black', 'rgb(45, 201, 240)', ctx);
     }
 }
 
@@ -327,5 +317,90 @@ class IntroAstron {
         }
 
         this.y += this.speedY;
+        this.x = document.documentElement.clientWidth*4/2 - 200;
+    }
+}
+
+class ShootingStar {
+    constructor() {
+        this.x = document.documentElement.clientWidth*4/2;
+        this.y = document.documentElement.clientHeight*4 - 400;
+        this.diameter = 40;
+        this.randomX = -20;
+        this.randomY = -10;
+        this.speedMin = 10;
+        this.speedMax = 20;
+        this.directionChangeSpeed = 100;
+        this.color = 'rgba(221, 116, 55, 0.55)';
+
+        this.dirX;
+        this.dirY;
+
+        this.boundary = 1000;
+        this.history = [];
+    }
+
+    trailDrawing() {
+        this.history.push([this.x, this.y]);
+
+        for(let i = 0; i < this.history.length; i++) {
+            let pos = this.history[i];
+            drawCircle(pos[0], pos[1], ((this.diameter/2) + (i*2.5)), 50, 'rgb(204, 190, 163, 0.11)', `rgb(204, 190, 163, 0.51)`, introCTX);
+        }
+
+        if(this.history.length > 30) {
+            this.history.splice(0, 1);
+        }
+    }
+
+    draw() {
+        drawCircle(this.x, this.y, this.diameter, 20, 'rgba(60, 60, 60, 0.9)', this.color, introCTX);
+    }
+
+    randomPosition() {
+        console.log(this.randomX, this.randomY);
+
+        let directionX = () => {
+            this.dirX = Math.floor(Math.random() * 2) ? '-' : '+';
+        }
+
+        let directionY = () => {
+            this.dirY = Math.floor(Math.random() * 2) ? '-' : '+';
+        }
+
+        let randomNum = () => {
+            this.randomX = Number(this.dirX + Math.floor(Math.random() * (this.speedMax) + this.speedMin));
+            this.randomY = Number(this.dirY + Math.floor(Math.random() * (this.speedMax) + this.speedMin));
+        }
+
+        if(this.x + this.boundary < 300) {
+            this.dirX = '+';
+            directionY();
+            randomNum();
+        }
+        if(this.x > dIntroCanvas.width + this.boundary - 300) {
+            this.dirX = '-';
+            directionY();
+            randomNum();
+        }
+        if(this.y + this.boundary < 300) {
+            this.dirY = '+';
+            directionX();
+            randomNum();
+        }
+        if(this.y > dIntroCanvas.height + this.boundary - 300) {
+            this.dirY = '-';
+            directionX();
+            randomNum();
+        }
+
+        this.x += this.randomX;
+        this.y += this.randomY;
+
+        if(introFrames % this.directionChangeSpeed === 0) {
+            directionX();
+            directionY();
+            randomNum();
+        }
     }
 }
