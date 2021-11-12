@@ -123,13 +123,20 @@ class Enemy {
     }
 
     drawPower() {
+        if(powerOn) {
+            dUFOPower = false;
+            return
+        };
         ctx.beginPath();
+        ctx.restore();
         ctx.arc(this.x, this.y, this.radius + 200, (Math.PI/180)*70, (Math.PI/180)*110);
-        ctx.fillStyle = 'rgba(192, 228, 151, 0.21)';
+        ctx.fillStyle = 'rgba(164, 224, 22, 0.11)';
+        ctx.lineWidth = 0;
         ctx.stroke();
         ctx.lineTo(this.x, this.y);
         ctx.stroke();
         ctx.fill();
+        ctx.save();
         ctx.closePath();
     }
 
@@ -252,8 +259,6 @@ class AttackBullet {
         }
 
         trayectorySlope();
-
-        
     }
 }
 

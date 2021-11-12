@@ -92,5 +92,5 @@ bulletAbd.src = './audio/bulletAbd.wav';
 const aWinSound = new Audio();
 aWinSound.src = './audio/aWin.wav';
 
-const loseSound = new Audio();
-loseSound.src = './audio/lose.wav';
+const ufoPower = new Audio();
+ufoPower.src = './audio/UFOpower.wav'

@@ -6,7 +6,7 @@ html, body {
     padding: 0;
 }
 
-#introArea, #info, #gameArea, #aWin, #gameOver, #instructions div, #dirTrayect {
+#introArea, #info, #gameArea, #aWin, #gameOver, #instructions div, #dirTrayect, #level {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -22,10 +22,18 @@ span {
     font-weight: bolder;
 }
 
+h1 {
+    background-color: rgb(164, 224, 22);
+    background-color: rgba(255, 255, 255, 0.534);
+    padding: 0 30px;
+    border-radius: 30px;
+    margin: 160px 0 0;
+}
+
 h4 {
-    font-size: 45px;
+    font-size: 40px;
     text-align: center;
-    margin: 0 auto;
+    margin: 0 20px;
     padding: 0;
     width: 260px;
 }
@@ -33,8 +41,7 @@ h4 {
 h3 {
     font-size: 65px;
     text-align: center;
-    padding: 150px 0 30px;
-    margin: 0 50px;
+    margin: 0 auto;
 }
 
 #gotit {
@@ -124,7 +131,7 @@ button:hover {
     margin: 20px 0;
 }
 #shootingS, #greenLight {
-    width: 290px;
+    width: 250px;
     margin: 20px 0;
 }
 #ufo {
@@ -164,22 +171,29 @@ h5 {
 }
 #gameOver h3, #aWin h3 {
     padding: 20px;
-    font-size: 170px;
     border: 6px solid black;
     border-radius: 50px;
-    background-color: rgba(223, 33, 74, 0.39);
+    background-color: rgba(206, 34, 105, 0.562);
     color: black;
 }
 #aWin h3 {
-    background-color: rgba(105, 19, 163, 0.473);
+    background-color: rgba(33, 224, 199, 0.637);
+}
+
+#level {
+    padding-top: 150px;
+}
+
+#level h3 {
+    background-color: rgba(255, 255, 255, 0.534);
+    padding: 0 30px;
+    border-radius: 30px;
 }
 
 @media (min-width: 320px) {
     h1 {
         font-family: Amatic SC;
         font-size: 65px;
-        margin: 190px 0 0;
-        padding: 0;
     }
 
     button {
@@ -191,14 +205,17 @@ h5 {
         font-size: 50px;
         border-radius: 20px;
     }
+    #gameOver h3, #aWin h3 {
+        font-size: 50px;
+        border-width: 3px;
+    }
 }
 
 @media (min-width: 760px) {
     h1 {
         font-family: Amatic SC;
         font-size: 140px;
-        margin: 140px 0 0;
-        padding: 0;
+        margin: 170px 0 0;
     }
 
     h4 {
@@ -222,14 +239,23 @@ h5 {
     #fullScreen {
         padding: 150px 0 30px;
     }
+    #gameOver h3, #aWin h3 {
+        font-size: 80px;
+        border-width: 3px;
+    }
+    #shootingS, #greenLight {
+        width: 290px;
+    }
 }
 
 
 @media (min-width: 1000px) {
     h1 {
         font-family: Amatic SC;
-        font-size: 190px;
-        margin: 140px 0 0;
-        padding: 0;
+        font-size: 170px;
+    }
+    #gameOver h3, #aWin h3 {
+        font-size: 160px;
+        border-width: 3px;
     }
 }
