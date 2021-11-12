@@ -43,7 +43,6 @@ h3 {
 
 button {
     margin: 20px 0;
-    background-color: rgb(166, 67, 196);
     background-color: rgb(46, 46, 46);
     font-family: Amatic SC;
     font-size: 56px;
@@ -124,8 +123,8 @@ button:hover {
     width: 150px;
     margin: 20px 0;
 }
-#shootingS {
-    width: 250px;
+#shootingS, #greenLight {
+    width: 290px;
     margin: 20px 0;
 }
 #ufo {
@@ -158,6 +157,21 @@ h5 {
 
 #fullScreen {
     padding: 80px 0 30px;
+}
+
+#gameOver, #aWin {
+    padding-top: 170px;
+}
+#gameOver h3, #aWin h3 {
+    padding: 20px;
+    font-size: 170px;
+    border: 6px solid black;
+    border-radius: 50px;
+    background-color: rgba(223, 33, 74, 0.39);
+    color: black;
+}
+#aWin h3 {
+    background-color: rgba(105, 19, 163, 0.473);
 }
 
 @media (min-width: 320px) {

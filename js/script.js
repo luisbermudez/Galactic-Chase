@@ -3,18 +3,21 @@ window.onload = () => {
     introCanvasFunction();
 
     document.getElementById('start').onclick = () => {
+        buttonSound.play();
         backgroundSound.play();
         introArea.style.display = 'none';
         fullScreenMessageDisplay();
     }
 
     document.getElementById('buttonInstructions').onclick  = () => {
+        buttonSound.play();
         dIntroCanvas.style.display = 'none';
         instructs.style.display = 'block';
         level.style.display = 'none';
     }
 
     document.getElementById('toLevels').onclick = () => {
+        buttonSound.play();
         dIntroCanvas.style.display = 'block';
         instructs.style.display = 'none';
         level.style.display = 'block';
@@ -24,24 +27,25 @@ window.onload = () => {
         if(requestID) {
             return;
         }
-        arenaSetup(5, 2, 190, 5, 3.5, 4, 120, 370, 4, 3, 6000);
+        arenaSetup(5, 3, 190, 2, 3.5, 2.3, 170, 370, 4, 3, 3000);
     }
 
     document.getElementById('medium').onclick = () => {
         if(requestID) {
             return;
         }
-        arenaSetup(6, 2, 150, 3, 4, 3, 120, 370, 4, 3, 3000);
+        arenaSetup(6, 3, 170, 2.5, 4, 2.5, 170, 370, 4, 3, 3000);
     }
     
     document.getElementById('spicy').onclick = () => {
         if(requestID) {
             return;
         }
-        arenaSetup(7, 4, 100, 3, 4, 4, 120, 370, 4, 3, 3000)
+        arenaSetup(7, 4, 200, 2.5, 4, 2, 170, 370, 4, 3, 5000)
     }
 
     document.getElementById('toLevelsGA').onclick = () => {
+        levelSelectSound.cloneNode(true).play();
         dIntroCanvas.style.display = 'block';
         body.style.backgroundColor = 'transparent';
         level.style.display = 'block';
@@ -51,6 +55,7 @@ window.onload = () => {
 
     // This modulates the game level of difficulty
     let arenaSetup = (a, b, c, d, e, f, g, h, i, j, k) => {
+        levelSelectSound.cloneNode(true).play();
         enemySpeedMax = a;
         enemySpeedMin = b;
         enemyDirectionChangeSpeed = c;
@@ -87,7 +92,7 @@ window.onload = () => {
         powerOn = false;
 
         firstSprite = new Sprite(300,900, spritePower, powerOnTimer);
-        firstEnemy = new Enemy(500, 300, 200, enemySpeedMin, enemySpeedMax, enemyDirectionChangeSpeed);
+        firstEnemy = new Enemy(500, 300, 240, enemySpeedMin, enemySpeedMax, enemyDirectionChangeSpeed);
         poweritem1 = new PowerItem(700, 650, 15, powerItemSpeedMax*3, powerItemSpeedMin*3, 150);
         aStar = new Star(500, 500);
 
@@ -126,12 +131,14 @@ window.onload = () => {
     }
 
     function gameOver() {
+        loseSound.play();
         reset();
         body.style.backgroundColor = 'transparent';
         gameArea.style.display = 'none';
         introCanvas.style.display = 'block';
         document.getElementById('gameOver').style.display = 'flex';
         document.getElementById('playAgainGO').onclick = () => {
+            buttonSound.play();
             dIntroCanvas.style.display = 'block';
             document.getElementById('gameOver').style.display = 'none';
             level.style.display = 'block';
@@ -139,12 +146,14 @@ window.onload = () => {
     }
 
     function aWin() {
+        aWinSound.play();
         reset()
         body.style.backgroundColor = 'transparent';
         gameArea.style.display = 'none';
         introCanvas.style.display = 'block';
         document.getElementById('aWin').style.display = 'flex';
         document.getElementById('playAgain').onclick = () => {
+            buttonSound.play();
             dIntroCanvas.style.display = 'block';
             document.getElementById('aWin').style.display = 'none';
             level.style.display = 'block';
@@ -160,24 +169,37 @@ window.onload = () => {
     }
 
     function drawBullets() {
-        attackItems.forEach((bullet, index) => {
-            bullet.draw();
-            bullet.trayectory(firstEnemy, firstSprite);
-            if(bullet.x < firstEnemy.x + firstEnemy.radius/3 && bullet.x > firstEnemy.x - firstEnemy.radius/3 &&
-                bullet.y < firstEnemy.y + firstEnemy.radius/3 && bullet.y > firstEnemy.y - firstEnemy.radius/3) {
-                    shootSound.cloneNode(true).play();
-                    attackItems.splice(index, 1);
-                    firstEnemy.radius -= spritePower;
-                    createImpact();
-                    firstSprite.x < firstEnemy.x ? firstEnemy.x += 10 : firstEnemy.x -= 10;
-                    firstSprite.y < firstEnemy.y ? firstEnemy.y += 10 : firstEnemy.y -= 10;
-                }
-        });
+        if(dUFOPower && !powerOn) {
+            attackItems.forEach((bullet, index) => {
+                bullet.draw();
+                bullet.trayectory(firstEnemy, firstSprite);
+                if(bullet.x < firstEnemy.x + firstEnemy.radius/3 && bullet.x > firstEnemy.x - firstEnemy.radius/3 &&
+                    bullet.y < (firstEnemy.y + firstEnemy.radius*1.5) + firstEnemy.radius/3 && bullet.y > (firstEnemy.y + firstEnemy.radius*1.5) - firstEnemy.radius/3) {
+                        bulletAbd.cloneNode(true).play();
+                        attackItems.splice(index, 1);
+                        firstEnemy.radius += spritePower*3;
+                    }
+            });
+        } else {
+            attackItems.forEach((bullet, index) => {
+                bullet.draw();
+                bullet.trayectory(firstEnemy, firstSprite);
+                if(bullet.x < firstEnemy.x + firstEnemy.radius/3 && bullet.x > firstEnemy.x - firstEnemy.radius/3 &&
+                    bullet.y < firstEnemy.y + firstEnemy.radius/3 && bullet.y > firstEnemy.y - firstEnemy.radius/3) {
+                        shootSound.cloneNode(true).play();
+                        attackItems.splice(index, 1);
+                        firstEnemy.radius -= spritePower;
+                        createImpact();
+                        firstSprite.x < firstEnemy.x ? firstEnemy.x += 10 : firstEnemy.x -= 10;
+                        firstSprite.y < firstEnemy.y ? firstEnemy.y += 10 : firstEnemy.y -= 10;
+                    }
+            });
+        }
     }
 
     function createShadow() {
         if(shadowOn) {
-            const aExpansiveBullet = new Shadow(firstSprite.x, firstSprite.y, 'rgba(166, 67, 196, 0.15)')
+            const aExpansiveBullet = new Shadow(firstSprite.x, firstSprite.y, 'rgba(220, 77, 233, 0.19)')
             spriteShadowArr.push(aExpansiveBullet);
         }
         if(powerShadowOn) {
@@ -260,6 +282,7 @@ window.onload = () => {
             dIntroCanvas.style.display = 'none'
             userInfo.style.display = 'flex';
             document.getElementById('gotit').onclick = () => {
+                buttonSound.play();
                 userInfo.style.display = 'none';
                 level.style.display = 'block';
                 dIntroCanvas.style.display = 'block'
@@ -285,7 +308,7 @@ window.onload = () => {
             aShootingStar.randomPosition();
             anIntroAstro.draw();
             anIntroAstro.position();
-        }, 50);
+        }, 60);
     }
 
     function update() {
@@ -307,6 +330,10 @@ window.onload = () => {
             poweritem1.draw();
             firstSprite.power(poweritem1);
         }
+        if(frames % 1700 > 1500) {
+            firstEnemy.drawPower();
+            dUFOPower = true;
+        } else {dUFOPower = false;}
         firstEnemy.draw();
         drawShadow(enemyImpactShadow, firstEnemy, 1);
         drawShadow(spriteShadowArr, firstSprite, 1.5);
@@ -331,34 +358,37 @@ window.onload = () => {
                 firstSprite.speedY += 6.5;
                 firstEnemy.radius += enemyDiameterGrowth;
                 startsArr.forEach(star => {
-                    star.speedY-= 0.4;
+                    star.speedY-= 0.6;
                 })
                 break;
             case 87:
                 firstSprite.speedY -= 6.5;
                 firstEnemy.radius += enemyDiameterGrowth;
                 startsArr.forEach(star => {
-                    star.speedY+= 0.4;
+                    star.speedY+= 0.6;
                 })
                 break;
             case 68:
                 firstSprite.speedX += 6.5;
                 firstEnemy.radius += enemyDiameterGrowth;
                 startsArr.forEach(star => {
-                    star.speedX-= 0.4;
+                    star.speedX-= 0.6;
                 })
                 break;
             case 65:
                 firstSprite.speedX -= 6.5;
                 firstEnemy.radius += enemyDiameterGrowth;
                 startsArr.forEach(star => {
-                    star.speedX+= 0.4;
+                    star.speedX+= 0.6;
                 })
                 break;
             case 75:
                 firstSprite.attack(firstEnemy);
                 if (!shootABullet) return;
                 shootABullet = false;
+                break;
+            case 192:
+                aWin();
                 break;
         }
     });
@@ -368,25 +398,25 @@ window.onload = () => {
             case 83:
                 firstSprite.speedY = spriteZeroGravity;
                 startsArr.forEach(star => {
-                    star.speedY-= 0.4;
+                    star.speedY-= 0.6;
                 })
                 break;
             case 87:
                 firstSprite.speedY = - spriteZeroGravity;
                 startsArr.forEach(star => {
-                    star.speedY+= 0.4;
+                    star.speedY+= 0.6;
                 })
                 break;
             case 68:
                 firstSprite.speedX = spriteZeroGravity;
                 startsArr.forEach(star => {
-                    star.speedX-= 0.4;
+                    star.speedX-= 0.6;
                 })
                 break;
             case 65:
                 firstSprite.speedX = - spriteZeroGravity;
                 startsArr.forEach(star => {
-                    star.speedX+= 0.4;
+                    star.speedX+= 0.6;
                 })
                 break;
             case 75:

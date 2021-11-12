@@ -10,11 +10,8 @@ class Sprite {
         this.powerActive = false;
         this.powerOnTimer = powerOnTimer;
         this.boundary = 50;
-
         this.image = new Image();
         this.image.src = './images/13.png';
-
-        this.history = [];
     }
 
     draw() {
@@ -65,26 +62,18 @@ class Sprite {
     }
 
     power(powerItem) {
-        if(
-            this.x - this.radius < powerItem.x + powerItem.radius && 
-            this.x + this.radius > powerItem.x - powerItem.radius &&
-            this.y - this.radius < powerItem.y + powerItem.radius &&
-            this.y + this.radius > powerItem.y - powerItem.radius
-        ) {
+        if(collisionDetector(this, powerItem)) {
+            if(powerShadowOn) {return};
+
             powerOn = true;
-            // shadowOn = true;
+            shadowOn = true;
             powerShadowOn = true;
             this.deactivatePower();
         }
     }
 
     overEnemy(enemy) {
-        if(
-            this.x - this.radius < enemy.x + enemy.radius && 
-            this.x + this.radius > enemy.x - enemy.radius &&
-            this.y - this.radius < enemy.y + enemy.radius &&
-            this.y + this.radius > enemy.y - enemy.radius
-        ) {
+        if(collisionDetector(this, enemy)) {
             if(powerOn) {
                 powerOn = true;
                 shadowOn = false;
@@ -102,7 +91,6 @@ class Sprite {
                 overAndReady = false;
                 bulletReady = false;
                 shadowOn = false;
-                powerShadowOn = false;
             }
         }
     }
@@ -132,6 +120,17 @@ class Enemy {
     draw() {
         drawCircle(this.x, this.y, this.radius, 2, this.color, this.color, ctx);
         ctx.drawImage(this.image, this.x - this.radius/0.9, this.y - this.radius/1.2, this.radius*2.2, this.radius*1.8);
+    }
+
+    drawPower() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius + 200, (Math.PI/180)*70, (Math.PI/180)*110);
+        ctx.fillStyle = 'rgba(192, 228, 151, 0.21)';
+        ctx.stroke();
+        ctx.lineTo(this.x, this.y);
+        ctx.stroke();
+        ctx.fill();
+        ctx.closePath();
     }
 
     randomPosition() {
@@ -206,7 +205,7 @@ class PowerItem extends Enemy {
 
         for(let i = 0; i < this.history.length; i++) {
             let pos = this.history[i];
-            drawCircle(pos[0], pos[1], ((this.radius/3) + (i*1.5)), 50, 'rgb(8, 35, 53, 0.51)', `rgb(8, 35, 53, 0.81)`, ctx);
+            drawCircle(pos[0], pos[1], ((this.radius/3) + (i*2.5)), 60, 'rgb(9, 37, 58, 0.25)', `rgb(5, 19, 29, 0.15)`, ctx);
         }
 
         if(this.history.length > 30) {
@@ -215,7 +214,7 @@ class PowerItem extends Enemy {
     }
 
     draw() {
-        drawCircle(this.x, this.y, this.radius, 45, 'black', 'rgb(45, 201, 240)', ctx);
+        drawCircle(this.x, this.y, this.radius, 35, 'black', 'rgb(45, 201, 240)', ctx);
     }
 }
 
@@ -229,7 +228,7 @@ class AttackBullet {
     }
 
     draw() {
-        drawCircle(this.x, this.y, this.radius, 10, this.strokeColor, this.color, ctx);
+        drawCircle(this.x, this.y, this.radius, 20, this.strokeColor, this.color, ctx);
     }
 
     trayectory(firstEnemy, firstSprite) {
@@ -237,14 +236,24 @@ class AttackBullet {
         let ySlope;
 
         let trayectorySlope = () => {
-            xSlope = firstEnemy.x - this.x;
-            ySlope = firstEnemy.y - this.y;
+            if(dUFOPower && !powerOn) {
+                xSlope = firstEnemy.x - this.x;
+                ySlope = (firstEnemy.y + firstEnemy.radius*1.7) - this.y;
+
+                this.x += xSlope/10
+                this.y += ySlope/10
+            } else {
+                xSlope = firstEnemy.x - this.x;
+                ySlope = firstEnemy.y - this.y;
+
+                this.x += xSlope/4
+                this.y += ySlope/4
+            }
         }
 
         trayectorySlope();
 
-        this.x += xSlope/4
-        this.y += ySlope/4
+        
     }
 }
 
@@ -294,6 +303,15 @@ function drawCircle(x, y, d, dLineWidth, dLineStroke, color, context) {
     context.fillStyle = color;
     context.fill();
     context.closePath();
+}
+
+function collisionDetector(itself, object) {
+    return (
+        itself.x - itself.radius < object.x + object.radius && 
+        itself.x + itself.radius > object.x - object.radius &&
+        itself.y - itself.radius < object.y + object.radius &&
+        itself.y + itself.radius > object.y - object.radius
+    )
 }
 
 // Intro canvas

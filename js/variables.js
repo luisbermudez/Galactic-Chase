@@ -29,6 +29,7 @@ let enemySpeedMax;
 let enemySpeedMin;
 let enemyDirectionChangeSpeed;
 let enemyDiameterGrowth;
+let dUFOPower = false;
 
 // Sprite different level values
 let spriteZeroGravity;
@@ -78,3 +79,18 @@ backgroundSound.loop = true;
 
 const bonusSound = new Audio();
 bonusSound.src = './audio/bonus.wav';
+
+const levelSelectSound = new Audio();
+levelSelectSound.src = './audio/levelSelect.wav';
+
+const buttonSound = new Audio();
+buttonSound.src = './audio/shooting.wav';
+
+const bulletAbd = new Audio();
+bulletAbd.src = './audio/bulletAbd.wav';
+
+const aWinSound = new Audio();
+aWinSound.src = './audio/aWin.wav';
+
+const loseSound = new Audio();
+loseSound.src = './audio/lose.wav';
