@@ -27,21 +27,21 @@ window.onload = () => {
         if(requestID) {
             return;
         }
-        arenaSetup(5, 3, 190, 2, 6.5, 2.3, 170, 370, 4, 3, 3000);
+        arenaSetup(5, 3, 190, 2, 4, 2.3, 170, 370, 4, 3, 3000);
     }
 
     document.getElementById('medium').onclick = () => {
         if(requestID) {
             return;
         }
-        arenaSetup(6, 3, 170, 2.5, 6.5, 2.5, 170, 370, 4, 3, 3000);
+        arenaSetup(6, 3, 170, 2.5, 4, 2.5, 170, 370, 4, 3, 3000);
     }
     
     document.getElementById('spicy').onclick = () => {
         if(requestID) {
             return;
         }
-        arenaSetup(7, 4, 200, 2.5, 6.5, 2, 170, 370, 4, 3, 5000)
+        arenaSetup(7, 4, 200, 2.5, 4, 2, 170, 370, 4, 3, 5000)
     }
 
     document.getElementById('toLevelsGA').onclick = () => {
@@ -367,28 +367,28 @@ window.onload = () => {
     addEventListener('keydown', (e) => {
         switch(e.keyCode) {
             case 83:
-                firstSprite.speedY += 6.5;
+                firstSprite.speedY += spriteZeroGravity;
                 firstEnemy.radius += enemyDiameterGrowth;
                 startsArr.forEach(star => {
                     star.speedY-= 1.2;
                 })
                 break;
             case 87:
-                firstSprite.speedY -= 6.5;
+                firstSprite.speedY -= spriteZeroGravity;
                 firstEnemy.radius += enemyDiameterGrowth;
                 startsArr.forEach(star => {
                     star.speedY+= 1.2;
                 })
                 break;
             case 68:
-                firstSprite.speedX += 6.5;
+                firstSprite.speedX += spriteZeroGravity;
                 firstEnemy.radius += enemyDiameterGrowth;
                 startsArr.forEach(star => {
                     star.speedX-= 1.2;
                 })
                 break;
             case 65:
-                firstSprite.speedX -= 6.5;
+                firstSprite.speedX -= spriteZeroGravity;
                 firstEnemy.radius += enemyDiameterGrowth;
                 startsArr.forEach(star => {
                     star.speedX+= 1.2;
