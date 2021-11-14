@@ -14,11 +14,11 @@ This is a videogame about an astronaut in his little ship fighting against a UFO
 These are the instructions:
 <ul>
 <li>1. The UFO grows everytime you move.</li>
-<li>1. The blue and pink waves get on to let you know you can shoot.</li>
-<li>2. When you shoot at the UFO, he will shrink.</li>
-<li>3. You can only shoot when you are over him.</li>
-<li>4. If you go over the shooting star, you get special powers and will be able to shoot even if you are not close to the UFO.</li>
-<li>5. Don't shoot when the UFO's green light is on as every bullet will make him bigger instead.</li>
+<li>2. The blue and pink waves get on to let you know you can shoot.</li>
+<li>3. When you shoot at the UFO, he will shrink.</li>
+<li>4. You can only shoot when you are over him.</li>
+<li>5. If you go over the shooting star, you get special powers and will be able to shoot even if you are not close to the UFO.</li>
+<li>6. Don't shoot when the UFO's green light is on as every bullet will make him bigger instead.</li>
 </ul>
 <br>
 <h2>Page sections</h2>
@@ -37,3 +37,20 @@ This is the Game Area, you can exit by clicking the X on the bottom-right corner
 <br>
 <h2>Responsive</h2>
 The page is fully responsive although you cannot play the videogame without a keyboard for now. The sections and the game area will adjust to any screen size. If the window width is not greater than 1000px you will get a message suggesting to enter full screen.
+<br>
+<h2>Audio</h2>
+<a href='https://mixkit.co/free-sound-effects/game/'>Mixkit</a> - Mixkit Sound Effects Free License
+<ul>
+<li>1. shooting.wav</li>
+<li>2. bonus.wav</li>
+<li>3. levelSelect.wav</li>
+<li>4. shooting.wav</li>
+<li>5. bulletAbd.wav</li>
+<li>6. aWin.wav</li>
+<li>7. UFOpower.wav</li>
+</ul>
+<a href="https://freesound.org/people/esistnichtsoernst/sounds/473996/">Freesound</a> - Creative Commons - CC0 1.0 Universal (CC0 1.0) - Public Domain Dedication
+<ul>
+<li>1. backgroundSound.wav</li>
+</ul>
+
