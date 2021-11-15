@@ -27,21 +27,21 @@ window.onload = () => {
         if(requestID) {
             return;
         }
-        arenaSetup(5, 3, 190, 2, 4, 2.3, 170, 370, 4, 3, 3000);
+        arenaSetup(5, 3, 190, 2, 7, 2.3, 170, 370, 4, 3, 3000);
     }
 
     document.getElementById('medium').onclick = () => {
         if(requestID) {
             return;
         }
-        arenaSetup(6, 3, 170, 2.5, 4, 2.5, 170, 370, 4, 3, 3000);
+        arenaSetup(6, 3, 170, 2.5, 7, 2.5, 170, 370, 4, 3, 3000);
     }
     
     document.getElementById('spicy').onclick = () => {
         if(requestID) {
             return;
         }
-        arenaSetup(7, 4, 200, 2.5, 4, 2, 170, 370, 4, 3, 5000)
+        arenaSetup(7, 4, 200, 2.5, 7, 2, 170, 370, 4, 3, 5000)
     }
 
     document.getElementById('toLevelsGA').onclick = () => {
@@ -408,25 +408,25 @@ window.onload = () => {
     addEventListener('keyup', (e) => {
         switch(e.keyCode) {
             case 83:
-                firstSprite.speedY = spriteZeroGravity;
+                firstSprite.speedY = spriteZeroGravity/1.7;
                 startsArr.forEach(star => {
                     star.speedY-= 1.2;
                 })
                 break;
             case 87:
-                firstSprite.speedY = - spriteZeroGravity;
+                firstSprite.speedY = - spriteZeroGravity/1.7;
                 startsArr.forEach(star => {
                     star.speedY+= 1.2;
                 })
                 break;
             case 68:
-                firstSprite.speedX = spriteZeroGravity;
+                firstSprite.speedX = spriteZeroGravity/1.7;
                 startsArr.forEach(star => {
                     star.speedX-= 1.2;
                 })
                 break;
             case 65:
-                firstSprite.speedX = - spriteZeroGravity;
+                firstSprite.speedX = - spriteZeroGravity/1.7;
                 startsArr.forEach(star => {
                     star.speedX+= 1.2;
                 })
