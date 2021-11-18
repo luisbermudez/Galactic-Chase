@@ -27,21 +27,21 @@ window.onload = () => {
         if(requestID) {
             return;
         }
-        arenaSetup(5, 3, 190, 2, 7, 2.3, 170, 370, 4, 3, 3000);
+        arenaSetup(5, 3, 190, 2, 6, 2.3, 170, 370, 4, 3, 3000);
     }
 
     document.getElementById('medium').onclick = () => {
         if(requestID) {
             return;
         }
-        arenaSetup(6, 3, 170, 2.5, 7, 2.5, 170, 370, 4, 3, 3000);
+        arenaSetup(6, 3, 170, 2.5, 6, 2.5, 170, 370, 4, 3, 3000);
     }
     
     document.getElementById('spicy').onclick = () => {
         if(requestID) {
             return;
         }
-        arenaSetup(7, 4, 200, 2.5, 7, 2, 170, 370, 4, 3, 5000)
+        arenaSetup(7, 4, 200, 2.5, 6, 2, 170, 370, 4, 3, 5000)
     }
 
     document.getElementById('toLevelsGA').onclick = () => {
@@ -240,21 +240,21 @@ window.onload = () => {
         for(let i = 0; i < 40; i++) {
             const x = Math.floor(Math.random() * (canvas.width + 25 - ( - 25)) + ( - 25));
             const y = Math.floor(Math.random() * (canvas.height + 25 - ( - 25)) + ( - 25));
-            const aStar = new Star(x, y, 'rgb(80, 80, 80, 0.92)', 2.7, 0.6);
+            const aStar = new Star(x, y, 'rgb(100, 100, 100, 0.92)', 2.7, 0.6);
             startsArr.push(aStar);
         }
 
         for(let i = 0; i < 4; i++) {
             const x = Math.floor(Math.random() * (canvas.width + 25 - ( - 25)) + ( - 25));
             const y = Math.floor(Math.random() * (canvas.height + 25 - ( - 25)) + ( - 25));
-            const aStar = new Star(x, y, 'rgba(120, 120, 120, 0.75)', 4.5, 1);
+            const aStar = new Star(x, y, 'rgba(140, 140, 140, 0.75)', 4.5, 1);
             startsArr.push(aStar);
         }
 
         for(let i = 0; i < 3; i++) {
             const x = Math.floor(Math.random() * (canvas.width + 25 - ( - 25)) + ( - 25));
             const y = Math.floor(Math.random() * (canvas.height + 25 - ( - 25)) + ( - 25));
-            const aStar = new Star(x, y, 'rgba(100, 100, 100, 0.75)', 5.5, 3);
+            const aStar = new Star(x, y, 'rgba(120, 120, 120, 0.75)', 5.5, 3);
             startsArr.push(aStar);
         }
     }
@@ -337,7 +337,7 @@ window.onload = () => {
         drawStars();
         createShadow()
         createBullets();
-        if(frames % 1600 > 1200) {
+        if(frames % 1600 > 1400) {
             firstEnemy.drawPower();
             dUFOPower = true;
         } else {dUFOPower = false;}
@@ -370,28 +370,28 @@ window.onload = () => {
                 firstSprite.speedY += spriteZeroGravity;
                 firstEnemy.radius += enemyDiameterGrowth;
                 startsArr.forEach(star => {
-                    star.speedY-= 1.2;
+                    star.speedY-= 0.8;
                 })
                 break;
             case 87:
                 firstSprite.speedY -= spriteZeroGravity;
                 firstEnemy.radius += enemyDiameterGrowth;
                 startsArr.forEach(star => {
-                    star.speedY+= 1.2;
+                    star.speedY+= 0.8;
                 })
                 break;
             case 68:
                 firstSprite.speedX += spriteZeroGravity;
                 firstEnemy.radius += enemyDiameterGrowth;
                 startsArr.forEach(star => {
-                    star.speedX-= 1.2;
+                    star.speedX-= 0.8;
                 })
                 break;
             case 65:
                 firstSprite.speedX -= spriteZeroGravity;
                 firstEnemy.radius += enemyDiameterGrowth;
                 startsArr.forEach(star => {
-                    star.speedX+= 1.2;
+                    star.speedX+= 0.8;
                 })
                 break;
             case 75:
@@ -408,27 +408,27 @@ window.onload = () => {
     addEventListener('keyup', (e) => {
         switch(e.keyCode) {
             case 83:
-                firstSprite.speedY = spriteZeroGravity/1.7;
+                firstSprite.speedY = spriteZeroGravity;
                 startsArr.forEach(star => {
-                    star.speedY-= 1.2;
+                    star.speedY -= 0.8;
                 })
                 break;
             case 87:
-                firstSprite.speedY = - spriteZeroGravity/1.7;
+                firstSprite.speedY = - spriteZeroGravity;
                 startsArr.forEach(star => {
-                    star.speedY+= 1.2;
+                    star.speedY += 0.8;
                 })
                 break;
             case 68:
-                firstSprite.speedX = spriteZeroGravity/1.7;
+                firstSprite.speedX = spriteZeroGravity;
                 startsArr.forEach(star => {
-                    star.speedX-= 1.2;
+                    star.speedX -= 0.8;
                 })
                 break;
             case 65:
-                firstSprite.speedX = - spriteZeroGravity/1.7;
+                firstSprite.speedX = - spriteZeroGravity;
                 startsArr.forEach(star => {
-                    star.speedX+= 1.2;
+                    star.speedX += 0.8;
                 })
                 break;
             case 75:

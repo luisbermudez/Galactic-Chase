@@ -9,7 +9,7 @@ class Sprite {
         this.powerOfAttack = powerOfAttack;
         this.powerActive = false;
         this.powerOnTimer = powerOnTimer;
-        this.boundary = 50;
+        this.boundary = 150;
         this.image = new Image();
         this.image.src = './images/13.png';
     }
@@ -295,6 +295,11 @@ class Star {
     position() {
         this.x += this.speedX;
         this.y += this.speedY;
+
+        if(this.speedX > 14) this.speedX = 14;
+        if(this.speedX < -14) this.speedX = -14;
+        if(this.speedY > 14) this.speedY = 14;
+        if(this.speedY < -14) this.speedY = -14;
     }
 }
 
