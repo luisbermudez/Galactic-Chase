@@ -3,7 +3,7 @@
 
 <br>
 <br>
-<br>
+<h2><b>You can play it <a href="https://luisbermudez.github.io/chaser/">here</a>!</b></h2>
 This is my first Ironhack's course project. Galactic Chase is a simple videogame created applying everything learnt in the first module.
 <br>
 <br>
