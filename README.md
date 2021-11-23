@@ -28,7 +28,7 @@ This is the landing page. When you click on the start button, it will take you t
 <br>
 <br>
 <img id="greenLight" src="./images/levelSection.png" width="200px">
-This is the Levels section where you can select the 3 different level modes. You can also access the instructions in this section by clicking on the question mark on the top-right corner.
+This is the Levels section where you can select the 3 different level modes. You can also access the instructions in this section by clicking on the HOW TO PLAY button on the top-right corner.
 <br>
 <br>
 <br>
