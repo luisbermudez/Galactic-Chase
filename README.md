@@ -12,26 +12,32 @@ This is my first Ironhack's course project. Galactic Chase is a simple videogame
 JavaScript, HTML and CSS. Some of the features and concepts applied:
 <br>
 <h4>JavaScript</h4>
+<ul>
 <li>Arrays, numbers, booleans, objects among other data types</li>
 <li>Conditional statements & loops</li>
 <li>Functions</li>
 <li>Array methods</li>
 <li>JavaScript Object-Oriented Programming - classes, inheritance, encapsulation, abstraction, polymorphism</li>
 <li>DOM Manipulation</li>
+</ul>
 <h4>CSS</h4>
+<ul>
 <li>Box model & positioning</li>
 <li>Selectors</li>
 <li>Transitions & animations</li></li>
 <li>Responsive Web Design & flexbox</li>
+</ul>
 <h4>HTML</h4>
+<ul>
 <li>Canvas for graphics</li>
+</ul>
 <br>
 <br>
 <h2>Tools used</h2>
 Git - GitHub - Visual Studio Code
 <br>
 <br>
-These are the instructions:
+<h2>These are the instructions</h2>
 <ul>
 <li>1. The UFO grows everytime you move.</li>
 <li>2. The blue and pink waves get on to let you know you can shoot.</li>
