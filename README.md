@@ -10,12 +10,21 @@ This is my first Ironhack's course project. Galactic Chase is a simple videogame
 <br>
 <h2>Technologies used</h2>
 JavaScript, HTML and CSS. Some of the features and concepts applied:
-<li>JavaScript conditional statements & loops - arrays & objects among other data types - array methods - functions</li>
+<br>
+<h4>JavaScript</h4>
+<li>Arrays, numbers, booleans, objects among other data types</li>
+<li>Conditional statements & loops</li>
+<li>Functions</li>
+<li>Array methods</li>
 <li>JavaScript Object-Oriented Programming - classes, inheritance, encapsulation, abstraction, polymorphism</li>
-<li>DOM API for HTML, manipulation</li>
-<li>HTML Canvas fro graphics</li>
-<li>CSS selectors - transitions & animations - box model, positioning</li>
-<li>CSS Responsive Web Design & flexbox</li>
+<li>DOM Manipulation</li>
+<h4>CSS</h4>
+<li>Box model & positioning</li>
+<li>Selectors</li>
+<li>Transitions & animations</li></li>
+<li>Responsive Web Design & flexbox</li>
+<h4>HTML</h4>
+<li>Canvas for graphics</li>
 <br>
 <br>
 <h2>Tools used</h2>
