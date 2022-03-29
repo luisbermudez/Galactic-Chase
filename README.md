@@ -32,7 +32,6 @@ JavaScript, HTML and CSS. Some of the features and concepts applied:
 <li>Canvas for graphics</li>
 </ul>
 <br>
-<br>
 <h2>Tools used</h2>
 Git - GitHub - Visual Studio Code
 <br>
