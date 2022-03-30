@@ -5,7 +5,7 @@
 <br>
 <img id="greenLight" src="./images/greenLight.png" width="200px">
 <h2><b>You can play it <a href="https://luisbermudez.github.io/Galactic-Chase/">here</a>!</b></h2>
-This is my first Ironhack's course project. Galactic Chase is a simple videogame about an astronaut in his little ship fighting against a UFO. The UFO grows everytime you move and your <b>mission</b> is to not let him grow by shooting at him.
+This is my first project during Ironhack bootcamp. Galactic Chase is a videogame about an astronaut in his ship fighting against a UFO. The UFO grows everytime you move and your <b>mission</b> is not let him grow by shooting at him.
 <br>
 <br>
 <h2>Technologies used</h2>
